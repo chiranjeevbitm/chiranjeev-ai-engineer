@@ -7,7 +7,7 @@ export default function Skills() {
       <main className="pt-32 pb-stack-lg px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
         {/* Header Section */}
         <section className="mb-stack-lg">
-          <h1 className="font-headline-xl text-headline-xl mb-stack-sm bg-gradient-to-r from-on-surface to-on-surface-variant bg-clip-text text-transparent">
+          <h1 className="font-headline-xl text-headline-xl mb-stack-sm bg-gradient-to-r from-on-surface to-on-surface-variant bg-clip-text text-transparent dark:bg-none dark:text-white">
             Technical Arsenal
           </h1>
           <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl">

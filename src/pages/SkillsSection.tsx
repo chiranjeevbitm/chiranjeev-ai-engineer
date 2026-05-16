@@ -11,7 +11,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
     <div className="min-h-screen selection:bg-primary/30 bg-background text-on-background dark:bg-[#131313] text-[var(--on-surface)]">
       <main className="pt-28 pb-stack-lg px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
         <section className="mb-stack-lg">
-          <h1 className="font-headline-xl text-headline-xl mb-stack-sm bg-gradient-to-r from-on-surface to-on-surface-variant bg-clip-text text-transparent dark:from-on-surface dark:to-on-surface-variant">
+          <h1 className="font-headline-xl text-headline-xl mb-stack-sm bg-gradient-to-r from-on-surface to-on-surface-variant bg-clip-text text-transparent dark:bg-none dark:text-white">
             Technical Arsenal
           </h1>
           <p className="font-body-md text-body-md text-[var(--on-surface-variant)] max-w-2xl">
