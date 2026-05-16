@@ -22,6 +22,8 @@
   }
 
   body {
+    background-color: var(--bg);
+    color: var(--text);
     font-family: "Inter", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -43,6 +45,7 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(125, 211, 252, 0.1);
+    color: var(--text);
   }
 
   .glow-hover-light:hover {
