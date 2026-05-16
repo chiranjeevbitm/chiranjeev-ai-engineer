@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
 import CodeBlock from "../components/CodeBlock";
+import AIStatusBar from "../components/AIStatusBar";
+import AnimatedBlobs from "../components/AnimatedBlobs";
+import MagneticButton from "../components/MagneticButton";
 
 interface Props {
   onNavigate: (section: string) => void;
@@ -21,12 +24,13 @@ const statVariants = {
 
 export default function HomeSection({ onNavigate }: Props) {
   return (
-    <div className="min-h-screen bg-grid-light selection:bg-primary/20 bg-background text-on-background dark:bg-[#131313]">
+    <div className="min-h-screen bg-grid-light selection:bg-primary/20 bg-background text-on-background dark:bg-[#131313] relative">
+      <AnimatedBlobs />
       {/* Hero Section */}
       <section className="relative min-h-[819px] flex flex-col justify-center items-center px-margin-mobile md:px-margin-desktop py-24 overflow-hidden pt-32 snap-start">
         {/* Parallax glow */}
         <motion.div
-          className="absolute inset-0 z-0 opacity-40"
+          className="absolute inset-0 z-[1] opacity-40"
           animate={{ scale: [1, 1.05, 1], opacity: [0.4, 0.5, 0.4] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -37,6 +41,13 @@ export default function HomeSection({ onNavigate }: Props) {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+          >
+            <AIStatusBar />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-primary/20 bg-white/60 backdrop-blur-md text-primary font-code-sm text-code-sm shadow-sm dark:bg-white/5"
           >
             <span className="material-symbols-outlined text-[16px]">verified</span>
@@ -76,24 +87,18 @@ export default function HomeSection({ onNavigate }: Props) {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center mt-10"
           >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            <MagneticButton
               onClick={() => onNavigate("skills")}
               className="px-8 py-4 bg-primary text-on-primary font-label-caps text-label-caps rounded-xl shadow-xl shadow-primary/20 dark:bg-[#d0bcff] dark:text-[#3c0091]"
             >
               Explore My Work
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            </MagneticButton>
+            <MagneticButton
               onClick={() => onNavigate("experience")}
               className="px-8 py-4 bg-white/60 backdrop-blur-md border border-white text-[var(--on-surface)] font-label-caps text-label-caps rounded-xl dark:bg-white/5 dark:border-white/10 text-[var(--on-surface)]"
             >
               My Journey
-            </motion.button>
+            </MagneticButton>
           </motion.div>
           {/* Scroll indicator */}
           <motion.div
