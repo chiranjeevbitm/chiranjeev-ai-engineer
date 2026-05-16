@@ -95,6 +95,15 @@ export const projects: Project[] = [
     tags: ["Deep Learning", "Research", "Medical Imaging"],
     githubUrl: "https://github.com/chiranjeevbitm/RDVCoNet",
   },
+  {
+    id: "english-quest",
+    title: "English Quest — Spend Analysis",
+    description:
+      "AI-powered spend analysis & cost optimisation for a 400-person professional services firm. Processed 1,050+ PO line items across 5 indirect procurement categories to identify top savings opportunities with ranged estimates.",
+    category: "Data Engineering",
+    tags: ["Spend Analysis", "Data Cleaning", "Cost Optimisation", "Excel"],
+    githubUrl: "https://github.com/chiranjeevbitm/english-quest",
+  },
 ];
 
 export const githubRepos: GitHubRepo[] = [
