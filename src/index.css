@@ -10,6 +10,13 @@
     --text-muted: #666666;
     --border: #e0e0e0;
     --accent: #2563eb;
+    /* Legacy alias variables — used across all component files */
+    --on-surface: var(--text);
+    --on-surface-variant: var(--text-muted);
+    --surface: var(--bg-surface);
+    --background: var(--bg);
+    --on-background: var(--text);
+    --on-bg: var(--text);
   }
 
   [data-theme="dark"] {
@@ -19,6 +26,13 @@
     --text-muted: #888888;
     --border: #2a2a2a;
     --accent: #60a5fa;
+    /* Legacy alias variables — used across all component files */
+    --on-surface: var(--text);
+    --on-surface-variant: var(--text-muted);
+    --surface: var(--bg-surface);
+    --background: var(--bg);
+    --on-background: var(--text);
+    --on-bg: var(--text);
   }
 
   body {
