@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { useTheme } from "../context/ThemeContext";
+import ThemeToggle from "./ThemeToggle";
 
 interface NavbarProps {
   onOpenResume: () => void;
@@ -17,7 +17,6 @@ const SECTION_NAMES = ["home", "experience", "skills", "projects"];
 
 export default function Navbar({ onOpenResume, activeSection }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { toggle, isDark } = useTheme();
 
   const scrollToSection = (section: string) => {
     const container = document.querySelector(".snap-y") as HTMLElement;
@@ -73,15 +72,7 @@ export default function Navbar({ onOpenResume, activeSection }: NavbarProps) {
             </div>
           ))}
           {/* Theme Toggle */}
-          <button
-            onClick={toggle}
-            className="flex items-center justify-center w-10 h-10 rounded-xl transition-all bg-gray-100/80 border border-gray-200 text-[#475569] hover:text-[#0ea5e9] hover:bg-gray-200 dark:bg-white/5 dark:border-white/10 dark:text-[#cbc3d7] dark:hover:text-[#d0bcff] dark:hover:bg-white/10"
-            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-          >
-            <span className="material-symbols-outlined">
-              {isDark ? "light_mode" : "dark_mode"}
-            </span>
-          </button>
+          <ThemeToggle />
           <button
             onClick={onOpenResume}
             className="ml-2 px-6 py-2 font-label-caps text-label-caps rounded-xl transition-all active:scale-95 bg-[#0ea5e9] text-white shadow-lg shadow-[#0ea5e9]/20 dark:bg-[#d0bcff] dark:text-[#3c0091] dark:shadow-lg dark:shadow-[#d0bcff]/20"

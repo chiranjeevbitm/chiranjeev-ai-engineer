@@ -1,3 +1,5 @@
+import CodeBlock from "../components/CodeBlock";
+
 interface Props {
   onNavigate: (section: string) => void;
   onOpenResume: () => void;
@@ -21,13 +23,14 @@ export default function HomeSection({ onNavigate }: Props) {
             <br />
             <span className="text-gradient">Generative AI & Agentic Systems</span>
           </h1>
-          <p className="font-body-md text-body-md text-[var(--on-surface-variant)] max-w-2xl mx-auto mb-10">
+          <p className="font-body-md text-body-md text-[var(--on-surface-variant)] max-w-2xl mx-auto mb-4">
             Full-Stack AI Engineer specializing in production-grade RAG solutions,
             multi-agent architectures, end-to-end LLM applications, and modern UI
             development with React and TypeScript. Building intelligent interfaces
             that bridge complex AI systems with seamless user experiences.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <CodeBlock />
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
             <button
               onClick={() => onNavigate("skills")}
               className="px-8 py-4 bg-primary text-on-primary font-label-caps text-label-caps rounded-xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 dark:bg-[#d0bcff] dark:text-[#3c0091]"
