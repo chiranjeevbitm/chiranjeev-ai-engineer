@@ -3,7 +3,7 @@ interface Props {
   onOpenResume: () => void;
 }
 
-export default function HomeSection({ onNavigate, onOpenResume }: Props) {
+export default function HomeSection({ onNavigate }: Props) {
   return (
     <div className="min-h-screen bg-grid-light selection:bg-primary/20 bg-background text-on-background dark:bg-[#131313]">
       {/* Hero Section */}

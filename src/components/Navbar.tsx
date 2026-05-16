@@ -17,7 +17,7 @@ const SECTION_NAMES = ["home", "experience", "skills", "projects"];
 
 export default function Navbar({ onOpenResume, activeSection }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { toggleTheme, isDark } = useTheme();
+  const { toggle, isDark } = useTheme();
 
   const scrollToSection = (section: string) => {
     const container = document.querySelector(".snap-y") as HTMLElement;
@@ -74,7 +74,7 @@ export default function Navbar({ onOpenResume, activeSection }: NavbarProps) {
           ))}
           {/* Theme Toggle */}
           <button
-            onClick={toggleTheme}
+            onClick={toggle}
             className="flex items-center justify-center w-10 h-10 rounded-xl transition-all bg-gray-100/80 border border-gray-200 text-[#475569] hover:text-[#0ea5e9] hover:bg-gray-200 dark:bg-white/5 dark:border-white/10 dark:text-[#cbc3d7] dark:hover:text-[#d0bcff] dark:hover:bg-white/10"
             aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
           >

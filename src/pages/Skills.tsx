@@ -1,13 +1,6 @@
 import PageTransition from "../components/PageTransition";
 
 export default function Skills() {
-  const certColors: Record<string, string> = {
-    N: "bg-primary/10 text-primary",
-    G: "bg-secondary/10 text-secondary",
-    D: "bg-tertiary/10 text-tertiary",
-    M: "bg-primary/10 text-primary",
-  };
-
   return (
     <PageTransition>
     <div className="bg-darkGlacier-surface text-on-surface min-h-screen bg-grid-dark selection:bg-primary/30 selection:text-primary">
