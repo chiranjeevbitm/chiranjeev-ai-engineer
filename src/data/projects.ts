@@ -76,6 +76,7 @@ export const projects: Project[] = [
     category: "Data Engineering",
     tags: ["React", "Node.js", "MongoDB"],
     githubUrl: "https://github.com/chiranjeevbitm/Doctors-Profile",
+    image: "/images/docto-profile.png",
   },
   {
     id: "leadership-insight",
@@ -85,6 +86,7 @@ export const projects: Project[] = [
     category: "Machine Learning",
     tags: ["Agentic AI", "Analytics", "Python"],
     githubUrl: "https://github.com/chiranjeevbitm/Leadership-Insight-Agent",
+    image: "/images/ledership-insight.png",
   },
   {
     id: "rdvconet",
@@ -94,6 +96,7 @@ export const projects: Project[] = [
     category: "Machine Learning",
     tags: ["Deep Learning", "Research", "Medical Imaging"],
     githubUrl: "https://github.com/chiranjeevbitm/RDVCoNet",
+    image: "/images/rdvconet.png",
   },
   {
     id: "english-quest",
@@ -103,6 +106,7 @@ export const projects: Project[] = [
     category: "Data Engineering",
     tags: ["Spend Analysis", "Data Cleaning", "Cost Optimisation", "Excel"],
     githubUrl: "https://github.com/chiranjeevbitm/english-quest",
+    image: "/images/english-quest.png",
   },
 ];
 
