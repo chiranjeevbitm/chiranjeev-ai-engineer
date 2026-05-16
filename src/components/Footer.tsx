@@ -1,24 +1,18 @@
-import { useLocation } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Footer() {
-  const location = useLocation();
-  const isDark =
-    location.pathname === "/skills" || location.pathname === "/projects";
+  const { isDark } = useTheme();
 
   return (
     <footer
-      className={`w-full py-stack-lg border-t ${
+      className={`w-full py-stack-lg border-t backdrop-blur-md transition-colors ${
         isDark
-          ? "border-darkGlacier-border/20 bg-darkGlacier-surface/50"
+          ? "border-[var(--border)] bg-[var(--bg-surface)]/50"
           : "border-white/50 bg-white/40"
-      } backdrop-blur-md`}
+      }`}
     >
       <div className="flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop gap-gutter">
-        <div
-          className={`font-code-sm text-code-sm ${
-            isDark ? "text-on-surface-variant" : "text-on-surface-variant"
-          }`}
-        >
+        <div className="font-code-sm text-code-sm text-[var(--text-muted)]">
           © 2024 Chiranjeev Kumar. Engineered for Intelligence.
         </div>
         <div className="flex gap-gutter">
@@ -26,11 +20,7 @@ export default function Footer() {
             href="https://linkedin.com/in/chiranjeev-bitm"
             target="_blank"
             rel="noopener noreferrer"
-            className={`font-body-md text-body-md transition-colors ${
-              isDark
-                ? "text-on-surface-variant hover:text-primary"
-                : "text-on-surface-variant hover:text-primary"
-            }`}
+            className="font-body-md text-body-md text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
           >
             LinkedIn
           </a>
@@ -38,31 +28,19 @@ export default function Footer() {
             href="https://github.com/chiranjeevbitm"
             target="_blank"
             rel="noopener noreferrer"
-            className={`font-body-md text-body-md transition-colors ${
-              isDark
-                ? "text-on-surface-variant hover:text-primary"
-                : "text-on-surface-variant hover:text-primary"
-            }`}
+            className="font-body-md text-body-md text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
           >
             GitHub
           </a>
           <a
             href="#"
-            className={`font-body-md text-body-md transition-colors ${
-              isDark
-                ? "text-on-surface-variant hover:text-primary"
-                : "text-on-surface-variant hover:text-primary"
-            }`}
+            className="font-body-md text-body-md text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
           >
             Kaggle
           </a>
           <a
             href="mailto:chiranjeev@example.com"
-            className={`font-body-md text-body-md transition-colors ${
-              isDark
-                ? "text-on-surface-variant hover:text-primary"
-                : "text-on-surface-variant hover:text-primary"
-            }`}
+            className="font-body-md text-body-md text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
           >
             Email
           </a>
