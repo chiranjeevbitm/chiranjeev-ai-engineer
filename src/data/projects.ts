@@ -26,7 +26,7 @@ export const projects: Project[] = [
     category: "RAG",
     tags: ["RAG", "Azure OpenAI", "LangChain", "Vector Search"],
     githubUrl: "https://github.com/chiranjeevbitm/multimodal_crag",
-    image: "/images/project_crag.png",
+    image: "/images/multimodal-crag.png",
   },
   {
     id: "enhanced-img",
@@ -36,7 +36,7 @@ export const projects: Project[] = [
     category: "GenAI",
     tags: ["LLMs", "Diffusion", "Prompt Engineering"],
     githubUrl: "https://github.com/chiranjeevbitm/Enhanced_image_prompting",
-    image: "/images/project_enhanced_img.png",
+    image: "/images/enhanced-image.png",
   },
   {
     id: "medguardian",
@@ -46,7 +46,7 @@ export const projects: Project[] = [
     category: "Machine Learning",
     tags: ["Healthcare", "Privacy", "Deep Learning"],
     githubUrl: "https://github.com/chiranjeevbitm/medguardian",
-    image: "/images/project_medguardian.png",
+    image: "/images/medguardian.png",
   },
   {
     id: "resume-builder",
@@ -56,7 +56,7 @@ export const projects: Project[] = [
     category: "GenAI",
     tags: ["AI", "NLP", "React", "ATS"],
     githubUrl: "https://github.com/chiranjeevbitm/Ats_friendly_AI_resume_builder",
-    image: "/images/project_resume_builder.png",
+    image: "/images/ats-friendly-ai-resume.png",
   },
   {
     id: "shikshak",
@@ -66,7 +66,7 @@ export const projects: Project[] = [
     category: "GenAI",
     tags: ["Education", "NLP", "Automation"],
     githubUrl: "https://github.com/chiranjeevbitm/shikshak-Sahayak",
-    image: "/images/project_shikshak.png",
+    image: "/images/sikshak-sahayak.png",
   },
   {
     id: "doctors-profile",
