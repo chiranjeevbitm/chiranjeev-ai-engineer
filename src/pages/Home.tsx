@@ -21,9 +21,10 @@ export default function Home() {
               <span className="text-gradient">Generative AI & Agentic Systems</span>
             </h1>
             <p className="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto mb-10">
-              Experienced Data Science Consultant specializing in production-grade RAG
-              solutions, multi-agent architectures, and end-to-end LLM applications on
-              enterprise platforms.
+              Full-Stack AI Engineer specializing in production-grade RAG solutions,
+              multi-agent architectures, end-to-end LLM applications, and modern UI
+              development with React and TypeScript. Building intelligent interfaces
+              that bridge complex AI systems with seamless user experiences.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
@@ -55,14 +56,13 @@ export default function Home() {
                 Strategic Consultant
               </h2>
               <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                I specialize in bridging the gap between complex machine learning
-                architecture and high-performance production systems. With a Master's
-                from Liverpool John Moores University and extensive experience at{" "}
+                I bridge the gap between complex AI architecture and polished user
+                interfaces. With a Master's from Liverpool John Moores University and
+                extensive experience at{" "}
                 <span className="text-on-surface font-semibold">Deloitte</span> and{" "}
                 <span className="text-on-surface font-semibold">Tredence</span>, I lead
-                the delivery of GenAI COE projects. My focus lies in designing robust
-                RAG pipelines, multi-agent frameworks, and ensuring responsible AI
-                deployments across Azure, AWS, and NVIDIA DGX infrastructures.
+                the delivery of GenAI COE projects while building modern full-stack
+                applications with React, TypeScript, and Tailwind CSS.
               </p>
             </div>
             <div className="glass-card-light p-10 rounded-xl glow-hover-light transition-all flex flex-col justify-between">
