@@ -231,15 +231,28 @@ export default function ExperienceSection() {
                       <span className={`text-[10px] px-1.5 py-0.5 rounded ${group.bgColor} ${group.color} font-code-sm`}>{groupCerts.length}</span>
                     </div>
                     <div className="space-y-1.5">
-                      {groupCerts.map((cert) => (
-                        <div key={cert.title} className="flex items-center gap-2 p-2 bg-white/40 rounded-lg border border-white/60 dark:bg-white/5 dark:border-white/10">
-                          <div className={`w-7 h-7 flex items-center justify-center rounded-lg font-bold text-[10px] border shrink-0 ${cert.cls}`}>{cert.initial}</div>
-                          <div className="min-w-0">
-                            <p className="text-xs font-semibold text-[var(--on-surface)] truncate leading-tight">{cert.title}</p>
-                            <p className="text-[9px] text-[var(--on-surface-variant)]">{cert.org} • {cert.year}</p>
-                          </div>
-                        </div>
-                      ))}
+                      {groupCerts.map((cert) => {
+                        const Card = cert.link ? 'a' : 'div';
+                        const cardProps = cert.link ? { href: cert.link, target: "_blank", rel: "noopener noreferrer" } : {};
+                        return (
+                          <Card
+                            {...cardProps}
+                            key={cert.title}
+                            className={`flex items-center gap-2 p-2 bg-white/40 rounded-lg border border-white/60 dark:bg-white/5 dark:border-white/10 ${
+                              cert.link ? 'cursor-pointer hover:bg-white/80 dark:hover:bg-white/10 hover:border-primary/30 transition-all' : ''
+                            }`}
+                          >
+                            <div className={`w-7 h-7 flex items-center justify-center rounded-lg font-bold text-[10px] border shrink-0 ${cert.cls}`}>{cert.initial}</div>
+                            <div className="min-w-0 flex-1">
+                              <p className="text-xs font-semibold text-[var(--on-surface)] truncate leading-tight">{cert.title}</p>
+                              <p className="text-[9px] text-[var(--on-surface-variant)]">{cert.org} • {cert.year}</p>
+                            </div>
+                            {cert.link && (
+                              <ExternalLink className="w-3 h-3 text-[var(--on-surface-variant)]/40 shrink-0" />
+                            )}
+                          </Card>
+                        );
+                      })}
                     </div>
                   </div>
                 );

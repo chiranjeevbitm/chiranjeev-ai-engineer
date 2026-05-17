@@ -1508,6 +1508,17 @@ Chiranjeev Kumar presents as a **high-potential GenAI specialist** with a rare c
 - Startup CTO in EdTech/GovTech space
 
 ---
+https://www.credly.com/badges/5973a15c-9d5a-457b-9d46-7c7efb07399b/public_url - google generative ai leader
+https://www.linkedin.com/in/chiranjeev-kumar-07071997/overlay/Certifications/44238080/treasury?profileId=ACoAACQphUUB5mPzUPWuC613M212Ym5BXWG3qV8  - nvidia agentic ai
+https://www.credly.com/badges/963eff76-3eba-4a9e-8be4-449651f12efe  - Nvidia generative ai multimodal
+https://www.credly.com/badges/c0bf9eca-9f56-4167-8b94-2a6b206cb1f3/public_url - Nvidia generative ai LLMs
+http://coursera.org/account/accomplishments/professional-cert/ZYA1DUAYC112  - google advanced analytics
+https://learn.microsoft.com/en-us/users/chiranjeevkumar-7726/credentials/18a7a3339787584b?ref=https%3A%2F%2Fwww.linkedin.com%2F -Microsoft Certified: Azure Data Scientist Associate
+https://www.coursera.org/account/accomplishments/specialization/MZHEWFWPKB9M - Prompt engineering coursera
+https://www.linkedin.com/in/chiranjeev-kumar-07071997/overlay/Certifications/1095455859/treasury?profileId=ACoAACQphUUB5mPzUPWuC613M212Ym5BXWG3qV8 -complete sql bootcamp
+https://www.linkedin.com/in/chiranjeev-kumar-07071997/overlay/Certifications/1095347270/treasury?profileId=ACoAACQphUUB5mPzUPWuC613M212Ym5BXWG3qV8 - data enginering
+https://www.linkedin.com/learning/certificates/2bc49a3408f09842c3a1d1da81c24b76547a9c3c48829bfd0f5399deced5faaa?trk=share_certificate&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BTPNFi3YyS16%2BrT1xAtNThA%3D%3D - Generative ai essestisals
+https://www.linkedin.com/learning/certificates/2bc49a3408f09842c3a1d1da81c24b76547a9c3c48829bfd0f5399deced5faaa?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BTPNFi3YyS16%2BrT1xAtNThA%3D%3D - Generative ai by microsoflt
 
 **Document Created:** May 17, 2026  
 **Analysis By:** Claude (Anthropic)  

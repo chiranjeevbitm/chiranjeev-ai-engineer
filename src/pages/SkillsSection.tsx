@@ -228,25 +228,38 @@ export default function SkillsSection({ onOpenResume }: Props) {
                   </span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                  {groupCerts.map((cert, ci) => (
-                    <motion.div
-                      key={cert.title}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: ci * 0.04, duration: 0.3 }}
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      className="flex items-center gap-2 p-2.5 bg-white/60 rounded-lg border border-white/80 hover:shadow-md transition-all dark:bg-white/5 dark:border-white/10"
-                    >
-                      <div className={`w-8 h-8 flex items-center justify-center rounded-lg font-bold text-[10px] border shrink-0 ${cert.cls}`}>
-                        {cert.initial}
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-xs font-semibold text-[var(--on-surface)] truncate leading-tight">{cert.title}</p>
-                        <p className="text-[9px] text-[var(--on-surface-variant)] truncate">{cert.org} • {cert.year}</p>
-                      </div>
-                    </motion.div>
-                  ))}
+                  {groupCerts.map((cert, ci) => {
+                    const Card = cert.link ? 'a' : 'div';
+                    const cardProps = cert.link ? { href: cert.link, target: "_blank", rel: "noopener noreferrer" } : {};
+                    return (
+                      <motion.div
+                        key={cert.title}
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: ci * 0.04, duration: 0.3 }}
+                        whileHover={{ scale: 1.02, y: -2 }}
+                      >
+                        <Card
+                          {...cardProps}
+                          className={`flex items-center gap-2 p-2.5 bg-white/60 rounded-lg border border-white/80 hover:shadow-md transition-all dark:bg-white/5 dark:border-white/10 ${
+                            cert.link ? 'cursor-pointer hover:border-primary/40 dark:hover:border-cyan-500/40' : ''
+                          }`}
+                        >
+                          <div className={`w-8 h-8 flex items-center justify-center rounded-lg font-bold text-[10px] border shrink-0 ${cert.cls}`}>
+                            {cert.initial}
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-xs font-semibold text-[var(--on-surface)] truncate leading-tight">{cert.title}</p>
+                            <p className="text-[9px] text-[var(--on-surface-variant)] truncate">{cert.org} • {cert.year}</p>
+                          </div>
+                          {cert.link && (
+                            <ExternalLink className="w-3 h-3 text-[var(--on-surface-variant)]/50 shrink-0" />
+                          )}
+                        </Card>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </motion.div>
             );

@@ -249,32 +249,33 @@ export interface Certification {
   year: string;
   cls: string;
   category: string;
+  link?: string;
 }
 
 export const certifications: Certification[] = [
   // NVIDIA - Enterprise GPU & AI
-  { initial: "N", title: "Certified Agentic AI", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai" },
-  { initial: "N", title: "GenAI Multimodal Associate", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai" },
-  { initial: "N", title: "GenAI LLMs Associate", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai" },
+  { initial: "N", title: "Certified Agentic AI", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai", link: "https://www.linkedin.com/in/chiranjeev-kumar-07071997/overlay/Certifications/44238080/treasury?profileId=ACoAACQphUUB5mPzUPWuC613M212Ym5BXWG3qV8" },
+  { initial: "N", title: "GenAI Multimodal Associate", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai", link: "https://www.credly.com/badges/963eff76-3eba-4a9e-8be4-449651f12efe" },
+  { initial: "N", title: "GenAI LLMs Associate", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai", link: "https://www.credly.com/badges/c0bf9eca-9f56-4167-8b94-2a6b206cb1f3/public_url" },
   { initial: "N", title: "Nemo Toolkit & DGX", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai" },
 
   // Google & Cloud AI
-  { initial: "G", title: "Generative AI For Leaders", org: "Google", year: "2026", cls: "bg-blue-500/10 text-blue-400 border-blue-500/20", category: "google-cloud" },
-  { initial: "G", title: "Advanced Data Analytics", org: "Google", year: "2024", cls: "bg-blue-500/10 text-blue-400 border-blue-500/20", category: "google-cloud" },
+  { initial: "G", title: "Generative AI For Leaders", org: "Google", year: "2026", cls: "bg-blue-500/10 text-blue-400 border-blue-500/20", category: "google-cloud", link: "https://www.credly.com/badges/5973a15c-9d5a-457b-9d46-7c7efb07399b/public_url" },
+  { initial: "G", title: "Advanced Data Analytics", org: "Google", year: "2024", cls: "bg-blue-500/10 text-blue-400 border-blue-500/20", category: "google-cloud", link: "http://coursera.org/account/accomplishments/professional-cert/ZYA1DUAYC112" },
   { initial: "G", title: "Conversational AI (Dialogflow CX)", org: "Google", year: "2024", cls: "bg-blue-500/10 text-blue-400 border-blue-500/20", category: "google-cloud" },
   { initial: "D", title: "GenAI Exchange Skill Badge", org: "Google Cloud", year: "2024", cls: "bg-blue-500/10 text-blue-400 border-blue-500/20", category: "google-cloud" },
 
   // Microsoft Azure
-  { initial: "M", title: "Azure Data Scientist Associate", org: "Microsoft", year: "2024", cls: "bg-sky-500/10 text-sky-400 border-sky-500/20", category: "microsoft-azure" },
+  { initial: "M", title: "Azure Data Scientist Associate", org: "Microsoft", year: "2024", cls: "bg-sky-500/10 text-sky-400 border-sky-500/20", category: "microsoft-azure", link: "https://learn.microsoft.com/en-us/users/chiranjeevkumar-7726/credentials/18a7a3339787584b?ref=https%3A%2F%2Fwww.linkedin.com%2F" },
   { initial: "M", title: "Azure AI Fundamentals", org: "Microsoft", year: "2020", cls: "bg-sky-500/10 text-sky-400 border-sky-500/20", category: "microsoft-azure" },
   { initial: "M", title: "Azure Fundamentals", org: "Microsoft", year: "2020", cls: "bg-sky-500/10 text-sky-400 border-sky-500/20", category: "microsoft-azure" },
-  { initial: "A", title: "Career Essentials: GenAI", org: "Microsoft & LinkedIn", year: "2024", cls: "bg-sky-500/10 text-sky-400 border-sky-500/20", category: "microsoft-azure" },
+  { initial: "A", title: "Career Essentials: GenAI", org: "Microsoft & LinkedIn", year: "2024", cls: "bg-sky-500/10 text-sky-400 border-sky-500/20", category: "microsoft-azure", link: "https://www.linkedin.com/learning/certificates/2bc49a3408f09842c3a1d1da81c24b76547a9c3c48829bfd0f5399deced5faaa?trk=share_certificate&lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BTPNFi3YyS16%2BrT1xAtNThA%3D%3D" },
 
   // DeepLearning.AI & AI Skills
   { initial: "A", title: "Agent Skills with Anthropic", org: "DeepLearning.AI x Anthropic", year: "2026", cls: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20", category: "ai-skills" },
   { initial: "A", title: "Pair Programming with LLM", org: "DeepLearning.AI", year: "2024", cls: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20", category: "ai-skills" },
   { initial: "D", title: "Building Portable AI Agent Skills", org: "Udemy", year: "2026", cls: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20", category: "ai-skills" },
-  { initial: "C", title: "Prompt Engineering Specialization", org: "Coursera", year: "2024", cls: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20", category: "ai-skills" },
+  { initial: "C", title: "Prompt Engineering Specialization", org: "Coursera", year: "2024", cls: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20", category: "ai-skills", link: "https://www.coursera.org/account/accomplishments/specialization/MZHEWFWPKB9M" },
 
   // Dataiku & Enterprise Platforms
   { initial: "D", title: "GenAI Practitioner", org: "Dataiku", year: "2024", cls: "bg-orange-500/10 text-orange-400 border-orange-500/20", category: "platforms" },
@@ -283,6 +284,6 @@ export const certifications: Certification[] = [
 
   // Security & Specialized
   { initial: "U", title: "GenAI Risk & Cyber Security", org: "Udemy", year: "2024", cls: "bg-rose-500/10 text-rose-400 border-rose-500/20", category: "specialized" },
-  { initial: "S", title: "The Complete SQL Bootcamp", org: "Udemy", year: "2023", cls: "bg-rose-500/10 text-rose-400 border-rose-500/20", category: "specialized" },
+  { initial: "S", title: "The Complete SQL Bootcamp", org: "Udemy", year: "2023", cls: "bg-rose-500/10 text-rose-400 border-rose-500/20", category: "specialized", link: "https://www.linkedin.com/in/chiranjeev-kumar-07071997/overlay/Certifications/1095455859/treasury?profileId=ACoAACQphUUB5mPzUPWuC613M212Ym5BXWG3qV8" },
   { initial: "I", title: "PG Diploma in ML & AI", org: "IIIT Bangalore", year: "2022", cls: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20", category: "specialized" },
 ];
