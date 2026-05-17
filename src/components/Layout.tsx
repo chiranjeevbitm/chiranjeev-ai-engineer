@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import ScrollToTop from "./ScrollToTop";
 import ResumeModal from "./ResumeModal";
 
 export default function Layout() {
@@ -20,6 +21,7 @@ export default function Layout() {
         />
       </main>
       <Footer />
+      <ScrollToTop />
       <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
     </div>
   );
