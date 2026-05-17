@@ -198,7 +198,7 @@ export default function ExperienceSection() {
               </div>
             </motion.div>
 
-            {/* Certifications - by category */}
+            {/* Certifications - Compact Preview */}
             <motion.div
               variants={fadeIn}
               initial="hidden"
@@ -214,55 +214,57 @@ export default function ExperienceSection() {
                 </span>
               </div>
 
-              {/* Category groups */}
-              {[
-                { key: "nvidia-genai", label: "NVIDIA", icon: "🚀", color: "text-purple-400", bgColor: "bg-purple-500/10" },
-                { key: "google-cloud", label: "Google Cloud", icon: "☁️", color: "text-blue-400", bgColor: "bg-blue-500/10" },
-                { key: "microsoft-azure", label: "Microsoft Azure", icon: "📦", color: "text-sky-400", bgColor: "bg-sky-500/10" },
-                { key: "ai-skills", label: "AI Skills", icon: "🧠", color: "text-emerald-400", bgColor: "bg-emerald-500/10" },
-              ].map((group) => {
-                const groupCerts = certifications.filter(c => c.category === group.key);
-                if (groupCerts.length === 0) return null;
+              {/* Featured Certification */}
+              {(() => {
+                const featured = certifications.find(c => c.title === "Certified Agentic AI") || certifications[0];
+                const Card = featured.link ? 'a' : 'div';
+                const cardProps = featured.link ? { href: featured.link, target: "_blank", rel: "noopener noreferrer" } : {};
                 return (
-                  <div key={group.key} className="mb-3 last:mb-0">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span>{group.icon}</span>
-                      <span className={`text-[11px] font-semibold uppercase tracking-wider ${group.color}`}>{group.label}</span>
-                      <span className={`text-[10px] px-1.5 py-0.5 rounded ${group.bgColor} ${group.color} font-code-sm`}>{groupCerts.length}</span>
+                  <Card
+                    {...cardProps}
+                    className={`flex items-center gap-3 p-3 bg-white/40 rounded-xl border border-white/60 dark:bg-white/5 dark:border-white/10 mb-4 ${
+                      featured.link ? 'cursor-pointer hover:bg-white/80 dark:hover:bg-white/10 hover:border-primary/30 transition-all' : ''
+                    }`}
+                  >
+                    <div className={`w-10 h-10 flex items-center justify-center rounded-xl font-bold text-sm border shrink-0 ${featured.cls}`}>
+                      {featured.initial}
                     </div>
-                    <div className="space-y-1.5">
-                      {groupCerts.map((cert) => {
-                        const Card = cert.link ? 'a' : 'div';
-                        const cardProps = cert.link ? { href: cert.link, target: "_blank", rel: "noopener noreferrer" } : {};
-                        return (
-                          <Card
-                            {...cardProps}
-                            key={cert.title}
-                            className={`flex items-center gap-2 p-2 bg-white/40 rounded-lg border border-white/60 dark:bg-white/5 dark:border-white/10 ${
-                              cert.link ? 'cursor-pointer hover:bg-white/80 dark:hover:bg-white/10 hover:border-primary/30 transition-all' : ''
-                            }`}
-                          >
-                            <div className={`w-7 h-7 flex items-center justify-center rounded-lg font-bold text-[10px] border shrink-0 ${cert.cls}`}>{cert.initial}</div>
-                            <div className="min-w-0 flex-1">
-                              <p className="text-xs font-semibold text-[var(--on-surface)] truncate leading-tight">{cert.title}</p>
-                              <p className="text-[9px] text-[var(--on-surface-variant)]">{cert.org} • {cert.year}</p>
-                            </div>
-                            {cert.link && (
-                              <ExternalLink className="w-3 h-3 text-[var(--on-surface-variant)]/40 shrink-0" />
-                            )}
-                          </Card>
-                        );
-                      })}
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-bold text-[var(--on-surface)] truncate">{featured.title}</p>
+                      <p className="text-[10px] text-[var(--on-surface-variant)]">{featured.org} • {featured.year}</p>
                     </div>
-                  </div>
+                    {featured.link && (
+                      <ExternalLink className="w-3.5 h-3.5 text-[var(--on-surface-variant)]/50 shrink-0" />
+                    )}
+                    <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse shrink-0" />
+                  </Card>
                 );
-              })}
+              })()}
+
+              {/* Quick Stats Row */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {[
+                  { key: "nvidia-genai", label: "NVIDIA", icon: "🚀", color: "text-purple-400", bgColor: "bg-purple-500/10" },
+                  { key: "google-cloud", label: "Google", icon: "☁️", color: "text-blue-400", bgColor: "bg-blue-500/10" },
+                  { key: "microsoft-azure", label: "Azure", icon: "📦", color: "text-sky-400", bgColor: "bg-sky-500/10" },
+                  { key: "ai-skills", label: "AI Skills", icon: "🧠", color: "text-emerald-400", bgColor: "bg-emerald-500/10" },
+                ].map((group) => {
+                  const count = certifications.filter(c => c.category === group.key).length;
+                  return (
+                    <span key={group.key} className={`inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-full ${group.bgColor} ${group.color} font-code-sm`}>
+                      <span>{group.icon}</span>
+                      <span>{group.label}</span>
+                      <span className="opacity-70">({count})</span>
+                    </span>
+                  );
+                })}
+              </div>
 
               <a
                 href="/#certifications"
-                className="mt-4 inline-flex items-center gap-1 text-primary dark:text-[#d0bcff] text-sm font-code-sm hover:underline group"
+                className="inline-flex items-center gap-1 text-primary dark:text-[#d0bcff] text-sm font-code-sm hover:underline group"
               >
-                View all in Skills <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                View all {certifications.length} certifications <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
               </a>
             </motion.div>
 
