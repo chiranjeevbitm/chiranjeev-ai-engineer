@@ -65,7 +65,10 @@ export default function PortfolioScroll() {
     if (!container) return;
     const section = container.children[index] as HTMLElement;
     if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Account for fixed navbar height (80px desktop, 64px mobile)
+      const navbarH = window.innerWidth < 768 ? 64 : 80;
+      const top = section.getBoundingClientRect().top + container.scrollTop - navbarH;
+      container.scrollTo({ top, behavior: "smooth" });
       setActiveSection(SECTION_NAMES[index]);
       window.history.replaceState(null, "", `#${SECTION_NAMES[index]}`);
     }
