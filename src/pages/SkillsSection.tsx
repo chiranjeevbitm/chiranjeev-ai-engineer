@@ -202,10 +202,10 @@ export default function SkillsSection({ onOpenResume }: Props) {
           </h2>
 
           {[
-            { key: "nvidia-genai", label: "NVIDIA GenAI & GPU", icon: "🚀", color: "border-l-purple-500 bg-purple-500/5", badge: "bg-purple-500/10 text-purple-400" },
             { key: "google-cloud", label: "Google Cloud & AI", icon: "☁️", color: "border-l-blue-500 bg-blue-500/5", badge: "bg-blue-500/10 text-blue-400" },
             { key: "microsoft-azure", label: "Microsoft Azure", icon: "📦", color: "border-l-sky-500 bg-sky-500/5", badge: "bg-sky-500/10 text-sky-400" },
             { key: "ai-skills", label: "AI Skills & DeepLearning.AI", icon: "🧠", color: "border-l-emerald-500 bg-emerald-500/5", badge: "bg-emerald-500/10 text-emerald-400" },
+            { key: "nvidia-genai", label: "NVIDIA GenAI & GPU", icon: "🚀", color: "border-l-purple-500 bg-purple-500/5", badge: "bg-purple-500/10 text-purple-400" },
             { key: "platforms", label: "Enterprise Platforms", icon: "⚙️", color: "border-l-orange-500 bg-orange-500/5", badge: "bg-orange-500/10 text-orange-400" },
             { key: "specialized", label: "Security & Specialized", icon: "🔒", color: "border-l-rose-500 bg-rose-500/5", badge: "bg-rose-500/10 text-rose-400" },
           ].map((group, gi) => {
