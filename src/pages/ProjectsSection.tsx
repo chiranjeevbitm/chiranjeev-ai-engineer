@@ -91,11 +91,11 @@ export default function ProjectsSection() {
                 
                 {/* Impact Metrics */}
                 {project.impact && project.impact.length > 0 && (
-                  <div className="grid grid-cols-2 gap-3 mb-stack-md p-3 bg-black/20 rounded-lg dark:bg-black/40">
+                  <div className="grid grid-cols-2 gap-3 mb-stack-md p-3 bg-gray-100 rounded-lg dark:bg-black/40">
                     {project.impact.map((item, i) => (
                       <div key={i}>
-                        <div className="text-sm font-bold text-cyan-400 dark:text-cyan-400">{item.value}</div>
-                        <div className="text-[10px] text-[var(--on-surface-variant)]">{item.metric}</div>
+                        <div className="text-sm font-bold text-cyan-600 dark:text-cyan-400">{item.value}</div>
+                        <div className="text-[10px] text-gray-600 dark:text-[var(--on-surface-variant)]">{item.metric}</div>
                       </div>
                     ))}
                   </div>
