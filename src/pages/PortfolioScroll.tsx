@@ -1,9 +1,11 @@
 import { useRef, useEffect, useCallback, useState } from "react";
 import { useOutletContext } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import HomeSection from "./HomeSection";
 import ExperienceSection from "./ExperienceSection";
 import SkillsSection from "./SkillsSection";
 import ProjectsSection from "./ProjectsSection";
+import Footer from "../components/Footer";
 
 const SECTION_NAMES = ["home", "experience", "skills", "projects"];
 
@@ -45,6 +47,19 @@ export default function PortfolioScroll() {
     return () => observer.disconnect();
   }, []);
 
+  const [scrollTopVisible, setScrollTopVisible] = useState(false);
+
+  // Track scroll position for ScrollToTop button
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const handleScroll = () => {
+      setScrollTopVisible(container.scrollTop > 400);
+    };
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const scrollToSection = useCallback((index: number) => {
     const container = containerRef.current;
     if (!container) return;
@@ -56,6 +71,13 @@ export default function PortfolioScroll() {
     }
   }, []);
 
+  const scrollToTop = useCallback(() => {
+    const container = containerRef.current;
+    if (container) {
+      container.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, []);
+
   const handleSectionNav = (section: string) => {
     const idx = SECTION_NAMES.indexOf(section);
     if (idx >= 0) scrollToSection(idx);
@@ -64,7 +86,7 @@ export default function PortfolioScroll() {
   return (
     <div
       ref={containerRef}
-      className="h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth"
+      className="h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth relative"
       style={{ scrollBehavior: "auto" }}
     >
       <div className="snap-start min-h-screen" id="home">
@@ -79,6 +101,38 @@ export default function PortfolioScroll() {
       <div className="snap-start min-h-screen" id="projects">
         <ProjectsSection />
       </div>
+      {/* Footer inside snap container */}
+      <div className="snap-start">
+        <Footer />
+      </div>
+
+      {/* Scroll to Top Button (^) - inside container so it's visible */}
+      <AnimatePresence>
+        {scrollTopVisible && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 20 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            onClick={scrollToTop}
+            aria-label="Scroll to top"
+            className="fixed bottom-6 right-6 z-50 w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-xl shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:scale-110 active:scale-95 transition-all duration-300"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="18 15 12 9 6 15" />
+            </svg>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
