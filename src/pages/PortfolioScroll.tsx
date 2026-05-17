@@ -27,6 +27,7 @@ export default function PortfolioScroll() {
     const container = containerRef.current;
     if (!container) return;
 
+    // Use passive observer - no scroll interference, just track position
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -42,7 +43,7 @@ export default function PortfolioScroll() {
       { threshold: [0.15, 0.5] }
     );
 
-    const sections = container.querySelectorAll<HTMLElement>(".snap-start");
+    const sections = container.querySelectorAll<HTMLElement>("[data-section]");
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
   }, []);
@@ -89,23 +90,22 @@ export default function PortfolioScroll() {
   return (
     <div
       ref={containerRef}
-      className="h-screen overflow-y-auto snap-y snap-mandatory scroll-smooth relative"
-      style={{ scrollBehavior: "auto" }}
+      className="h-screen overflow-y-auto relative"
     >
-      <div className="snap-start min-h-screen" id="home">
+      <div className="snap-start min-h-screen" id="home" data-section>
         <HomeSection onNavigate={handleSectionNav} onOpenResume={onOpenResume} />
       </div>
-      <div className="snap-start min-h-screen" id="experience">
+      <div className="snap-start min-h-screen" id="experience" data-section>
         <ExperienceSection />
       </div>
-      <div className="snap-start min-h-screen" id="skills">
+      <div className="snap-start min-h-screen" id="skills" data-section>
         <SkillsSection onOpenResume={onOpenResume} />
       </div>
-      <div className="snap-start min-h-screen" id="projects">
+      <div className="snap-start min-h-screen" id="projects" data-section>
         <ProjectsSection />
       </div>
       {/* Footer inside snap container */}
-      <div className="snap-start">
+      <div className="snap-start" data-section>
         <Footer />
       </div>
 
