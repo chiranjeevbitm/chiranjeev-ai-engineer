@@ -188,7 +188,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
           ))}
         </motion.div>
 
-        {/* Certifications Wall */}
+        {/* Certifications Wall - Categorized */}
         <motion.section
           id="certifications"
           initial={{ opacity: 0, y: 30 }}
@@ -198,29 +198,59 @@ export default function SkillsSection({ onOpenResume }: Props) {
           className="mb-stack-lg"
         >
           <h2 className="font-headline-lg text-headline-lg mb-stack-md border-l-4 border-primary pl-4 text-[var(--on-surface)] dark:border-[#d0bcff]">
-            Certifications & Credentials <span className="text-sm text-[var(--on-surface-variant)] font-normal">({certifications.length}+)</span>
+            Certifications & Credentials <span className="text-sm text-[var(--on-surface-variant)] font-normal">({certifications.length})</span>
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            {certifications.slice(0, 20).map((cert, i) => (
+
+          {[
+            { key: "nvidia-genai", label: "NVIDIA GenAI & GPU", icon: "🚀", color: "border-l-purple-500 bg-purple-500/5", badge: "bg-purple-500/10 text-purple-400" },
+            { key: "google-cloud", label: "Google Cloud & AI", icon: "☁️", color: "border-l-blue-500 bg-blue-500/5", badge: "bg-blue-500/10 text-blue-400" },
+            { key: "microsoft-azure", label: "Microsoft Azure", icon: "📦", color: "border-l-sky-500 bg-sky-500/5", badge: "bg-sky-500/10 text-sky-400" },
+            { key: "ai-skills", label: "AI Skills & DeepLearning.AI", icon: "🧠", color: "border-l-emerald-500 bg-emerald-500/5", badge: "bg-emerald-500/10 text-emerald-400" },
+            { key: "platforms", label: "Enterprise Platforms", icon: "⚙️", color: "border-l-orange-500 bg-orange-500/5", badge: "bg-orange-500/10 text-orange-400" },
+            { key: "specialized", label: "Security & Specialized", icon: "🔒", color: "border-l-rose-500 bg-rose-500/5", badge: "bg-rose-500/10 text-rose-400" },
+          ].map((group, gi) => {
+            const groupCerts = certifications.filter(c => c.category === group.key);
+            if (groupCerts.length === 0) return null;
+            return (
               <motion.div
-                key={cert.title}
-                initial={{ opacity: 0, y: 10 }}
+                key={group.key}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.03, duration: 0.3 }}
-                whileHover={{ scale: 1.02 }}
-                className="flex items-center gap-3 p-3 bg-white/40 rounded-lg border border-white/60 dark:bg-white/5 dark:border-white/10"
+                transition={{ delay: gi * 0.08, duration: 0.4 }}
+                className={`mb-4 p-4 rounded-xl border-l-4 ${group.color} border border-white/60 dark:border-white/10`}
               >
-                <div className={`w-9 h-9 flex items-center justify-center rounded-lg font-bold text-xs border shrink-0 ${cert.cls}`}>
-                  {cert.initial}
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-lg">{group.icon}</span>
+                  <h3 className="font-headline-lg text-headline-lg text-[var(--on-surface)]">{group.label}</h3>
+                  <span className={`ml-auto text-xs px-2 py-0.5 rounded-full font-code-sm ${group.badge}`}>
+                    {groupCerts.length} certs
+                  </span>
                 </div>
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold text-[var(--on-surface)] truncate">{cert.title}</p>
-                  <p className="text-[10px] text-[var(--on-surface-variant)]">{cert.org} • {cert.year}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                  {groupCerts.map((cert, ci) => (
+                    <motion.div
+                      key={cert.title}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: ci * 0.04, duration: 0.3 }}
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      className="flex items-center gap-2 p-2.5 bg-white/60 rounded-lg border border-white/80 hover:shadow-md transition-all dark:bg-white/5 dark:border-white/10"
+                    >
+                      <div className={`w-8 h-8 flex items-center justify-center rounded-lg font-bold text-[10px] border shrink-0 ${cert.cls}`}>
+                        {cert.initial}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-xs font-semibold text-[var(--on-surface)] truncate leading-tight">{cert.title}</p>
+                        <p className="text-[9px] text-[var(--on-surface-variant)] truncate">{cert.org} • {cert.year}</p>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </motion.div>
-            ))}
-          </div>
+            );
+          })}
         </motion.section>
 
         {/* Awards Section */}

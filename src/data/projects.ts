@@ -242,27 +242,47 @@ export const githubRepos: GitHubRepo[] = [
   },
 ];
 
-export const certifications = [
-  { initial: "N", title: "Certified Agentic AI", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400" },
-  { initial: "N", title: "GenAI Multimodal Associate", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400" },
-  { initial: "N", title: "GenAI LLMs Associate", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400" },
-  { initial: "G", title: "Generative AI For Leaders", org: "Google", year: "2026", cls: "bg-blue-500/10 text-blue-400" },
-  { initial: "A", title: "Agent Skills with Anthropic", org: "DeepLearning.AI x Anthropic", year: "2026", cls: "bg-green-500/10 text-green-400" },
-  { initial: "M", title: "Azure Data Scientist Associate", org: "Microsoft", year: "2024", cls: "bg-sky-500/10 text-sky-400" },
-  { initial: "G", title: "Advanced Data Analytics", org: "Google", year: "2024", cls: "bg-blue-500/10 text-blue-400" },
-  { initial: "D", title: "GenAI Practitioner", org: "Dataiku", year: "2024", cls: "bg-orange-500/10 text-orange-400" },
-  { initial: "C", title: "Prompt Engineering Specialization", org: "Coursera", year: "2024", cls: "bg-yellow-500/10 text-yellow-400" },
-  { initial: "G", title: "Conversational AI (Dialogflow CX)", org: "Google", year: "2024", cls: "bg-blue-500/10 text-blue-400" },
-  { initial: "A", title: "Career Essentials: GenAI", org: "Microsoft & LinkedIn", year: "2024", cls: "bg-sky-500/10 text-sky-400" },
-  { initial: "D", title: "GenAI Exchange Skill Badge", org: "Google Cloud", year: "2024", cls: "bg-blue-500/10 text-blue-400" },
-  { initial: "N", title: "Nemo Toolkit & DGX", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400" },
-  { initial: "G", title: "GenAI Byte-Sized Program", org: "Tredence Inc.", year: "2023", cls: "bg-green-500/10 text-green-400" },
-  { initial: "M", title: "Azure AI Fundamentals", org: "Microsoft", year: "2020", cls: "bg-sky-500/10 text-sky-400" },
-  { initial: "M", title: "Azure Fundamentals", org: "Microsoft", year: "2020", cls: "bg-sky-500/10 text-sky-400" },
-  { initial: "U", title: "GenAI Risk & Cyber Security", org: "Udemy", year: "2024", cls: "bg-red-500/10 text-red-400" },
-  { initial: "D", title: "Building Portable AI Agent Skills", org: "Udemy", year: "2026", cls: "bg-red-500/10 text-red-400" },
-  { initial: "A", title: "Pair Programming with LLM", org: "DeepLearning.AI", year: "2024", cls: "bg-green-500/10 text-green-400" },
-  { initial: "S", title: "The Complete SQL Bootcamp", org: "Udemy", year: "2023", cls: "bg-red-500/10 text-red-400" },
-  { initial: "D", title: "Azure Databricks & Spark", org: "Udemy", year: "2023", cls: "bg-red-500/10 text-red-400" },
-  { initial: "I", title: "PG Diploma in ML & AI", org: "IIIT Bangalore", year: "2022", cls: "bg-indigo-500/10 text-indigo-400" },
+export interface Certification {
+  initial: string;
+  title: string;
+  org: string;
+  year: string;
+  cls: string;
+  category: string;
+}
+
+export const certifications: Certification[] = [
+  // NVIDIA - Enterprise GPU & AI
+  { initial: "N", title: "Certified Agentic AI", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai" },
+  { initial: "N", title: "GenAI Multimodal Associate", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai" },
+  { initial: "N", title: "GenAI LLMs Associate", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai" },
+  { initial: "N", title: "Nemo Toolkit & DGX", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai" },
+
+  // Google & Cloud AI
+  { initial: "G", title: "Generative AI For Leaders", org: "Google", year: "2026", cls: "bg-blue-500/10 text-blue-400 border-blue-500/20", category: "google-cloud" },
+  { initial: "G", title: "Advanced Data Analytics", org: "Google", year: "2024", cls: "bg-blue-500/10 text-blue-400 border-blue-500/20", category: "google-cloud" },
+  { initial: "G", title: "Conversational AI (Dialogflow CX)", org: "Google", year: "2024", cls: "bg-blue-500/10 text-blue-400 border-blue-500/20", category: "google-cloud" },
+  { initial: "D", title: "GenAI Exchange Skill Badge", org: "Google Cloud", year: "2024", cls: "bg-blue-500/10 text-blue-400 border-blue-500/20", category: "google-cloud" },
+
+  // Microsoft Azure
+  { initial: "M", title: "Azure Data Scientist Associate", org: "Microsoft", year: "2024", cls: "bg-sky-500/10 text-sky-400 border-sky-500/20", category: "microsoft-azure" },
+  { initial: "M", title: "Azure AI Fundamentals", org: "Microsoft", year: "2020", cls: "bg-sky-500/10 text-sky-400 border-sky-500/20", category: "microsoft-azure" },
+  { initial: "M", title: "Azure Fundamentals", org: "Microsoft", year: "2020", cls: "bg-sky-500/10 text-sky-400 border-sky-500/20", category: "microsoft-azure" },
+  { initial: "A", title: "Career Essentials: GenAI", org: "Microsoft & LinkedIn", year: "2024", cls: "bg-sky-500/10 text-sky-400 border-sky-500/20", category: "microsoft-azure" },
+
+  // DeepLearning.AI & AI Skills
+  { initial: "A", title: "Agent Skills with Anthropic", org: "DeepLearning.AI x Anthropic", year: "2026", cls: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20", category: "ai-skills" },
+  { initial: "A", title: "Pair Programming with LLM", org: "DeepLearning.AI", year: "2024", cls: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20", category: "ai-skills" },
+  { initial: "D", title: "Building Portable AI Agent Skills", org: "Udemy", year: "2026", cls: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20", category: "ai-skills" },
+  { initial: "C", title: "Prompt Engineering Specialization", org: "Coursera", year: "2024", cls: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20", category: "ai-skills" },
+
+  // Dataiku & Enterprise Platforms
+  { initial: "D", title: "GenAI Practitioner", org: "Dataiku", year: "2024", cls: "bg-orange-500/10 text-orange-400 border-orange-500/20", category: "platforms" },
+  { initial: "G", title: "GenAI Byte-Sized Program", org: "Tredence Inc.", year: "2023", cls: "bg-orange-500/10 text-orange-400 border-orange-500/20", category: "platforms" },
+  { initial: "D", title: "Azure Databricks & Spark", org: "Udemy", year: "2023", cls: "bg-orange-500/10 text-orange-400 border-orange-500/20", category: "platforms" },
+
+  // Security & Specialized
+  { initial: "U", title: "GenAI Risk & Cyber Security", org: "Udemy", year: "2024", cls: "bg-rose-500/10 text-rose-400 border-rose-500/20", category: "specialized" },
+  { initial: "S", title: "The Complete SQL Bootcamp", org: "Udemy", year: "2023", cls: "bg-rose-500/10 text-rose-400 border-rose-500/20", category: "specialized" },
+  { initial: "I", title: "PG Diploma in ML & AI", org: "IIIT Bangalore", year: "2022", cls: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20", category: "specialized" },
 ];

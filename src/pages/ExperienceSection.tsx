@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Award, BookOpen, ExternalLink, Calendar, Newspaper, TrendingUp } from "lucide-react";
+import { Award, BookOpen, ExternalLink, Calendar, Newspaper, TrendingUp, ChevronRight } from "lucide-react";
+import { certifications } from "../data/projects";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -197,7 +198,7 @@ export default function ExperienceSection() {
               </div>
             </motion.div>
 
-            {/* Certifications */}
+            {/* Certifications - by category */}
             <motion.div
               variants={fadeIn}
               initial="hidden"
@@ -208,25 +209,47 @@ export default function ExperienceSection() {
               <div className="flex items-center gap-3 mb-stack-lg">
                 <Award className="w-6 h-6 text-secondary dark:text-[#4cd7f6]" />
                 <h2 className="font-headline-lg text-headline-lg text-[var(--on-surface)] font-bold">Certifications</h2>
+                <span className="ml-auto text-xs px-2 py-0.5 rounded-full bg-white/60 dark:bg-white/10 text-[var(--on-surface-variant)] font-code-sm">
+                  {certifications.length}
+                </span>
               </div>
-              <div className="grid grid-cols-1 gap-3 mb-4">
-                {[
-                  { initial: "N", title: "Certified Agentic AI", org: "NVIDIA", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20" },
-                  { initial: "G", title: "Generative AI For Leaders", org: "Google", cls: "bg-blue-500/10 text-blue-400 border-blue-500/20" },
-                  { initial: "D", title: "GenAI Practitioner", org: "Dataiku", cls: "bg-orange-500/10 text-orange-400 border-orange-500/20" },
-                  { initial: "M", title: "Azure Data Scientist", org: "Microsoft", cls: "bg-sky-500/10 text-sky-400 border-sky-500/20" },
-                ].map((cert) => (
-                  <div key={cert.title} className="flex items-center gap-3 p-3 bg-white/40 rounded-lg border border-white/60 dark:bg-white/5 dark:border-white/10">
-                    <div className={`w-8 h-8 flex items-center justify-center rounded-lg font-bold text-sm border ${cert.cls}`}>{cert.initial}</div>
-                    <div>
-                      <p className="text-sm font-bold text-[var(--on-surface)]">{cert.title}</p>
-                      <p className="text-xs text-[var(--on-surface-variant)] font-medium">{cert.org}</p>
+
+              {/* Category groups */}
+              {[
+                { key: "nvidia-genai", label: "NVIDIA", icon: "🚀", color: "text-purple-400", bgColor: "bg-purple-500/10" },
+                { key: "google-cloud", label: "Google Cloud", icon: "☁️", color: "text-blue-400", bgColor: "bg-blue-500/10" },
+                { key: "microsoft-azure", label: "Microsoft Azure", icon: "📦", color: "text-sky-400", bgColor: "bg-sky-500/10" },
+                { key: "ai-skills", label: "AI Skills", icon: "🧠", color: "text-emerald-400", bgColor: "bg-emerald-500/10" },
+              ].map((group) => {
+                const groupCerts = certifications.filter(c => c.category === group.key);
+                if (groupCerts.length === 0) return null;
+                return (
+                  <div key={group.key} className="mb-3 last:mb-0">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span>{group.icon}</span>
+                      <span className={`text-[11px] font-semibold uppercase tracking-wider ${group.color}`}>{group.label}</span>
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded ${group.bgColor} ${group.color} font-code-sm`}>{groupCerts.length}</span>
+                    </div>
+                    <div className="space-y-1.5">
+                      {groupCerts.map((cert) => (
+                        <div key={cert.title} className="flex items-center gap-2 p-2 bg-white/40 rounded-lg border border-white/60 dark:bg-white/5 dark:border-white/10">
+                          <div className={`w-7 h-7 flex items-center justify-center rounded-lg font-bold text-[10px] border shrink-0 ${cert.cls}`}>{cert.initial}</div>
+                          <div className="min-w-0">
+                            <p className="text-xs font-semibold text-[var(--on-surface)] truncate leading-tight">{cert.title}</p>
+                            <p className="text-[9px] text-[var(--on-surface-variant)]">{cert.org} • {cert.year}</p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                ))}
-              </div>
-              <a href="#certifications" className="text-primary dark:text-[#d0bcff] text-sm font-code-sm hover:underline">
-                View all 22+ certifications →
+                );
+              })}
+
+              <a
+                href="/#certifications"
+                className="mt-4 inline-flex items-center gap-1 text-primary dark:text-[#d0bcff] text-sm font-code-sm hover:underline group"
+              >
+                View all in Skills <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
               </a>
             </motion.div>
 
