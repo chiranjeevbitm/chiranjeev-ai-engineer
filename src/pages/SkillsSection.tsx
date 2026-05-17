@@ -141,13 +141,13 @@ export default function SkillsSection({ onOpenResume }: Props) {
               className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
                 activeCategory === cat.id
                   ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg scale-105'
-                  : 'bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10'
+                  : 'bg-white/5 border border-white/10 text-black dark:text-gray-300 hover:bg-white/10'
               }`}
             >
               <span>{cat.icon}</span>
               <span>{cat.label}</span>
               <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-                activeCategory === cat.id ? 'bg-white/20 text-white' : 'bg-white/10 text-gray-400'
+                activeCategory === cat.id ? 'bg-white/20 text-white' : 'bg-white/10 text-black dark:text-gray-400'
               }`}>
                 {cat.count}
               </span>
