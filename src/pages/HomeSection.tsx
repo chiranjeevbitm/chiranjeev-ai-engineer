@@ -35,7 +35,7 @@ export default function HomeSection({ onNavigate }: Props) {
     <div className="min-h-screen bg-grid-light selection:bg-primary/20 bg-background text-on-background dark:bg-[#131313] relative">
       <AnimatedBlobs />
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col justify-center items-center px-margin-mobile md:px-margin-desktop py-24 overflow-hidden pt-32 snap-start">
+      <section className="relative min-h-screen md:min-h-screen flex flex-col justify-center md:justify-center items-center px-margin-mobile md:px-margin-desktop py-12 md:py-24 overflow-visible md:overflow-hidden pt-24 md:pt-32 snap-start">
         {/* Parallax glow */}
         <motion.div
           className="absolute inset-0 z-[1] opacity-40"
