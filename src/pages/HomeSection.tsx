@@ -122,7 +122,7 @@ export default function HomeSection({ onNavigate }: Props) {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-12"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-0"
           >
             {stats.map((stat, i) => (
               <motion.div
@@ -148,7 +148,7 @@ export default function HomeSection({ onNavigate }: Props) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6 }}
-        className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg snap-start"
+        className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-0 md:py-stack-lg snap-start"
         id="about"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
