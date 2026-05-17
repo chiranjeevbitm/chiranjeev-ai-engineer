@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ExternalLink, Code2, Star, FolderOpen } from "lucide-react";
 import { projects, githubRepos } from "../data/projects";
-
-const repoVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" as const } },
-};
 
 export default function ProjectsSection() {
   const [filter, setFilter] = useState("All Systems");
@@ -26,7 +22,7 @@ export default function ProjectsSection() {
           </div>
           <h1 className="font-headline-xl text-headline-xl text-[var(--on-surface)] mb-stack-sm tracking-tight">Technical Showcase</h1>
           <p className="text-[var(--on-surface-variant)] max-w-2xl font-body-md text-body-md leading-relaxed">
-            Exploring the intersection of Generative AI, RAG architectures, and scalable Data Engineering.
+            From weekend hacks to enterprise production systems — end-to-end AI solutions that solve real problems.
           </p>
         </header>
 
@@ -66,35 +62,62 @@ export default function ProjectsSection() {
               whileHover={{ y: -4 }}
               className="glass-card-light p-stack-md rounded-xl flex flex-col h-full group glow-hover-light"
             >
-              <div className="h-56 w-full rounded-lg overflow-hidden mb-stack-md border border-primary/10 relative dark:border-[#d0bcff]/10">
+              <div className="h-48 w-full rounded-lg overflow-hidden mb-stack-md border border-primary/10 relative dark:border-[#d0bcff]/10">
                 <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-500 z-10 dark:bg-[#d0bcff]/10"></div>
                 {project.image ? (
                   <img src={project.image} alt={project.title}
                     className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[64px] text-primary/40 dark:text-[#d0bcff]/40">folder_open</span>
+                    <FolderOpen className="w-16 h-16 text-primary/40 dark:text-[#d0bcff]/40" />
+                  </div>
+                )}
+                {/* Featured Badge */}
+                {project.featured && (
+                  <div className="absolute top-3 right-3 z-20">
+                    <span className="px-2 py-1 bg-yellow-500/90 text-black text-xs font-semibold rounded-full flex items-center gap-1">
+                      <Star className="w-3 h-3" /> Featured
+                    </span>
                   </div>
                 )}
               </div>
               <div className="flex-grow">
                 <div className="flex items-center justify-between mb-3">
                   <span className="font-code-sm text-code-sm text-primary dark:text-[#d0bcff] bg-primary/10 px-2.5 py-1 rounded-lg border border-primary/20 dark:bg-[#d0bcff]/10 dark:border-[#d0bcff]/20">{project.category}</span>
-                  <span className="material-symbols-outlined text-outline">auto_awesome</span>
+                  <span className="text-xs text-[var(--on-surface-variant)]">{project.tagline}</span>
                 </div>
                 <h3 className="font-headline-lg text-headline-lg text-[var(--on-surface)] mb-2 group-hover:text-primary dark:group-hover:text-[#d0bcff] transition-colors">{project.title}</h3>
                 <p className="text-[var(--on-surface-variant)] font-body-md text-body-md mb-stack-md leading-relaxed">{project.description}</p>
+                
+                {/* Impact Metrics */}
+                {project.impact && project.impact.length > 0 && (
+                  <div className="grid grid-cols-2 gap-3 mb-stack-md p-3 bg-black/20 rounded-lg dark:bg-black/40">
+                    {project.impact.map((item, i) => (
+                      <div key={i}>
+                        <div className="text-sm font-bold text-cyan-400 dark:text-cyan-400">{item.value}</div>
+                        <div className="text-[10px] text-[var(--on-surface-variant)]">{item.metric}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                
                 <div className="flex flex-wrap gap-2 mb-stack-md">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="font-code-sm text-code-sm px-2 py-1 bg-white/5 rounded-lg border border-primary/10 text-[var(--on-surface)] dark:border-[#d0bcff]/10 text-[var(--on-surface)]">{tag}</span>
+                    <span key={tag} className="font-code-sm text-code-sm px-2 py-1 bg-white/5 rounded-lg border border-primary/10 text-[var(--on-surface)] dark:border-[#d0bcff]/10">{tag}</span>
                   ))}
                 </div>
               </div>
               <div className="flex gap-stack-md pt-stack-md border-t border-primary/10 dark:border-[#d0bcff]/10">
                 <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
                   className="flex items-center gap-2 text-primary dark:text-[#d0bcff] font-label-caps text-label-caps hover:brightness-110">
-                  <span className="material-symbols-outlined text-[18px]">code</span> View GitHub
+                  <Code2 className="w-4 h-4" /> View GitHub
                 </a>
+                {project.links.article && (
+                  <a href={project.links.article} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-[var(--on-surface-variant)] font-label-caps text-label-caps hover:text-primary dark:hover:text-[#d0bcff] transition-colors">
+                    <ExternalLink className="w-4 h-4" /> Article
+                  </a>
+                )}
               </div>
             </motion.div>
           ))}
@@ -110,13 +133,13 @@ export default function ProjectsSection() {
         >
           <div className="flex items-center justify-between mb-stack-lg">
             <div className="flex items-center gap-3">
-              <span className="material-symbols-outlined text-primary dark:text-[#d0bcff] text-[32px]">folder_open</span>
+              <FolderOpen className="w-8 h-8 text-primary dark:text-[#d0bcff]" />
               <h2 className="font-headline-lg text-headline-lg text-[var(--on-surface)]">Latest from GitHub</h2>
             </div>
             <a href="https://github.com/chiranjeevbitm" target="_blank" rel="noopener noreferrer"
               className="text-on-surface-variant hover:text-primary dark:hover:text-[#d0bcff] transition-colors flex items-center gap-2 group">
               <span className="font-label-caps text-label-caps">Follow @chiranjeev</span>
-              <span className="material-symbols-outlined text-[18px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">open_in_new</span>
+              <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
           </div>
           <motion.div
@@ -132,13 +155,16 @@ export default function ProjectsSection() {
             {githubRepos.map((repo) => (
               <motion.div
                 key={repo.name}
-                variants={repoVariants}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" as const } },
+                }}
                 whileHover={{ y: -2 }}
                 className="bg-white/5 border border-primary/10 p-stack-md rounded-xl hover:border-primary/50 hover:bg-white/10 transition-all group dark:border-[#d0bcff]/10 dark:hover:border-[#d0bcff]/50"
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="font-code-sm text-code-sm text-primary dark:text-[#d0bcff] font-bold">{repo.name}</span>
-                  <span className="material-symbols-outlined text-primary/40 text-[16px] dark:text-[#d0bcff]/40">star</span>
+                  <Star className="w-4 h-4 text-primary/40 dark:text-[#d0bcff]/40" />
                 </div>
                 <p className="text-[var(--on-surface-variant)] text-body-md text-sm mb-4 line-clamp-2 leading-relaxed">{repo.description}</p>
                 <div className="flex items-center gap-4">
@@ -162,14 +188,21 @@ export default function ProjectsSection() {
         >
           <div className="absolute -top-24 -left-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
           <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
-          <h2 className="font-headline-lg text-headline-lg text-[var(--on-surface)] mb-stack-md tracking-tight">Interested in collaborating?</h2>
+          <h2 className="font-headline-lg text-headline-lg text-[var(--on-surface)] mb-stack-md tracking-tight">Let's Build Something Together</h2>
           <p className="text-[var(--on-surface-variant)] font-body-md text-body-md max-w-xl mx-auto mb-stack-lg leading-relaxed">
-            Currently focusing on Agentic AI and multi-agent systems.
+            Currently focusing on Agentic AI, Multi-Agent Systems, and MCP Architectures. 
+            Open to consulting and collaboration opportunities.
           </p>
-          <a href="mailto:chiranjeev@example.com"
-            className="inline-flex bg-primary dark:bg-[#d0bcff] text-on-primary dark:text-[#3c0091] px-10 py-3.5 rounded-xl font-label-caps text-label-caps items-center gap-2 shadow-xl shadow-primary/20 hover:scale-105 transition-all">
-            <span className="material-symbols-outlined">mail</span> Send an Email
-          </a>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="https://linkedin.com/in/chiranjeev-kumar-07071997" target="_blank" rel="noopener noreferrer"
+              className="inline-flex bg-primary dark:bg-[#d0bcff] text-on-primary dark:text-[#3c0091] px-10 py-3.5 rounded-xl font-label-caps text-label-caps items-center gap-2 shadow-xl shadow-primary/20 hover:scale-105 transition-all">
+              <ExternalLink className="w-4 h-4" /> Connect on LinkedIn
+            </a>
+            <a href="https://github.com/chiranjeevbitm" target="_blank" rel="noopener noreferrer"
+              className="inline-flex bg-white/5 border border-white/10 text-[var(--on-surface)] px-10 py-3.5 rounded-xl font-label-caps text-label-caps items-center gap-2 hover:bg-white/10 hover:scale-105 transition-all">
+              <Code2 className="w-4 h-4" /> View GitHub Profile
+            </a>
+          </div>
         </motion.section>
       </main>
     </div>
