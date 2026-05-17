@@ -42,6 +42,30 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 0.5s ease, color 0.3s ease;
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+  }
+
+  /* Minimum touch target size (Apple/Google HIG) */
+  button, a, .btn, [role="button"], input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Remove tap highlight on mobile */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent text selection on interactive */
+  button, a, .btn, [role="button"] {
+    user-select: none;
+  }
+
+  /* Responsive images */
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
@@ -121,5 +145,31 @@
   .snap-y::-webkit-scrollbar-thumb {
     background: #94a3b8;
     border-radius: 3px;
+  }
+}
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .motion-div, [class*="animate-"], [class*="motion-"] {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Small mobile adjustments (320px - 480px) */
+@media (max-width: 480px) {
+  .glass-card-light {
+    padding: 1rem;
+  }
+
+  .pt-28, .pt-32 {
+    padding-top: 4.5rem;
   }
 }

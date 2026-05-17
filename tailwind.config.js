@@ -53,20 +53,20 @@ export default {
         "headline-xl": ["Inter", "sans-serif"],
       },
       fontSize: {
-        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
-        "code-sm": ["14px", { lineHeight: "20px", fontWeight: "450" }],
+        "body-md": ["clamp(0.875rem, 2vw, 1rem)", { lineHeight: "1.5", fontWeight: "400" }],
+        "code-sm": ["clamp(0.75rem, 1.5vw, 0.875rem)", { lineHeight: "1.4", fontWeight: "450" }],
         "headline-lg": [
-          "32px",
-          { lineHeight: "40px", letterSpacing: "-0.01em", fontWeight: "600" },
+          "clamp(1.35rem, 3.5vw, 2rem)",
+          { lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "600" },
         ],
-        "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "600" }],
+        "headline-lg-mobile": ["clamp(1.25rem, 4vw, 1.75rem)", { lineHeight: "1.25", fontWeight: "600" }],
         "label-caps": [
-          "12px",
-          { lineHeight: "16px", letterSpacing: "0.1em", fontWeight: "600" },
+          "clamp(0.6875rem, 1.5vw, 0.75rem)",
+          { lineHeight: "1.3", letterSpacing: "0.1em", fontWeight: "600" },
         ],
         "headline-xl": [
-          "48px",
-          { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" },
+          "clamp(1.75rem, 4.5vw, 3rem)",
+          { lineHeight: "1.15", letterSpacing: "-0.02em", fontWeight: "700" },
         ],
       },
       animation: {
