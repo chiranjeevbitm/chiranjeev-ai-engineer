@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Award, BookOpen, Code2, Users, Zap, ExternalLink, ChevronDown } from "lucide-react";
+import { Award, BookOpen, Code2, Users, Zap, ExternalLink } from "lucide-react";
 import CodeBlock from "../components/CodeBlock";
 import AIStatusBar from "../components/AIStatusBar";
 import AnimatedBlobs from "../components/AnimatedBlobs";
@@ -139,14 +139,6 @@ export default function HomeSection({ onNavigate }: Props) {
             ))}
           </motion.div>
 
-          {/* Scroll indicator */}
-          <motion.div
-            className="mt-8 animate-bounce"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          >
-            <ChevronDown className="w-8 h-8 text-[var(--on-surface-variant)]/40 mx-auto" />
-          </motion.div>
         </div>
       </section>
 
