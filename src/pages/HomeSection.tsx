@@ -148,7 +148,7 @@ export default function HomeSection({ onNavigate }: Props) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6 }}
-        className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-0 md:py-stack-lg snap-start"
+        className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-stack-lg snap-start"
         id="about"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
