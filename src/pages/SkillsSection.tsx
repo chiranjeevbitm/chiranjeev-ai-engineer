@@ -273,7 +273,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-gutter">
               {[
                 { platform: "LinkedIn", followers: "1,900+", metric: "Followers", href: "https://linkedin.com/in/chiranjeev-kumar-07071997", color: "text-blue-400" },
-                { platform: "Kaggle", followers: "Top 0.5%", metric: "Rank (1029/225K)", href: "https://kaggle.com/chiranjeev", color: "text-cyan-400" },
+                { platform: "Kaggle", followers: "Top 0.5%", metric: "Rank (1029/225K)", href: "https://kaggle.com/chiranjeevbit", color: "text-cyan-400" },
                 { platform: "GitHub", followers: "Open Source", metric: "Projects & Contributions", href: "https://github.com/chiranjeevbitm", color: "text-white" },
                 { platform: "LinkedIn Articles", followers: "3.5K+", metric: "Total Impressions", href: "https://linkedin.com/in/chiranjeev-kumar-07071997", color: "text-blue-400" },
               ].map((item) => (
