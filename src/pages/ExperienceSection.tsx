@@ -101,7 +101,7 @@ export default function ExperienceSection() {
       platform: "Medium",
       impressions: "351",
       date: "2025",
-      link: "https://medium.com/@chiranjeev",
+      link: "https://medium.com/@chiranjeevkumar47",
     },
   ];
 

@@ -5,7 +5,7 @@ export default function Footer() {
     { label: "LinkedIn", href: "https://linkedin.com/in/chiranjeev-kumar-07071997", followers: "1.9K+" },
     { label: "GitHub", href: "https://github.com/chiranjeevbitm", followers: "Open Source" },
     { label: "Kaggle", href: "https://kaggle.com/chiranjeev", followers: "Top 0.5%" },
-    { label: "Medium", href: "https://medium.com/@chiranjeev", followers: "Blog" },
+    { label: "Medium", href: "https://medium.com/@chiranjeevkumar47", followers: "Blog" },
     { label: "Email", href: "mailto:chiranjeev@example.com", followers: "Contact" },
   ];
 
