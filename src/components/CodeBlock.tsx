@@ -49,6 +49,83 @@ export default function CodeBlock() {
     }, 15);
   };
 
+  const tokenize = (code: string) => {
+    const tokens: { text: string; color: string }[] = [];
+    let i = 0;
+    while (i < code.length) {
+      if (code[i] === "\n") {
+        tokens.push({ text: "\n", color: "transparent" });
+        i++;
+        continue;
+      }
+      if (code[i] === " ") {
+        tokens.push({ text: " ", color: "var(--text-muted)" });
+        i++;
+        continue;
+      }
+      // Keywords
+      if (/^(const|let|var|return|export|default|function)/.test(code.slice(i))) {
+        const match = code.slice(i).match(/^(const|let|var|return|export|default|function)/)![0];
+        tokens.push({ text: match, color: "#c084fc" });
+        i += match.length;
+        continue;
+      }
+      // Numbers
+      if (/[0-9]/.test(code[i])) {
+        let num = "";
+        while (i < code.length && /[0-9]/.test(code[i])) { num += code[i]; i++; }
+        tokens.push({ text: num, color: "#f59e0b" });
+        continue;
+      }
+      // String literals
+      if (code[i] === '"' || code[i] === "'" || code[i] === "`") {
+        const quote = code[i];
+        let str = quote;
+        i++;
+        while (i < code.length && code[i] !== quote) { str += code[i]; i++; }
+        if (i < code.length) { str += code[i]; i++; }
+        tokens.push({ text: str, color: "#10b981" });
+        continue;
+      }
+      // Property access (word after dot)
+      if (code[i] === ".") {
+        let dot = ".";
+        i++;
+        while (i < code.length && /[a-zA-Z]/.test(code[i])) {
+          // Check if it's a keyword like "split", "map", etc.
+          dot += code[i]; i++;
+        }
+        tokens.push({ text: dot, color: "#60a5fa" });
+        continue;
+      }
+      // Comments
+      if (code[i] === "/" && code[i+1] === "/") {
+        let comment = "";
+        while (i < code.length && code[i] !== "\n") { comment += code[i]; i++; }
+        tokens.push({ text: comment, color: "#6b7280" });
+        continue;
+      }
+      // Punctuation
+      if (/[{}(),;:[\]<>]/.test(code[i])) {
+        tokens.push({ text: code[i], color: "var(--text)" });
+        i++;
+        continue;
+      }
+      // Default: word characters
+      let word = "";
+      while (i < code.length && /[a-zA-Z_]/.test(code[i])) { word += code[i]; i++; }
+      if (word) {
+        tokens.push({ text: word, color: word === "name" || word === "role" || word === "languages" || word === "expertise" || word === "experience" || word === "passion" ? "#7dd3fc" : "var(--text-muted)" });
+        continue;
+      }
+      // Fallback
+      tokens.push({ text: code[i], color: "var(--text-muted)" });
+      i++;
+    }
+    return tokens;
+  };
+
+  const allTokens = tokenize(codeSnippet);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -65,41 +142,46 @@ export default function CodeBlock() {
       </div>
 
       {/* Code content */}
-      <div className="p-4 font-code-sm text-sm leading-relaxed overflow-x-auto select-none bg-[var(--bg-surface)]">
-        <pre className="whitespace-pre">
-          {codeSnippet
-            .split("")
-            .slice(0, displayed)
-            .map((char, i) => {
-              // Colorize based on content
-              let color = "var(--text-muted)";
-              if (/["'`:;,{}]/.test(char)) color = "var(--text)";
-              if (/[0-9]/.test(char)) color = "#f59e0b";
-              if (char === ">" || char === "5") color = "#10b981";
-              if (char === '"' || char === "'") color = "#f59e0b";
-              if (/[a-zA-Z]/.test(char) && i > 0 && codeSnippet[i - 1] === ".") color = "#60a5fa";
-
-              return (
-                <span key={i} style={{ color }}>
-                  {char === "\n" ? "\n" : char}
-                </span>
-              );
-            })}
-          {!completed && (
-            <motion.span
-              animate={{ opacity: [1, 0] }}
-              transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-              className="inline-block w-[2px] h-4 bg-[var(--accent)] ml-0.5 align-middle"
-            />
-          )}
-          {completed && (
-            <motion.button
-              onClick={handleReplay}
-              className="ml-2 text-[10px] px-2 py-0.5 rounded bg-[var(--bg)] text-[var(--text-muted)] border border-[var(--border)] hover:text-[var(--accent)] transition-colors align-middle"
-            >
-              ↻ replay
-            </motion.button>
-          )}
+      <div className="p-4 font-code-sm text-sm leading-relaxed overflow-x-auto select-none bg-[var(--bg-surface)] min-h-[200px]">
+        <pre className="whitespace-pre-wrap break-all font-code-sm text-sm leading-relaxed m-0">
+          <code>
+            {completed ? (
+              // Full rendered code with proper syntax highlighting
+              allTokens.map((token, i) => (
+                <span key={i} style={{ color: token.color }}>{token.text}</span>
+              ))
+            ) : (
+              // Character-by-character typing animation
+              codeSnippet.split("").slice(0, displayed).map((char, i) => {
+                let color = "var(--text-muted)";
+                if (/["'`:;,{}]/.test(char)) color = "var(--text)";
+                if (/[0-9]/.test(char)) color = "#f59e0b";
+                if (char === '"' || char === "'") color = "#f59e0b";
+                return (
+                  <span key={i} style={{ color }}>
+                    {char === "\n" ? "\n" : char}
+                  </span>
+                );
+              })
+            )}
+            {!completed && (
+              <motion.span
+                animate={{ opacity: [1, 0] }}
+                transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+                className="inline-block w-[2px] h-4 bg-[var(--accent)] ml-0.5 align-middle"
+              />
+            )}
+            {completed && (
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                onClick={handleReplay}
+                className="ml-2 text-[10px] px-2 py-0.5 rounded bg-[var(--bg)] text-[var(--text-muted)] border border-[var(--border)] hover:text-[var(--accent)] transition-colors align-middle"
+              >
+                ↻ replay
+              </motion.button>
+            )}
+          </code>
         </pre>
       </div>
     </motion.div>
