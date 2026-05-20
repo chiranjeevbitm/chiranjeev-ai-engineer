@@ -23,6 +23,28 @@ export interface GitHubRepo {
 
 export const projects: Project[] = [
   {
+    id: "sitamarhi-health",
+    title: "Sitamarhi Health Portal",
+    tagline: "Full-Stack Healthcare Dashboard & Community Health Platform",
+    description:
+      "A comprehensive healthcare portal for Sitamarhi, Bihar, featuring a medical dashboard with real-time health metrics, patient management, resource tracking, and community health initiatives. Built with modern web technologies and deployed on Vercel for scalable access across the region.",
+    category: "Data Engineering",
+    tags: ["Healthcare", "Dashboard", "React", "Data Visualization", "Community Health"],
+    githubUrl: "https://github.com/chiranjeevbitm/sitamarhi-health--portal",
+    image: "/images/medical-dashboard.png",
+    featured: true,
+    impact: [
+      { metric: "Domain", value: "Healthcare" },
+      { metric: "Platform", value: "Vercel" },
+      { metric: "Stack", value: "Full-Stack" },
+      { metric: "Focus", value: "Community Health" }
+    ],
+    links: {
+      demo: "https://sitamarhi-health-portal.vercel.app/",
+      github: "https://github.com/chiranjeevbitm/sitamarhi-health--portal"
+    }
+  },
+  {
     id: "shikshak",
     title: "Shikshak Sahayak (शिक्षक सहायक)",
     tagline: "AI-Powered Teacher Assistant for 400K+ BSEB Teachers",
