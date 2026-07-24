@@ -91,6 +91,38 @@ export default function Experience() {
                           check_circle
                         </span>
                         <p className="text-on-surface">
+                          Led end-to-end delivery of production-grade GenAI systems handling enterprise-scale workloads with microservices orchestration (Postgres, Redis, RabbitMQ, Azure Service Bus).
+                        </p>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="material-symbols-outlined text-primary text-[18px] shrink-0">
+                          check_circle
+                        </span>
+                        <p className="text-on-surface">
+                          Designed hexagonal architecture for maximum portability — zero-code migration across cloud environments via dependency injection and env swaps.
+                        </p>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="material-symbols-outlined text-primary text-[18px] shrink-0">
+                          check_circle
+                        </span>
+                        <p className="text-on-surface">
+                          Managed cross-functional teams as technical lead, coordinating architects, domain experts, and platform engineers to ship production releases.
+                        </p>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="material-symbols-outlined text-primary text-[18px] shrink-0">
+                          check_circle
+                        </span>
+                        <p className="text-on-surface">
+                          Established engineering best practices: import boundary enforcement via CI tests, stateless workers for horizontal scaling, and exactly-once semantics on at-least-once transport.
+                        </p>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="material-symbols-outlined text-primary text-[18px] shrink-0">
+                          check_circle
+                        </span>
+                        <p className="text-on-surface">
                           Implemented enterprise proposal generation system utilizing content extraction, chunking, and Azure AI Search.
                         </p>
                       </li>
