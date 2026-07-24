@@ -75,8 +75,23 @@ export default function Experience() {
                           check_circle
                         </span>
                         <p className="text-on-surface">
-                          Implemented enterprise proposal generation system utilizing
-                          content extraction, chunking, and Azure AI Search.
+                          Built Copilot Core SDK — production-grade async multi-tenant engine with OPEV loop, Kahn's-algorithm scheduler, and Lossless Context Management.
+                        </p>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="material-symbols-outlined text-primary text-[18px] shrink-0">
+                          check_circle
+                        </span>
+                        <p className="text-on-surface">
+                          Delivered Revit Copilot Agent — first production use case: AI copilot inside Autodesk Revit with Apply-then-Review safety workflow.
+                        </p>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="material-symbols-outlined text-primary text-[18px] shrink-0">
+                          check_circle
+                        </span>
+                        <p className="text-on-surface">
+                          Implemented enterprise proposal generation system utilizing content extraction, chunking, and Azure AI Search.
                         </p>
                       </li>
                     </ul>

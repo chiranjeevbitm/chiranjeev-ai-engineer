@@ -234,6 +234,69 @@ export const projects: Project[] = [
     links: {
       github: "https://github.com/chiranjeevbitm/Doctors-Profile"
     }
+  },
+  {
+    id: "copilot-core-sdk",
+    title: "Copilot Core SDK",
+    tagline: "Production-Grade Async Multi-Tenant AI Copilot Engine",
+    description:
+      "A production-grade, async, multi-tenant engine for building AI copilots. You bring tools + domain context; it provides the reasoning loop, orchestration, and serving fabric. Features the OPEV loop of typed decisions (Observe→Plan→Execute→Validate), verified_by clause eliminating hallucinated 'done' verdicts, Kahn's-algorithm scheduler for safe parallel execution (~2x faster), Lossless Context Management with append-only immutable log, and Agent-as-a-service with stateless workers on a message bus. Deployed as process roles — gateway / orchestrator / worker. Built with Postgres, Redis, RabbitMQ/Azure Service Bus with hexagonal ports for zero-code Azure migration.",
+    category: "GenAI",
+    tags: ["Agentic AI", "Multi-Tenant", "OPEV Loop", "Kahn's Algorithm", "Azure", "Redis", "Postgres", "RabbitMQ"],
+    githubUrl: "https://github.com/chiranjeevbitm/copilot-core-sdk",
+    image: "/images/custom built copilot.png",
+    featured: true,
+    impact: [
+      { metric: "Architecture", value: "OPEV Loop" },
+      { metric: "Scheduler", value: "Kahn's Algorithm" },
+      { metric: "Context", value: "Lossless LM" },
+      { metric: "Deployment", value: "Gateway/Orch/Worker" }
+    ],
+    links: {
+      github: "https://github.com/chiranjeevbitm/copilot-core-sdk"
+    }
+  },
+  {
+    id: "revit-copilot-agent",
+    title: "Revit Copilot Agent",
+    tagline: "AI Copilot Inside Autodesk Revit — First Production Use Case",
+    description:
+      "The Copilot platform inside Autodesk Revit — the same chat UI docked in a pyRevit pane, plus an agent whose tools execute real IronPython on the live model. Features two universal primitives: revit_search_api (live .NET reflection = ground truth, no hallucinated members) and revit_run_script (agent-authored IronPython in one transaction with rollback). Includes Apply-then-Review (Keep/Undo) workflow with change ledger, WebSocket bridge (port 9100) with command_id correlation, identity end-to-end via gateway JWT, and deterministic trace engine for high-stakes fabrication tracing. Supports 500 developers via Redis presence registry.",
+    category: "GenAI",
+    tags: ["Revit", "Agentic AI", "IronPython", "WebSocket", "pyRevit", "BIM", "Autodesk"],
+    githubUrl: "https://github.com/chiranjeevbitm/revit-copilot-agent",
+    image: "/images/revit copilot agent.png",
+    featured: true,
+    impact: [
+      { metric: "Platform", value: "Autodesk Revit" },
+      { metric: "Safety", value: "Apply-then-Review" },
+      { metric: "Scale", value: "500 Developers" },
+      { metric: "Bridge", value: "WebSocket Port 9100" }
+    ],
+    links: {
+      github: "https://github.com/chiranjeevbitm/revit-copilot-agent"
+    }
+  },
+  {
+    id: "ai-tracing-platform",
+    title: "AI-Tracing Platform",
+    tagline: "Generic AI-Agent Platform + Production Revit Copilot",
+    description:
+      "The 30-second picture: one generic AI-agent platform (copilot-sdk/) plus one real production use case (revit-agent/) built on top of it. The core design creed: the SDK is a generic core; domain knowledge lives only in tools and context providers, and the core never changes. Features two separate WebSocket channels — Chat channel (browser/WebView2 UI → Gateway /ws/chat) and Bridge channel (pyRevit plugin → revit-agent's Bridge ws://:9100). Includes AI Tracing with one trace_id riding the bus across gateway + orchestrator + every worker for a single MLflow waterfall and billing-grade usage ledger.",
+    category: "GenAI",
+    tags: ["Agentic AI", "Multi-Agent", "Orchestration", "Revit", "Azure", "Tracing", "MLflow"],
+    githubUrl: "https://github.com/chiranjeevbitm/ai-tracing-platform",
+    image: "/images/overall project.jpeg",
+    featured: true,
+    impact: [
+      { metric: "Architecture", value: "Generic Core + Domain" },
+      { metric: "Channels", value: "Chat + Bridge WS" },
+      { metric: "Tracing", value: "End-to-End MLflow" },
+      { metric: "Portability", value: "Zero Code Change" }
+    ],
+    links: {
+      github: "https://github.com/chiranjeevbitm/ai-tracing-platform"
+    }
   }
 ];
 

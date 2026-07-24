@@ -31,6 +31,9 @@ export default function ExperienceSection() {
       highlights: [
         'Architected NLQ-to-SQL agent in Dataiku for natural language enterprise querying.',
         "Led incubator GenAI COE projects: RAG, multi-agent frameworks, MCP across Azure & AWS.",
+        "Built Copilot Core SDK — production-grade async multi-tenant engine with OPEV loop, Kahn's-algorithm scheduler, and Lossless Context Management.",
+        "Delivered Revit Copilot Agent — first production use case: AI copilot inside Autodesk Revit with Apply-then-Review safety workflow.",
+        "Architected AI-Tracing Platform — generic agent platform + domain adapter pattern enabling zero-code Azure migration.",
         "Implemented enterprise proposal system with Azure AI Search.",
         "Received Outstanding Performance Award for GenAI contributions.",
       ],
