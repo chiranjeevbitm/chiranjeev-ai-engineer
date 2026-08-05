@@ -237,20 +237,20 @@ export const projects: Project[] = [
   },
   {
     id: "doctor-appointment-form",
-    title: "Doctor Appointment Form",
-    tagline: "Streamlined Doctor Appointment Booking System",
+    title: "Arogya Clinic — Prescription Management",
+    tagline: "Full-Stack Digital Prescription Platform for Dr. Deepak Kumar MD",
     description:
-      "A clean, responsive doctor appointment booking form with patient information collection, appointment scheduling, and confirmation workflow. Built with modern web technologies and deployed on Vercel for fast, reliable access.",
+      "A production-grade digital prescription management platform for Arogya Clinic (Dr. Deepak Kumar MD, General Medicine). Features a React 19 + Vite 7 frontend with a complete clinical form — patient demographics, vitals, physical & systemic exams, comorbidities with expandable detail drawers, quick-fill diagnosis chips, and a prescription table with unlimited medications. Backend built with FastAPI + PostgreSQL with bcrypt authentication, PMBJP drug catalog search, and full CRUD APIs. Includes an A4 print view that exactly mirrors the paper prescription format with Hindi letterhead, diet routine graphic, and doctor signature block, plus a patient dashboard with real-time stats and search.",
     category: "Data Engineering",
-    tags: ["React", "Appointment Booking", "Healthcare", "Form", "Vercel"],
+    tags: ["React", "FastAPI", "PostgreSQL", "Healthcare", "Prescription", "Vite", "Full-Stack"],
     githubUrl: "https://github.com/chiranjeevbitm/DoctorAppointmentForm",
     image: "/images/doctor-appointment-form.png",
     featured: false,
     impact: [
-      { metric: "Domain", value: "Healthcare" },
-      { metric: "Platform", value: "Vercel" },
-      { metric: "Type", value: "Appointment Booking" },
-      { metric: "Stack", value: "React" }
+      { metric: "Frontend", value: "React 19 + Vite 7" },
+      { metric: "Backend", value: "FastAPI + PostgreSQL" },
+      { metric: "Auth", value: "bcrypt" },
+      { metric: "Deployment", value: "Vercel + Render" }
     ],
     links: {
       demo: "https://drdeepak-appointment-form.vercel.app/",
