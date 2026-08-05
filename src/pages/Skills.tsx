@@ -184,8 +184,10 @@ export default function Skills() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
             {[
-              { company: "Deloitte", title: "Applause Award", desc: "For training enablement and knowledge-sharing in GenAI." },
-              { company: "Deloitte", title: "Outstanding Performance", desc: "Technical contributions to the Client GenAI RFP project." },
+              { company: "Deloitte", title: "Applause Award 2026", desc: "Deloitte recognition for exceptional client impact." },
+              { company: "Deloitte", title: "Outstanding Performance 2025", desc: "Top performer designation for GenAI contributions." },
+              { company: "Deloitte", title: "Best Performer 2025", desc: "Recognized for outstanding delivery and impact." },
+              { company: "Deloitte", title: "Hackathon 1st Prize", desc: "Consultant-Level Bangalore Hackathon (team)." },
               { company: "Tredence Inc.", title: "Pat on the Back", desc: "Recognition for excellence in Catalog Normalization automation." },
             ].map((award) => (
               <div
@@ -211,7 +213,11 @@ export default function Skills() {
           </h2>
           <div className="flex flex-wrap gap-stack-md">
             {[
-              "NVIDIA Agentic AI",
+              "Claude Certified Architect (Anthropic)",
+              "Claude Certified Associate (Anthropic)",
+              "NVIDIA Certified Professional — Agentic AI",
+              "NVIDIA Certified Associate — GenAI LLMs",
+              "NVIDIA Certified Associate — GenAI Multimodal",
               "Azure Data Scientist",
               "Dataiku GenAI Practitioner",
               "Google GenAI For Leaders",

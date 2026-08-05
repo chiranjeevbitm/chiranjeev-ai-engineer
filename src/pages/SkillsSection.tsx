@@ -28,12 +28,12 @@ export default function SkillsSection({ onOpenResume }: Props) {
   });
 
   const skillCategories = [
-    { id: 'genai' as SkillCategory, label: 'GenAI & LLMs', icon: '🤖', count: 8 },
-    { id: 'mlai' as SkillCategory, label: 'ML & AI', icon: '🧠', count: 7 },
-    { id: 'cloud' as SkillCategory, label: 'Cloud & Infra', icon: '☁️', count: 7 },
-    { id: 'data' as SkillCategory, label: 'Data & DB', icon: '💾', count: 6 },
-    { id: 'frameworks' as SkillCategory, label: 'Frameworks', icon: '⚙️', count: 7 },
-    { id: 'soft' as SkillCategory, label: 'Leadership', icon: '👥', count: 6 },
+    { id: 'genai' as SkillCategory, label: 'GenAI & LLMs', icon: '🤖', count: 10 },
+    { id: 'mlai' as SkillCategory, label: 'ML & AI', icon: '🧠', count: 9 },
+    { id: 'cloud' as SkillCategory, label: 'Cloud & Infra', icon: '☁️', count: 9 },
+    { id: 'data' as SkillCategory, label: 'Data & DB', icon: '💾', count: 8 },
+    { id: 'frameworks' as SkillCategory, label: 'Frameworks', icon: '⚙️', count: 9 },
+    { id: 'soft' as SkillCategory, label: 'Leadership', icon: '👥', count: 8 },
   ];
 
   const allSkills: Skill[] = [
@@ -43,9 +43,11 @@ export default function SkillsSection({ onOpenResume }: Props) {
     { name: 'RAG Pipelines', level: 5, category: 'genai' },
     { name: 'LLM Guardrails', level: 5, category: 'genai' },
     { name: 'Prompt Engineering', level: 5, category: 'genai' },
-    { name: 'MCP (Model Context Protocol)', level: 4, category: 'genai' },
+    { name: 'MCP (Model Context Protocol)', level: 5, category: 'genai' },
     { name: 'Agent Ops', level: 4, category: 'genai' },
-    { name: 'Physical AI', level: 3, category: 'genai' },
+    { name: 'Physical AI', level: 4, category: 'genai' },
+    { name: 'Fine-tuning', level: 4, category: 'genai' },
+    { name: 'OPEV Loop Architecture', level: 5, category: 'genai' },
     // ML & AI
     { name: 'Deep Learning', level: 5, category: 'mlai' },
     { name: 'Transfer Learning', level: 5, category: 'mlai' },
@@ -54,11 +56,15 @@ export default function SkillsSection({ onOpenResume }: Props) {
     { name: 'Scikit-Learn', level: 5, category: 'mlai' },
     { name: 'PyTorch', level: 4, category: 'mlai' },
     { name: 'TensorFlow/Keras', level: 4, category: 'mlai' },
+    { name: 'Imitation Learning', level: 4, category: 'mlai' },
+    { name: 'Policy Training', level: 4, category: 'mlai' },
     // Cloud & Infrastructure
     { name: 'Azure OpenAI', level: 5, category: 'cloud' },
     { name: 'Azure AI Studio', level: 5, category: 'cloud' },
+    { name: 'Azure AI Search', level: 5, category: 'cloud' },
     { name: 'AWS Bedrock', level: 3, category: 'cloud' },
     { name: 'NVIDIA DGX', level: 4, category: 'cloud' },
+    { name: 'NVIDIA Isaac Sim', level: 3, category: 'cloud' },
     { name: 'Kubernetes', level: 3, category: 'cloud' },
     { name: 'Docker', level: 4, category: 'cloud' },
     { name: 'Azure Databricks', level: 4, category: 'cloud' },
@@ -69,6 +75,8 @@ export default function SkillsSection({ onOpenResume }: Props) {
     { name: 'PostgreSQL', level: 4, category: 'data' },
     { name: 'SQL', level: 5, category: 'data' },
     { name: 'Pandas/NumPy', level: 5, category: 'data' },
+    { name: 'Redis', level: 4, category: 'data' },
+    { name: 'RabbitMQ / Azure Service Bus', level: 4, category: 'data' },
     // Frameworks & Tools
     { name: 'LangChain', level: 5, category: 'frameworks' },
     { name: 'LangGraph', level: 5, category: 'frameworks' },
@@ -77,6 +85,8 @@ export default function SkillsSection({ onOpenResume }: Props) {
     { name: 'Streamlit/Gradio', level: 4, category: 'frameworks' },
     { name: 'Python', level: 5, category: 'frameworks' },
     { name: 'Git/GitHub', level: 5, category: 'frameworks' },
+    { name: 'LeRobot (Hugging Face)', level: 4, category: 'frameworks' },
+    { name: 'MLflow', level: 4, category: 'frameworks' },
     // Soft Skills
     { name: 'Team Leadership', level: 4, category: 'soft' },
     { name: 'Stakeholder Management', level: 4, category: 'soft' },
@@ -84,6 +94,8 @@ export default function SkillsSection({ onOpenResume }: Props) {
     { name: 'System Design', level: 4, category: 'soft' },
     { name: 'Agile/Scrum', level: 4, category: 'soft' },
     { name: 'Production Deployment', level: 5, category: 'soft' },
+    { name: 'Cross-functional Coordination', level: 5, category: 'soft' },
+    { name: 'Training & Enablement', level: 5, category: 'soft' },
   ];
 
   const filteredSkills = allSkills.filter(s => s.category === activeCategory);
@@ -279,8 +291,10 @@ export default function SkillsSection({ onOpenResume }: Props) {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
             {[
-              { company: "Deloitte", title: "Outstanding Performance Award", desc: "For technical contributions to Client GenAI RFP project.", icon: "🏆" },
-              { company: "Deloitte", title: "Applause Award", desc: "For training enablement and knowledge-sharing in GenAI.", icon: "👏" },
+              { company: "Deloitte", title: "Applause Award 2026", desc: "Deloitte recognition for exceptional client impact.", icon: "👏" },
+              { company: "Deloitte", title: "Outstanding Performance Award 2025", desc: "Top performer designation for GenAI contributions.", icon: "🏆" },
+              { company: "Deloitte", title: "Best Performer Award 2025", desc: "Recognized for outstanding delivery and impact.", icon: "🥇" },
+              { company: "Deloitte", title: "Consultant-Level Bangalore Hackathon", desc: "1st Prize (team) for innovative AI solution.", icon: "🏅" },
               { company: "Tredence Inc.", title: "Pat on the Back Award", desc: "Recognition for excellence in Catalog Normalization automation.", icon: "🎖️" },
             ].map((a, i) => (
               <motion.div

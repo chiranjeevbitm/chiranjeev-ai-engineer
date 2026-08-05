@@ -27,19 +27,19 @@ export default function ExperienceSection() {
       textColor: "text-primary",
       logo: "D",
       featured:
-        "Client GenAI RFP project contributing to ~$1M initial scope. Delivered production-ready Agentic AI solutions reducing proposal turnaround from 4 weeks to 2 weeks.",
+        "Client GenAI RFP project contributing to ~$1M initial scope. Delivered production-ready Agentic AI solutions reducing proposal turnaround from 4 weeks to 2 weeks. $5M+ pipeline opportunity forecast across GBUs.",
       highlights: [
-        'Architected NLQ-to-SQL agent in Dataiku for natural language enterprise querying.',
-        "Led incubator GenAI COE projects: RAG, multi-agent frameworks, MCP across Azure & AWS.",
-        "Built Copilot Core SDK — production-grade async multi-tenant engine with OPEV loop, Kahn's-algorithm scheduler, and Lossless Context Management.",
-        "Delivered Revit Copilot Agent — first production use case: AI copilot inside Autodesk Revit with Apply-then-Review safety workflow.",
-        "Architected AI-Tracing Platform — generic agent platform + domain adapter pattern enabling zero-code Azure migration.",
-        "Implemented enterprise proposal system with Azure AI Search.",
-        "Led end-to-end delivery of production-grade GenAI systems handling enterprise-scale workloads with microservices orchestration (Postgres, Redis, RabbitMQ, Azure Service Bus).",
-        "Designed hexagonal architecture for maximum portability — zero-code migration across cloud environments via dependency injection and env swaps.",
-        "Managed cross-functional teams as technical lead, coordinating between architects, domain experts, and platform engineers to ship production releases.",
-        "Established engineering best practices: import boundary enforcement via CI tests, stateless workers for horizontal scaling, and exactly-once semantics on at-least-once transport.",
-        "Received Outstanding Performance Award for GenAI contributions.",
+        "Led the GenAI COE Incubator — built multiple POCs and production pipelines across RAG, multi-agent frameworks, and MCP (server/client) deployments on Azure, NVIDIA DGX, and AWS.",
+        "Architected an RFP Automation System end-to-end: content extraction → chunking → vector indexing → Azure OpenAI inference → Azure AI Search, powering enterprise proposal generation and similarity-based retrieval.",
+        "Developed an NLQ-to-SQL Multi-Agentic System enabling business users to query enterprise databases in plain English — with automated evaluation metrics (SQL correctness, latency) and output visualizations integrated into Dataiku Flow.",
+        "Managed full production lifecycle: model/version management, prompt versioning, Azure Monitor / Insights, and incident escalation — improving response stability for GenAI apps at scale.",
+        "Conducted multi-agent & RAG training for 233 AI practitioners across the organization.",
+        "Built Copilot Core SDK — production-grade async multi-tenant engine with OPEV loop, Kahn's-algorithm scheduler, Lossless Context Management, and Agent-as-a-service on a message bus.",
+        "Deployed the SDK as a live AI Copilot inside Autodesk Revit — serving 500+ developers on real BIM models with Apply-then-Review safety workflow and WebSocket bridge.",
+        "Built AI-Tracing Platform — single trace_id riding the message bus across gateway + orchestrator + every worker for a complete MLflow waterfall per request plus billing-grade usage ledger.",
+        "Currently exploring Physical AI & Robotics — running imitation learning and policy training pipelines with LeRobot (Hugging Face) on physical robotic arms (SO-100, Koch v1.1).",
+        "Investigating NVIDIA Isaac Sim for photorealistic sim-to-real transfer and synthetic data generation.",
+        "Received Outstanding Performance Award 2025, Applause Award 2026, and Best Performer Award 2025.",
       ],
     },
     {
@@ -223,7 +223,7 @@ export default function ExperienceSection() {
 
               {/* Featured Certification */}
               {(() => {
-                const featured = certifications.find(c => c.title === "Certified Agentic AI") || certifications[0];
+                const featured = certifications.find(c => c.title === "NVIDIA Certified Professional — Agentic AI") || certifications[0];
                 const Card = featured.link ? 'a' : 'div';
                 const cardProps = featured.link ? { href: featured.link, target: "_blank", rel: "noopener noreferrer" } : {};
                 return (

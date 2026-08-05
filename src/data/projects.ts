@@ -338,10 +338,14 @@ export interface Certification {
 }
 
 export const certifications: Certification[] = [
+  // Anthropic - Claude Certifications
+  { initial: "C", title: "Claude Certified Architect – Foundations", org: "Anthropic", year: "2026", cls: "bg-orange-500/10 text-orange-400 border-orange-500/20", category: "ai-skills", link: "https://lnkd.in/dz7HWYDb" },
+  { initial: "C", title: "Claude Certified Associate – Foundations", org: "Anthropic", year: "2026", cls: "bg-orange-500/10 text-orange-400 border-orange-500/20", category: "ai-skills", link: "https://lnkd.in/dHEyJaUe" },
+
   // NVIDIA - Enterprise GPU & AI
-  { initial: "N", title: "Certified Agentic AI", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai", link: "https://www.linkedin.com/in/chiranjeev-kumar-07071997/overlay/Certifications/44238080/treasury?profileId=ACoAACQphUUB5mPzUPWuC613M212Ym5BXWG3qV8" },
-  { initial: "N", title: "GenAI Multimodal Associate", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai", link: "https://www.credly.com/badges/963eff76-3eba-4a9e-8be4-449651f12efe" },
-  { initial: "N", title: "GenAI LLMs Associate", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai", link: "https://www.credly.com/badges/c0bf9eca-9f56-4167-8b94-2a6b206cb1f3/public_url" },
+  { initial: "N", title: "NVIDIA Certified Professional — Agentic AI", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai", link: "https://www.linkedin.com/in/chiranjeev-kumar-07071997/overlay/Certifications/44238080/treasury?profileId=ACoAACQphUUB5mPzUPWuC613M212Ym5BXWG3qV8" },
+  { initial: "N", title: "NVIDIA Certified Associate — GenAI Multimodal", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai", link: "https://www.credly.com/badges/963eff76-3eba-4a9e-8be4-449651f12efe" },
+  { initial: "N", title: "NVIDIA Certified Associate — GenAI LLMs", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai", link: "https://www.credly.com/badges/c0bf9eca-9f56-4167-8b94-2a6b206cb1f3/public_url" },
   { initial: "N", title: "Nemo Toolkit & DGX", org: "NVIDIA", year: "2025", cls: "bg-purple-500/10 text-purple-400 border-purple-500/20", category: "nvidia-genai" },
 
   // Google & Cloud AI

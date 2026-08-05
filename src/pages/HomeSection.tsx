@@ -25,10 +25,10 @@ const statVariants = {
 
 export default function HomeSection({ onNavigate }: Props) {
   const stats = [
-    { icon: <Zap className="w-5 h-5" />, value: "20+", label: "AI/ML Certifications" },
-    { icon: <Award className="w-5 h-5" />, value: "73%", label: "Master's Distinction" },
-    { icon: <Users className="w-5 h-5" />, value: "1.9K+", label: "LinkedIn Followers" },
-    { icon: <Code2 className="w-5 h-5" />, value: "Top 0.5%", label: "Kaggle Notebooks" },
+    { icon: <Zap className="w-5 h-5" />, value: "233", label: "AI Practitioners Trained" },
+    { icon: <Award className="w-5 h-5" />, value: "$5M+", label: "Pipeline Opportunity" },
+    { icon: <Users className="w-5 h-5" />, value: "500+", label: "Developers Served" },
+    { icon: <Code2 className="w-5 h-5" />, value: "50%", label: "Proposal Time Cut" },
   ];
 
   return (
@@ -166,12 +166,15 @@ export default function HomeSection({ onNavigate }: Props) {
               <p>
                 I'm a Data Science Consultant at <strong className="text-[var(--on-surface)]">Deloitte</strong> specializing in 
                 <strong className="text-[var(--on-surface)]"> Production Generative AI</strong>, <strong className="text-[var(--on-surface)]">Agentic Systems</strong>, 
-                and <strong className="text-[var(--on-surface)]">Multi-Agent Architectures</strong>.
+                and <strong className="text-[var(--on-surface)]">Multi-Agent Architectures</strong>. I build AI systems that ship to production — not just POCs.
               </p>
               <p>
-                Currently leading GenAI COE initiatives — designing, developing, and deploying 
-                enterprise-scale AI solutions across Azure, AWS, and NVIDIA DGX infrastructure. 
-                From RAG pipelines to MCP servers, I bridge research and production.
+                Led the GenAI COE Incubator — shipping production pipelines for RAG, multi-agent frameworks, and MCP (server/client) deployments. 
+                Architected an RFP Automation System that cut proposal turnaround from 4 weeks to 2 weeks for a client — part of an initial ~$1M engagement with a $5M+ pipeline forecast.
+              </p>
+              <p>
+                Built a <strong className="text-[var(--on-surface)]">Copilot Core SDK</strong> — a production-grade, async, multi-tenant agentic engine featuring the OPEV Loop, verified_by clause, Kahn's Algorithm Scheduler, and lossless context management. 
+                Deployed it as a live AI Copilot inside Autodesk Revit serving 500+ developers, and extended the same architecture toward Physical AI & Robotics with LeRobot.
               </p>
               <p>
                 With a <strong className="text-[var(--on-surface)]">Master's in AI/ML from LJMU (73% Distinction)</strong> and 
@@ -238,12 +241,12 @@ export default function HomeSection({ onNavigate }: Props) {
             </div>
             <div className="glass-card-light p-8 rounded-xl glow-hover-light transition-all">
               <div className="font-label-caps text-label-caps text-purple-400 mb-2 flex items-center gap-2">
-                <Award className="w-4 h-4" /> NVIDIA CERTIFIED
+                <Award className="w-4 h-4" /> CERTIFIED
               </div>
-              <div className="font-body-md text-body-md text-[var(--on-surface)] font-semibold mb-2">Certified Agentic AI</div>
-              <div className="font-code-sm text-code-sm text-[var(--on-surface-variant)]">GenAI Multimodal • GenAI LLMs • Nemo Toolkit & DGX</div>
+              <div className="font-body-md text-body-md text-[var(--on-surface)] font-semibold mb-2">Claude Certified Architect</div>
+              <div className="font-code-sm text-code-sm text-[var(--on-surface-variant)]">Anthropic • NVIDIA Certified Professional — Agentic AI</div>
               <div className="mt-4 flex flex-wrap gap-2">
-                {["Agentic AI", "Multimodal", "LLMs", "DGX"].map((b) => (
+                {["Claude", "Agentic AI", "Multimodal", "LLMs", "DGX"].map((b) => (
                   <span key={b} className="px-2 py-1 bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs rounded-lg font-code-sm">{b}</span>
                 ))}
               </div>
@@ -280,10 +283,10 @@ export default function HomeSection({ onNavigate }: Props) {
             className="grid grid-cols-2 md:grid-cols-4 gap-6"
           >
             {[
-              { value: "22+", label: "Professional Certifications", icon: "✅" },
-              { value: "4", label: "Enterprise Roles (TCS → Deloitte)", icon: "📈" },
-              { value: "9+", label: "Production Projects", icon: "🚀" },
-              { value: "1,900+", label: "LinkedIn Community", icon: "👥" },
+              { value: "233", label: "AI Practitioners Trained", icon: "🎓" },
+              { value: "$5M+", label: "Pipeline Opportunity", icon: "💰" },
+              { value: "500+", label: "Developers Served (Revit)", icon: "🚀" },
+              { value: "50%", label: "Proposal Time Reduction", icon: "⚡" },
             ].map((stat) => (
               <motion.div
                 key={stat.label}
