@@ -277,27 +277,6 @@ export const projects: Project[] = [
       github: "https://github.com/chiranjeevbitm/revit-copilot-agent"
     }
   },
-  {
-    id: "ai-tracing-platform",
-    title: "AI-Tracing Platform",
-    tagline: "Generic AI-Agent Platform + Production Revit Copilot",
-    description:
-      "The 30-second picture: one generic AI-agent platform (copilot-sdk/) plus one real production use case (revit-agent/) built on top of it. The core design creed: the SDK is a generic core; domain knowledge lives only in tools and context providers, and the core never changes. Features two separate WebSocket channels — Chat channel (browser/WebView2 UI → Gateway /ws/chat) and Bridge channel (pyRevit plugin → revit-agent's Bridge ws://:9100). Includes AI Tracing with one trace_id riding the bus across gateway + orchestrator + every worker for a single MLflow waterfall and billing-grade usage ledger.",
-    category: "GenAI",
-    tags: ["Agentic AI", "Multi-Agent", "Orchestration", "Revit", "Azure", "Tracing", "MLflow"],
-    githubUrl: "https://github.com/chiranjeevbitm/ai-tracing-platform",
-    image: "/images/overall project.jpeg",
-    featured: true,
-    impact: [
-      { metric: "Architecture", value: "Generic Core + Domain" },
-      { metric: "Channels", value: "Chat + Bridge WS" },
-      { metric: "Tracing", value: "End-to-End MLflow" },
-      { metric: "Portability", value: "Zero Code Change" }
-    ],
-    links: {
-      github: "https://github.com/chiranjeevbitm/ai-tracing-platform"
-    }
-  }
 ];
 
 export const githubRepos: GitHubRepo[] = [

@@ -254,7 +254,7 @@ export default function Home() {
               {[
                 { value: "Deloitte", label: "Current Consultant" },
                 { value: "Distinction", label: "Master's Degree" },
-                { value: "1000", label: "Practitioners Trained" },
+                { value: "1500", label: "Practitioners Trained" },
                 { value: "$5M+", label: "Forecast Opportunity" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center p-6 glass-card-light rounded-xl">

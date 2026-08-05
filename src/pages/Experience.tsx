@@ -85,7 +85,7 @@ export default function Experience() {
                           check_circle
                         </span>
                         <p className="text-on-surface">
-                          Conducted multi-agent & RAG training for 1000 AI practitioners across the organization.
+                          Conducted multiple multi-agent & RAG trainings for 1500 AI practitioners across the organization.
                         </p>
                       </li>
                       <li className="flex gap-3">

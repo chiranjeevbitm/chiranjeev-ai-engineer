@@ -25,7 +25,7 @@ const statVariants = {
 
 export default function HomeSection({ onNavigate }: Props) {
   const stats = [
-    { icon: <Zap className="w-5 h-5" />, value: "1000", label: "AI Practitioners Trained" },
+    { icon: <Zap className="w-5 h-5" />, value: "1500", label: "AI Practitioners Trained" },
     { icon: <Award className="w-5 h-5" />, value: "$5M+", label: "Pipeline Opportunity" },
     { icon: <Users className="w-5 h-5" />, value: "500+", label: "Developers Served" },
     { icon: <Code2 className="w-5 h-5" />, value: "50%", label: "Proposal Time Cut" },
@@ -287,7 +287,7 @@ export default function HomeSection({ onNavigate }: Props) {
             className="grid grid-cols-2 md:grid-cols-4 gap-6"
           >
             {[
-              { value: "1000", label: "AI Practitioners Trained", icon: "🎓" },
+              { value: "1500", label: "AI Practitioners Trained", icon: "🎓" },
               { value: "$5M+", label: "Pipeline Opportunity", icon: "💰" },
               { value: "500+", label: "Developers Served (Revit)", icon: "🚀" },
               { value: "50%", label: "Proposal Time Reduction", icon: "⚡" },

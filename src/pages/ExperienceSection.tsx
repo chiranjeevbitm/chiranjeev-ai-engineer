@@ -33,7 +33,7 @@ export default function ExperienceSection() {
         "Architected an RFP Automation System end-to-end: content extraction → chunking → vector indexing → Azure OpenAI inference → Azure AI Search, powering enterprise proposal generation and similarity-based retrieval.",
         "Developed an NLQ-to-SQL Multi-Agentic System enabling business users to query enterprise databases in plain English — with automated evaluation metrics (SQL correctness, latency) and output visualizations integrated into Dataiku Flow.",
         "Managed full production lifecycle: model/version management, prompt versioning, Azure Monitor / Insights, and incident escalation — improving response stability for GenAI apps at scale.",
-        "Conducted multi-agent & RAG training for 1000 AI practitioners across the organization.",
+        "Conducted multiple multi-agent & RAG trainings for 1500 AI practitioners across the organization.",
         "Built Copilot Core SDK — production-grade async multi-tenant engine with OPEV loop, Kahn's-algorithm scheduler, Lossless Context Management, and Agent-as-a-service on a message bus.",
         "Deployed the SDK as a live AI Copilot inside Autodesk Revit — serving 500+ developers on real BIM models with Apply-then-Review safety workflow and WebSocket bridge.",
         "Built AI-Tracing Platform — single trace_id riding the message bus across gateway + orchestrator + every worker for a complete MLflow waterfall per request plus billing-grade usage ledger.",
