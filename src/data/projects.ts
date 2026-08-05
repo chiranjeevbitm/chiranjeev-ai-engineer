@@ -236,6 +236,28 @@ export const projects: Project[] = [
     }
   },
   {
+    id: "doctor-appointment-form",
+    title: "Doctor Appointment Form",
+    tagline: "Streamlined Doctor Appointment Booking System",
+    description:
+      "A clean, responsive doctor appointment booking form with patient information collection, appointment scheduling, and confirmation workflow. Built with modern web technologies and deployed on Vercel for fast, reliable access.",
+    category: "Data Engineering",
+    tags: ["React", "Appointment Booking", "Healthcare", "Form", "Vercel"],
+    githubUrl: "https://github.com/chiranjeevbitm/DoctorAppointmentForm",
+    image: "/images/doctor-appointment-form.png",
+    featured: false,
+    impact: [
+      { metric: "Domain", value: "Healthcare" },
+      { metric: "Platform", value: "Vercel" },
+      { metric: "Type", value: "Appointment Booking" },
+      { metric: "Stack", value: "React" }
+    ],
+    links: {
+      demo: "https://drdeepak-appointment-form.vercel.app/",
+      github: "https://github.com/chiranjeevbitm/DoctorAppointmentForm"
+    }
+  },
+  {
     id: "copilot-core-sdk",
     title: "Copilot Core SDK",
     tagline: "Production-Grade Async Multi-Tenant AI Copilot Engine",
