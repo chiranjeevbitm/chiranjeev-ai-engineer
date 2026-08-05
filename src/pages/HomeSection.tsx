@@ -181,7 +181,7 @@ export default function HomeSection({ onNavigate }: Props) {
                 Deployed it as a live AI Copilot inside Autodesk Revit serving 500+ developers, and extended the same architecture toward Physical AI & Robotics with LeRobot.
               </p>
               <p>
-                With a <strong className="text-[var(--on-surface)]">Master's in AI/ML from LJMU (73% Distinction)</strong> and 
+                With a <strong className="text-[var(--on-surface)]">Master's in AI/ML from LJMU</strong> and 
                 a <strong className="text-[var(--on-surface)]">PG Diploma from IIIT Bangalore (3.5/4 GPA)</strong>, 
                 I combine academic rigor with a builder's mindset — shipping production apps in weekends 
                 (like Shikshak Sahayak for 400K+ teachers) while delivering enterprise-grade systems.
@@ -220,8 +220,8 @@ export default function HomeSection({ onNavigate }: Props) {
               <div className="font-label-caps text-label-caps text-secondary dark:text-[#4cd7f6] mb-2 flex items-center gap-2">
                 <BookOpen className="w-4 h-4" /> EDUCATION
               </div>
-              <div className="font-headline-lg text-headline-lg text-[var(--on-surface)] mb-1 tracking-tighter">73% Distinction</div>
-              <div className="font-body-md text-body-md text-[var(--on-surface-variant)] mb-4">Master's in ML & AI — LJMU</div>
+              <div className="font-headline-lg text-headline-lg text-[var(--on-surface)] mb-1 tracking-tighter">Master's in ML & AI — LJMU</div>
+              <div className="font-body-md text-body-md text-[var(--on-surface-variant)] mb-4">Liverpool John Moores University</div>
               <div className="border-t border-white/50 pt-4 dark:border-white/10 space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-white/80 flex items-center justify-center shadow-sm dark:bg-white/10">

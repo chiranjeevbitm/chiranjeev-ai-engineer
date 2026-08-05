@@ -71,10 +71,10 @@ export default function Home() {
                   EDUCATION
                 </div>
                 <div className="font-headline-lg text-headline-lg text-on-surface mb-2 tracking-tighter">
-                  73% Distinction
+                  Master's in ML & AI
                 </div>
                 <div className="font-body-md text-body-md text-on-surface-variant">
-                  Master's in ML & AI
+                  Liverpool John Moores University
                 </div>
               </div>
               <div className="mt-8 border-t border-white/50 pt-6">
@@ -254,7 +254,7 @@ export default function Home() {
               {[
                 { value: "Deloitte", label: "Current Consultant" },
                 { value: "Distinction", label: "Master's Degree" },
-                { value: "700+", label: "Practitioners Trained" },
+                { value: "1000", label: "Practitioners Trained" },
                 { value: "$5M+", label: "Forecast Opportunity" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center p-6 glass-card-light rounded-xl">
