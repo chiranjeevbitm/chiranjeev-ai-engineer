@@ -279,7 +279,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
             {[
-              { company: "Deloitte", title: "Outstanding Performance Award", desc: "For technical contributions to Bechtel GenAI RFP project.", icon: "🏆" },
+              { company: "Deloitte", title: "Outstanding Performance Award", desc: "For technical contributions to Client GenAI RFP project.", icon: "🏆" },
               { company: "Deloitte", title: "Applause Award", desc: "For training enablement and knowledge-sharing in GenAI.", icon: "👏" },
               { company: "Tredence Inc.", title: "Pat on the Back Award", desc: "Recognition for excellence in Catalog Normalization automation.", icon: "🎖️" },
             ].map((a, i) => (

@@ -41,7 +41,7 @@ export default function Experience() {
                     <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-lg">
                       <p className="font-body-md text-on-surface">
                         <span className="text-primary font-bold">Featured:</span>{" "}
-                        Bechtel GenAI RFP project contributing to ~$1M initial scope.
+                        Client GenAI RFP project contributing to ~$1M initial scope.
                         Delivered production-ready Agentic AI solutions reducing
                         proposal turnaround from 4 weeks to 2 weeks.
                       </p>

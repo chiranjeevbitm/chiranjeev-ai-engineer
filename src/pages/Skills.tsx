@@ -185,7 +185,7 @@ export default function Skills() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
             {[
               { company: "Deloitte", title: "Applause Award", desc: "For training enablement and knowledge-sharing in GenAI." },
-              { company: "Deloitte", title: "Outstanding Performance", desc: "Technical contributions to the Bechtel GenAI RFP project." },
+              { company: "Deloitte", title: "Outstanding Performance", desc: "Technical contributions to the Client GenAI RFP project." },
               { company: "Tredence Inc.", title: "Pat on the Back", desc: "Recognition for excellence in Catalog Normalization automation." },
             ].map((award) => (
               <div

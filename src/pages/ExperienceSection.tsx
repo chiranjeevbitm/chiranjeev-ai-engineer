@@ -27,7 +27,7 @@ export default function ExperienceSection() {
       textColor: "text-primary",
       logo: "D",
       featured:
-        "Bechtel GenAI RFP project contributing to ~$1M initial scope. Delivered production-ready Agentic AI solutions reducing proposal turnaround from 4 weeks to 2 weeks.",
+        "Client GenAI RFP project contributing to ~$1M initial scope. Delivered production-ready Agentic AI solutions reducing proposal turnaround from 4 weeks to 2 weeks.",
       highlights: [
         'Architected NLQ-to-SQL agent in Dataiku for natural language enterprise querying.',
         "Led incubator GenAI COE projects: RAG, multi-agent frameworks, MCP across Azure & AWS.",
