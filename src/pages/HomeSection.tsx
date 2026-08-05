@@ -25,7 +25,7 @@ const statVariants = {
 
 export default function HomeSection({ onNavigate }: Props) {
   const stats = [
-    { icon: <Zap className="w-5 h-5" />, value: "233", label: "AI Practitioners Trained" },
+    { icon: <Zap className="w-5 h-5" />, value: "1000", label: "AI Practitioners Trained" },
     { icon: <Award className="w-5 h-5" />, value: "$5M+", label: "Pipeline Opportunity" },
     { icon: <Users className="w-5 h-5" />, value: "500+", label: "Developers Served" },
     { icon: <Code2 className="w-5 h-5" />, value: "50%", label: "Proposal Time Cut" },
@@ -67,6 +67,10 @@ export default function HomeSection({ onNavigate }: Props) {
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-md text-purple-400 font-code-sm text-code-sm shadow-sm">
               <span className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
               NVIDIA Certified Agentic AI
+            </span>
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 backdrop-blur-md text-orange-400 font-code-sm text-code-sm shadow-sm">
+              <span className="material-symbols-outlined text-[16px]">verified</span>
+              Claude Certified
             </span>
           </motion.div>
 
@@ -283,7 +287,7 @@ export default function HomeSection({ onNavigate }: Props) {
             className="grid grid-cols-2 md:grid-cols-4 gap-6"
           >
             {[
-              { value: "233", label: "AI Practitioners Trained", icon: "🎓" },
+              { value: "1000", label: "AI Practitioners Trained", icon: "🎓" },
               { value: "$5M+", label: "Pipeline Opportunity", icon: "💰" },
               { value: "500+", label: "Developers Served (Revit)", icon: "🚀" },
               { value: "50%", label: "Proposal Time Reduction", icon: "⚡" },
