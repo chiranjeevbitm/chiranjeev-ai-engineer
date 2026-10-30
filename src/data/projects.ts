@@ -31,6 +31,7 @@ export const projects: Project[] = [
       "An AI multi-agent system that investigates held supplier invoices and hands AP analysts a cited root-cause report and a ready-to-send supplier email, replacing manual cross-checking of POs, goods receipts and invoices. A LangGraph orchestrator routes each hold code to one of six specialist agents, which reason over PO, GR and invoice data with GPT-4o and stream a structured report section by section over Server-Sent Events. An Email Agent drafts the supplier resolution email. Includes a dashboard with aging buckets and SLA status, a priority queue, comment threads with @mentions, and prompt-template versioning with thumbs feedback.",
     category: "GenAI",
     tags: ["LangGraph", "LangChain", "GPT-4o", "FastAPI", "React 19", "SSE", "Multi-Agent"],
+    image: "/images/ap-invoice-hold-resolution.png",
     featured: true,
     status: "Live in production",
     impact: [
@@ -49,6 +50,7 @@ export const projects: Project[] = [
       "One Python package (v1.6.1) that adds guardrails and observability to LangChain and Azure OpenAI applications through MLflow, switched on by configuration rather than code changes. runner.guarded() extracts a value, runs the check, applies per-tenant policy, then passes, warns or blocks and persists the verdict. Checks include LLM-judge toxicity, hallucination, jailbreak and relevancy, plus schema, tool-call safety, rate limit and ground truth. Observability records one MLflow run per request with tokens, cost and failures, L1 PII masking with Presidio and detect-secrets, and hourly p95, burn-rate and error-pattern rollups. Azure target design: private-VNet MLflow on Container Apps, PostgreSQL, Key Vault, keyless Entra ID auth and Microsoft Foundry judge models.",
     category: "GenAI",
     tags: ["MLflow", "Guardrails", "LLM-as-Judge", "Azure", "Presidio", "Observability"],
+    image: "/images/guardian-observability-sdks.png",
     featured: true,
     status: "Built",
     impact: [
@@ -67,6 +69,7 @@ export const projects: Project[] = [
       "Contributed to a delivery framework that turns an ambiguous problem into shipped, tested software through three phases (orchestrate, build, validate) and nine skills, with a Plan Gate and one-module-at-a-time TDD. Judgement lives in the model while every deterministic step runs in tested Python. Added a GitHub Copilot path that maps the same skills, agents, MCP servers and rules onto Copilot, removing the 3 to 5 day wait for Claude Code access; guards move to a pre-commit hook and CI where Copilot cannot block mid-chat. Reached the Top 20 prototypes in the Agentic AI Hackathon (about 1,000 teams, as reported) with a two-person team building on the AP invoice platform.",
     category: "GenAI",
     tags: ["Claude Code", "Subagents", "TDD", "MCP", "GitHub Copilot"],
+    image: "/images/ascend-agentic-harness.png",
     featured: false,
     status: "Contributed",
     impact: [
@@ -85,6 +88,7 @@ export const projects: Project[] = [
       "A Python backend that detects and categorises changes between two revisions of an engineering drawing and returns annotated PDFs and review-ready results through a REST API. It pairs Azure Document Intelligence OCR with Azure OpenAI vision models to find both textual and geometric changes. Eight steps run end to end: render and preprocess with quality gates, Foreman-agent section planning (Rev B seeded with Rev A's section names), coarse crop and boundary refinement, a hybrid descriptor, parallel text and geometric diff paths, ReAct-loop validation of each candidate with a confidence score, highlighting, and PDF annotation. FastAPI exposes async comparisons (HTTP 202), per-step progress, reviews, approval and report download. Hybrid OCR plus vision, capped ReAct tool loops, and retry with backoff keep it resilient. It is the \"see what changed\" step of an AI change-impact analysis flow. Job state is currently held in memory, and one observed page with 8 sections took about 49 minutes.",
     category: "GenAI",
     tags: ["Azure Document Intelligence", "Azure OpenAI", "Vision", "ReAct Agents", "FastAPI", "OpenCV"],
+    image: "/images/ai-drawing-diff-pipeline.png",
     featured: false,
     status: "Worked on",
     impact: [
