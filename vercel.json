@@ -6,7 +6,8 @@
   "routes": [
     { "src": "/assets/(.*)", "dest": "/assets/$1" },
     { "src": "/images/(.*)", "dest": "/images/$1" },
-    { "src": "/Chiranjeev_GenAI_5\\+years\\.pdf", "dest": "/Chiranjeev_GenAI_5+years.pdf" },
+    { "src": "/Chiranjeev_Kumar_Resume_Oct2026\\.pdf", "dest": "/Chiranjeev_Kumar_Resume_Oct2026.pdf" },
+    { "src": "/Chiranjeev_GenAI_5\\+years\\.pdf", "dest": "/Chiranjeev_Kumar_Resume_Oct2026.pdf" },
     { "src": "/favicon\\.svg", "dest": "/favicon.svg" },
     { "handle": "filesystem" },
     { "src": "/.*", "dest": "/index.html" }

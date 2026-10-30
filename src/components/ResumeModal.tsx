@@ -100,7 +100,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               <div className="flex items-center gap-2">
                 {/* Download Button */}
                 <motion.a
-                  href="/Chiranjeev_GenAI_5+years.pdf"
+                  href="/Chiranjeev_Kumar_Resume_Oct2026.pdf"
                   download
                   className="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-xl font-label-caps text-label-caps hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
                   whileHover={{ scale: 1.05 }}
@@ -140,7 +140,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               variants={contentVariants}
             >
               <iframe
-                src="/Chiranjeev_GenAI_5+years.pdf#toolbar=0"
+                src="/Chiranjeev_Kumar_Resume_Oct2026.pdf#toolbar=0"
                 className="w-full h-full"
                 title="Resume PDF"
               />

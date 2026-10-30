@@ -24,7 +24,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
   const [activeCategory, setActiveCategory] = useState<SkillCategory>('genai');
 
   const handleResume = onOpenResume || (() => {
-    window.open("/Chiranjeev_GenAI_5+years.pdf", "_blank");
+    window.open("/Chiranjeev_Kumar_Resume_Oct2026.pdf", "_blank");
   });
 
   const skillCategories = [
@@ -128,7 +128,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
               </div>
               <div>
                 <h2 className="font-headline-lg text-headline-lg text-[var(--on-surface)]">Comprehensive Resume</h2>
-                <p className="font-body-md text-body-md text-[var(--on-surface-variant)]">Last updated: 2026 • PDF Format</p>
+                <p className="font-body-md text-body-md text-[var(--on-surface-variant)]">Last updated: October 2026 • PDF Format</p>
               </div>
             </div>
             <button onClick={handleResume}
