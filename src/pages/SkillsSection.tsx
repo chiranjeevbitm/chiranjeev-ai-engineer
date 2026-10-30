@@ -291,6 +291,8 @@ export default function SkillsSection({ onOpenResume }: Props) {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
             {[
+              { company: "Deloitte", title: "Applause Award, October 2026", desc: "Recognition for a GenAI session delivered to 1,000+ practitioners.", icon: "👏" },
+              { company: "Deloitte", title: "Agentic AI Hackathon: Top 20", desc: "Top 20 prototypes of about 1,000 teams in the Ascend Agentic Harness Hackathon.", icon: "🚀" },
               { company: "Deloitte", title: "Applause Award 2026", desc: "Deloitte recognition for exceptional client impact.", icon: "👏" },
               { company: "Deloitte", title: "Outstanding Performance Award 2025", desc: "Top performer designation for GenAI contributions.", icon: "🏆" },
               { company: "Deloitte", title: "Best Performer Award 2025", desc: "Recognized for outstanding delivery and impact.", icon: "🥇" },
@@ -368,7 +370,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
           </p>
           <div className="flex flex-wrap justify-center gap-stack-md">
             {[
-              { icon: <Mail className="w-4 h-4" />, label: "Email", href: "mailto:chiranjeev@example.com" },
+              { icon: <Mail className="w-4 h-4" />, label: "Email", href: "mailto:chiranjeevkumar47@gmail.com" },
               { icon: <ExternalLink className="w-4 h-4" />, label: "LinkedIn", href: "https://linkedin.com/in/chiranjeev-kumar-07071997" },
               { icon: <Code className="w-4 h-4" />, label: "GitHub", href: "https://github.com/chiranjeevbitm" },
             ].map((link) => (

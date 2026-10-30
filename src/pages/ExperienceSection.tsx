@@ -27,19 +27,46 @@ export default function ExperienceSection() {
       textColor: "text-primary",
       logo: "D",
       featured:
-        "Client GenAI RFP project contributing to ~$1M initial scope. Delivered production-ready Agentic AI solutions reducing proposal turnaround from 4 weeks to 2 weeks. $5M+ pipeline opportunity forecast across GBUs.",
-      highlights: [
-        "Led the GenAI COE Incubator — built multiple POCs and production pipelines across RAG, multi-agent frameworks, and MCP (server/client) deployments on Azure, NVIDIA DGX, and AWS.",
-        "Architected an RFP Automation System end-to-end: content extraction → chunking → vector indexing → Azure OpenAI inference → Azure AI Search, powering enterprise proposal generation and similarity-based retrieval.",
-        "Developed an NLQ-to-SQL Multi-Agentic System enabling business users to query enterprise databases in plain English — with automated evaluation metrics (SQL correctness, latency) and output visualizations integrated into Dataiku Flow.",
-        "Managed full production lifecycle: model/version management, prompt versioning, Azure Monitor / Insights, and incident escalation — improving response stability for GenAI apps at scale.",
-        "Conducted multiple multi-agent & RAG trainings for 1500 AI practitioners across the organization.",
-        "Built Copilot Core SDK — production-grade async multi-tenant engine with OPEV loop, Kahn's-algorithm scheduler, Lossless Context Management, and Agent-as-a-service on a message bus.",
-        "Deployed the SDK as a live AI Copilot inside Autodesk Revit — serving 500+ developers on real BIM models with Apply-then-Review safety workflow and WebSocket bridge.",
-        "Built AI-Tracing Platform — single trace_id riding the message bus across gateway + orchestrator + every worker for a complete MLflow waterfall per request plus billing-grade usage ledger.",
-        "Currently exploring Physical AI & Robotics — running imitation learning and policy training pipelines with LeRobot (Hugging Face) on physical robotic arms (SO-100, Koch v1.1).",
-        "Investigating NVIDIA Isaac Sim for photorealistic sim-to-real transfer and synthetic data generation.",
-        "Received Outstanding Performance Award 2025, Applause Award 2026, and Best Performer Award 2025.",
+        "Client GenAI RFP project contributing to ~$1M initial scope. Delivered production-ready Agentic AI solutions reducing proposal turnaround from 4 weeks to 2 weeks. $5M+ pipeline opportunity forecast across GBUs. Core strength: productionalizing GenAI end to end, from model and prompt versioning to monitoring, guardrails, evaluation, incident escalation and hand-off to the business.",
+      highlights: [] as string[],
+      groups: [
+        {
+          title: "Production systems",
+          items: [
+            "Led the GenAI COE Incubator, building 10+ POCs and production pipelines across RAG, multi-agent frameworks, and MCP (server/client) deployments on Azure, NVIDIA DGX, and AWS.",
+            "RFP Automation (in production): content extraction → chunking → vector indexing → Azure OpenAI inference → Azure AI Search for enterprise proposal generation. Turnaround cut from about 4 weeks to about 2.",
+            "NLQ-to-SQL Multi-Agentic System (in production): business users query enterprise databases in plain English, with automated evaluation of SQL correctness and latency. End-to-end query latency down 45%.",
+            "AP Invoice Hold Resolution (live in production): a LangGraph orchestrator with six specialist agents plus an email agent investigates held supplier invoices, streams a cited root-cause report and drafts the supplier email.",
+            "AI-Tracing Platform (in production): a single trace_id rides the message bus across gateway, orchestrator and every worker, giving a full MLflow waterfall per request plus a billing-grade usage ledger.",
+            "Managed the full production lifecycle: model and prompt versioning, Azure Monitor / App Insights, guardrails, evaluation and incident escalation, improving response stability for GenAI apps at scale.",
+          ],
+        },
+        {
+          title: "Platforms & SDKs",
+          items: [
+            "Built Copilot Core SDK, a production-grade async multi-tenant engine with the OPEV loop, Kahn's-algorithm scheduler, Lossless Context Management, and Agent-as-a-service on a message bus.",
+            "Deployed the SDK as a live AI Copilot inside Autodesk Revit for 500+ developers, with an Apply-then-Review safety workflow and a WebSocket bridge.",
+            "Built the Guardian and Observability SDKs (one package, v1.6.1): 16 guardian features and 10 observability features for LangChain and Azure OpenAI apps via MLflow, onboarded by configuration and fail-open by design.",
+            "Contributed to the Ascend Agentic Harness, a three-phase, nine-skill delivery framework on Claude Code with TDD builds, including a GitHub Copilot path that removes the 3 to 5 day Claude Code access wait.",
+            "Worked on an AI-assisted change-impact analysis flow for an engineering client, targeting weeks-to-days turnaround (an indicative estimate, not a measured result). People keep the approval decision.",
+            "Built the drawing-diff backend for that flow: Azure Document Intelligence OCR plus Azure OpenAI vision, a nine-agent, eight-step pipeline with parallel text and geometric diff paths, ReAct validation with confidence scores, and annotated PDFs served through a FastAPI REST API.",
+          ],
+        },
+        {
+          title: "Enablement & recognition",
+          items: [
+            "Delivered GenAI sessions on multi-agent systems and RAG to 1,000+ practitioners across the organization.",
+            "Agentic AI Hackathon: Top 20 prototypes of about 1,000 teams, as part of a two-person team building on the AP invoice platform.",
+            "Awards: Applause (2026, and again in October 2026), Outstanding Performance (2025), Best Performer (2025), and 1st prize (team) at the Consultant-Level Bangalore Hackathon.",
+          ],
+        },
+        {
+          title: "Physical AI (exploring)",
+          items: [
+            "Running imitation learning and policy training pipelines with LeRobot (Hugging Face) on physical robotic arms (SO-100, Koch v1.1).",
+            "Investigating NVIDIA Isaac Sim for photorealistic sim-to-real transfer and synthetic data generation.",
+          ],
+        },
       ],
     },
     {
@@ -50,8 +77,9 @@ export default function ExperienceSection() {
       textColor: "text-secondary",
       logo: "T",
       highlights: [
-        "Developed item-matching solution for supermarkets using LLM extraction, reducing manual work by 60%.",
-        "Benchmarked GenAI platforms (Dataiku, Databricks, Vertex AI) for vector search latency.",
+        "Item matching for a supermarket chain using LLM extraction: 95% accuracy across 50K+ SKUs, manual time per item down about 60%.",
+        "Benchmarked Dataiku, Databricks and Vertex AI on four metrics, cutting projected infrastructure cost by 20%.",
+        "Built RAG pipelines and prompt work that raised retrieval precision by 35%, and tuned cloud GPU inference to cut cloud spend by 15%.",
         "Received 'Pat on the Back' award for Catalog Normalization automation.",
         "Completed GenAI Byte-Sized program with practical application focus.",
       ],
@@ -66,6 +94,7 @@ export default function ExperienceSection() {
       highlights: [
         "Developed ML models and feature pipelines for behavioral data analysis and A/B testing.",
         "Worked on large-scale data analysis for enterprise process mining.",
+        "Built A/B testing frameworks that lifted model conversion by 12%.",
       ],
     },
     {
@@ -77,6 +106,7 @@ export default function ExperienceSection() {
       logo: "T",
       highlights: [
         "Built cloud-native services using Azure App Services and REST APIs.",
+        "Built ETL and data validation for enterprise ingest pipelines processing 1 TB+ a day at 99.9% uptime.",
         "Microsoft Azure certified — AI Fundamentals and Azure Fundamentals.",
       ],
     },
@@ -156,6 +186,19 @@ export default function ExperienceSection() {
                           <p className="font-body-md text-[var(--on-surface)]"><span className="text-primary dark:text-[#d0bcff] font-bold">Featured:</span> {item.featured}</p>
                         </div>
                       )}
+                      {item.groups?.map((group) => (
+                        <div key={group.title}>
+                          <h4 className="font-label-caps text-label-caps text-primary dark:text-[#d0bcff] font-bold mb-2 mt-2">{group.title}</h4>
+                          <ul className="list-none space-y-3">
+                            {group.items.map((h, j) => (
+                              <li key={j} className="flex gap-3">
+                                <span className="material-symbols-outlined text-primary dark:text-[#d0bcff] text-[18px] shrink-0">check_circle</span>
+                                <p className="text-[var(--on-surface)]">{h}</p>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
                       <ul className="list-none space-y-3">
                         {item.highlights.map((h, j) => (
                           <li key={j} className="flex gap-3">
@@ -185,9 +228,9 @@ export default function ExperienceSection() {
               </div>
               <div className="space-y-stack-lg">
                 {[
-                  { label: "Master's Degree", school: "Liverpool John Moores University", detail: "Machine Learning and AI", highlight: "Master's Degree" },
-                  { label: "Postgraduate Degree", school: "IIIT Bangalore", detail: "ML & AI • Grade: 3.5/4.0", highlight: "3.5/4.0 GPA" },
-                  { label: "Bachelor of Engineering", school: "BIT Mesra", detail: "Computer Science • 7.8/10 CGPA", highlight: "7.8/10" },
+                  { label: "Master's Degree", school: "Liverpool John Moores University", detail: "Machine Learning and AI • 2022–2023 • Thesis: RDVCoNet, COVID-19 detection from chest X-rays (Elsevier, 2021)", highlight: "Master's Degree" },
+                  { label: "Postgraduate Degree", school: "IIIT Bangalore", detail: "PG Diploma in ML & AI • 2021–2022 • Grade: 3.5/4.0", highlight: "3.5/4.0 GPA" },
+                  { label: "Bachelor of Engineering", school: "BIT Mesra", detail: "Computer Science • 2016–2020 • 7.8/10 CGPA", highlight: "7.8/10" },
                 ].map((e, i) => (
                   <motion.div
                     key={e.label}

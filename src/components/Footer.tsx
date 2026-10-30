@@ -1,4 +1,4 @@
-const LAST_UPDATED = "May 17, 2026";
+const LAST_UPDATED = "October 30, 2026";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -8,7 +8,7 @@ export default function Footer() {
     { label: "GitHub", href: "https://github.com/chiranjeevbitm", followers: "Open Source" },
     { label: "Kaggle", href: "https://kaggle.com/chiranjeevbit", followers: "Top 0.5%" },
     { label: "Medium", href: "https://medium.com/@chiranjeevkumar47", followers: "Blog" },
-    { label: "Email", href: "mailto:chiranjeev@example.com", followers: "Contact" },
+    { label: "Email", href: "mailto:chiranjeevkumar47@gmail.com", followers: "Contact" },
   ];
 
   return (

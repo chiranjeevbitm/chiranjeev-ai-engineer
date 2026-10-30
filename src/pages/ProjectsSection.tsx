@@ -72,6 +72,13 @@ export default function ProjectsSection() {
                     <FolderOpen className="w-16 h-16 text-primary/40 dark:text-[#d0bcff]/40" />
                   </div>
                 )}
+                {project.status && (
+                  <div className="absolute top-3 left-3 z-20">
+                    <span className="px-2 py-1 bg-emerald-500/90 text-black text-xs font-semibold rounded-full">
+                      {project.status}
+                    </span>
+                  </div>
+                )}
                 {/* Featured Badge */}
                 {project.featured && (
                   <div className="absolute top-3 right-3 z-20">
@@ -107,18 +114,22 @@ export default function ProjectsSection() {
                   ))}
                 </div>
               </div>
-              <div className="flex gap-stack-md pt-stack-md border-t border-primary/10 dark:border-[#d0bcff]/10">
-                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-primary dark:text-[#d0bcff] font-label-caps text-label-caps hover:brightness-110">
-                  <Code2 className="w-4 h-4" /> View GitHub
-                </a>
-                {project.links.article && (
-                  <a href={project.links.article} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-[var(--on-surface-variant)] font-label-caps text-label-caps hover:text-primary dark:hover:text-[#d0bcff] transition-colors">
-                    <ExternalLink className="w-4 h-4" /> Article
-                  </a>
-                )}
-              </div>
+              {(project.githubUrl || project.links.article) && (
+                <div className="flex gap-stack-md pt-stack-md border-t border-primary/10 dark:border-[#d0bcff]/10">
+                  {project.githubUrl && (
+                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-primary dark:text-[#d0bcff] font-label-caps text-label-caps hover:brightness-110">
+                      <Code2 className="w-4 h-4" /> View GitHub
+                    </a>
+                  )}
+                  {project.links.article && (
+                    <a href={project.links.article} target="_blank" rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-[var(--on-surface-variant)] font-label-caps text-label-caps hover:text-primary dark:hover:text-[#d0bcff] transition-colors">
+                      <ExternalLink className="w-4 h-4" /> Article
+                    </a>
+                  )}
+                </div>
+              )}
             </motion.div>
           ))}
           </AnimatePresence>

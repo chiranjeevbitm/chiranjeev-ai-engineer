@@ -25,7 +25,7 @@ const statVariants = {
 
 export default function HomeSection({ onNavigate }: Props) {
   const stats = [
-    { icon: <Zap className="w-5 h-5" />, value: "1500", label: "AI Practitioners Trained" },
+    { icon: <Zap className="w-5 h-5" />, value: "1000+", label: "AI Practitioners Trained" },
     { icon: <Award className="w-5 h-5" />, value: "$5M+", label: "Pipeline Opportunity" },
     { icon: <Users className="w-5 h-5" />, value: "500+", label: "Developers Served" },
     { icon: <Code2 className="w-5 h-5" />, value: "50%", label: "Proposal Time Cut" },
@@ -70,7 +70,7 @@ export default function HomeSection({ onNavigate }: Props) {
             </span>
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 backdrop-blur-md text-orange-400 font-code-sm text-code-sm shadow-sm">
               <span className="material-symbols-outlined text-[16px]">verified</span>
-              Claude Certified
+              Claude Certified Developer
             </span>
           </motion.div>
 
@@ -181,6 +181,11 @@ export default function HomeSection({ onNavigate }: Props) {
                 Deployed it as a live AI Copilot inside Autodesk Revit serving 500+ developers, and extended the same architecture toward Physical AI & Robotics with LeRobot.
               </p>
               <p>
+                Also shipped <strong className="text-[var(--on-surface)]">AP Invoice Hold Resolution</strong> (six specialist agents plus an email agent, live in production), 
+                built guardian and observability SDKs for LangChain and Azure OpenAI apps, and contributed to the Ascend Agentic Harness — 
+                part of a team that reached the Top 20 in the Agentic AI Hackathon.
+              </p>
+              <p>
                 With a <strong className="text-[var(--on-surface)]">Master's in AI/ML from LJMU</strong> and 
                 a <strong className="text-[var(--on-surface)]">PG Diploma from IIIT Bangalore (3.5/4 GPA)</strong>, 
                 I combine academic rigor with a builder's mindset — shipping production apps in weekends 
@@ -247,8 +252,8 @@ export default function HomeSection({ onNavigate }: Props) {
               <div className="font-label-caps text-label-caps text-purple-400 mb-2 flex items-center gap-2">
                 <Award className="w-4 h-4" /> CERTIFIED
               </div>
-              <div className="font-body-md text-body-md text-[var(--on-surface)] font-semibold mb-2">Claude Certified Architect</div>
-              <div className="font-code-sm text-code-sm text-[var(--on-surface-variant)]">Anthropic • NVIDIA Certified Professional — Agentic AI</div>
+              <div className="font-body-md text-body-md text-[var(--on-surface)] font-semibold mb-2">Claude Certified Developer Associate</div>
+              <div className="font-code-sm text-code-sm text-[var(--on-surface-variant)]">Anthropic (Developer Associate, Architect, Foundations) • NVIDIA Certified Professional — Agentic AI</div>
               <div className="mt-4 flex flex-wrap gap-2">
                 {["Claude", "Agentic AI", "Multimodal", "LLMs", "DGX"].map((b) => (
                   <span key={b} className="px-2 py-1 bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs rounded-lg font-code-sm">{b}</span>
@@ -287,10 +292,14 @@ export default function HomeSection({ onNavigate }: Props) {
             className="grid grid-cols-2 md:grid-cols-4 gap-6"
           >
             {[
-              { value: "1500", label: "AI Practitioners Trained", icon: "🎓" },
+              { value: "1000+", label: "AI Practitioners Trained", icon: "🎓" },
               { value: "$5M+", label: "Pipeline Opportunity", icon: "💰" },
               { value: "500+", label: "Developers Served (Revit)", icon: "🚀" },
               { value: "50%", label: "Proposal Time Reduction", icon: "⚡" },
+              { value: "-45%", label: "NLQ-to-SQL Query Latency", icon: "⏱️" },
+              { value: "+35%", label: "Retrieval Precision (RAG)", icon: "🎯" },
+              { value: "95%", label: "Item-Match Accuracy, 50K+ SKUs", icon: "🛒" },
+              { value: "Top 20", label: "Agentic AI Hackathon, ~1,000 Teams", icon: "🏅" },
             ].map((stat) => (
               <motion.div
                 key={stat.label}
