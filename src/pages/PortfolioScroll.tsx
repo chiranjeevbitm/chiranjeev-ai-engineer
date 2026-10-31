@@ -90,6 +90,7 @@ export default function PortfolioScroll() {
   return (
     <div
       ref={containerRef}
+      data-scroll-root
       className="h-screen overflow-y-auto relative"
     >
       <div className="snap-start min-h-screen" id="home" data-section>

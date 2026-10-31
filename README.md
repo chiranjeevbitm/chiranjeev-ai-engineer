@@ -26,6 +26,11 @@ A modern, responsive portfolio website built with **React + TypeScript + Vite** 
 - **Projects** — Filterable project grid with impact metrics, live demos, GitHub repos, and featured badges
 - **Footer** — Social links with hover stats, "Last updated" badge, scroll-to-top button
 
+### Normal / 3D mode
+- **Switch** in the navbar (saved in the browser). 3D mode lazy-loads three.js, so Normal mode stays light.
+- **3D mode:** a procedural robot whose head and eyes follow the cursor (and wander when idle), a particle field, floating wireframe shapes, scroll-driven camera and docking, a cursor glow, and tilting project cards. It forces the dark theme and respects `prefers-reduced-motion`.
+- Code: `src/three/` (scene, input state), `src/context/ModeContext.tsx`, `src/components/ModeToggle.tsx`, `SceneLayer.tsx`.
+
 ### UI/UX
 - 🌗 Dark/Light mode with smooth theme transitions
 - 📱 Fully responsive (mobile-first with clamp() fluid typography)
@@ -36,7 +41,8 @@ A modern, responsive portfolio website built with **React + TypeScript + Vite** 
 - 📄 PDF resume download modal
 
 ### Technical
-- **Framework:** React 18 + TypeScript
+- **Framework:** React 19 + TypeScript
+- **3D:** three.js + React Three Fiber + drei
 - **Build:** Vite 8
 - **Styling:** Tailwind CSS
 - **Animations:** Framer Motion

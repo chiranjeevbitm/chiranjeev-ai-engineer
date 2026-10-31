@@ -31,7 +31,7 @@ export const projects: Project[] = [
       "An AI multi-agent system that investigates held supplier invoices and hands AP analysts a cited root-cause report and a ready-to-send supplier email, replacing manual cross-checking of POs, goods receipts and invoices. A LangGraph orchestrator routes each hold code to one of six specialist agents, which reason over PO, GR and invoice data with GPT-4o and stream a structured report section by section over Server-Sent Events. An Email Agent drafts the supplier resolution email. Includes a dashboard with aging buckets and SLA status, a priority queue, comment threads with @mentions, and prompt-template versioning with thumbs feedback.",
     category: "GenAI",
     tags: ["LangGraph", "LangChain", "GPT-4o", "FastAPI", "React 19", "SSE", "Multi-Agent"],
-    image: "/images/ap-invoice-hold-resolution.png",
+    image: "/images/opt/ap-invoice-hold-resolution.jpg",
     featured: true,
     status: "Live in production",
     impact: [
@@ -43,6 +43,29 @@ export const projects: Project[] = [
     links: {}
   },
   {
+    id: "doctor-appointment-form",
+    title: "Arogya Rx — Clinic Prescription Platform",
+    tagline: "30-second bilingual prescriptions for clinics",
+    description:
+      "Clinic software for busy OPDs in Bihar and UP that produces a prescription on the doctor's own letterhead in about 30 seconds, prints generic names in capitals as NMC asks, and sends Hindi dose timings to the patient on WhatsApp. Built with a working clinic in Muzaffarpur: the print view is rebuilt pixel for pixel from the paper parchi, with a 205,507-medicine search that includes Jan Aushadhi prices, allergy and duplicate-drug checks, vitals with instant red flags, eight chronic-disease profiles, one-tap diagnosis templates, token queue and a patient timeline with HbA1c and BP trends. The core runs live at Arogya Clinic (React 19, FastAPI, PostgreSQL). The new build adds Hinglish voice-to-prescription and photo intake of old prescriptions, with the doctor confirming every line before anything prints. The public demo is a fully clickable app and landing site that runs in the browser on sample data.",
+    category: "Data Engineering",
+    tags: ["Healthcare", "Hindi + English", "WhatsApp", "Voice-to-Rx", "Jan Aushadhi", "React", "FastAPI", "PostgreSQL"],
+    githubUrl: "https://github.com/chiranjeevbitm/arogya-rx-demo",
+    image: "/images/opt/arogya-rx.jpg",
+    featured: true,
+    status: "Live demo",
+    impact: [
+      { metric: "Medicines searchable", value: "205,507" },
+      { metric: "Parchi target", value: "< 30 seconds" },
+      { metric: "Languages on every parchi", value: "English + हिंदी" },
+      { metric: "Live clinic", value: "Muzaffarpur" }
+    ],
+    links: {
+      demo: "https://arogya-rx-demo.vercel.app/",
+      github: "https://github.com/chiranjeevbitm/arogya-rx-demo"
+    }
+  },
+  {
     id: "guardian-observability-sdks",
     title: "Guardian & Observability SDKs",
     tagline: "Guardrails and Tracing for Any LangChain / Azure OpenAI App",
@@ -50,7 +73,7 @@ export const projects: Project[] = [
       "One Python package (v1.6.1) that adds guardrails and observability to LangChain and Azure OpenAI applications through MLflow, switched on by configuration rather than code changes. runner.guarded() extracts a value, runs the check, applies per-tenant policy, then passes, warns or blocks and persists the verdict. Checks include LLM-judge toxicity, hallucination, jailbreak and relevancy, plus schema, tool-call safety, rate limit and ground truth. Observability records one MLflow run per request with tokens, cost and failures, L1 PII masking with Presidio and detect-secrets, and hourly p95, burn-rate and error-pattern rollups. Azure target design: private-VNet MLflow on Container Apps, PostgreSQL, Key Vault, keyless Entra ID auth and Microsoft Foundry judge models.",
     category: "GenAI",
     tags: ["MLflow", "Guardrails", "LLM-as-Judge", "Azure", "Presidio", "Observability"],
-    image: "/images/guardian-observability-sdks.png",
+    image: "/images/opt/guardian-observability-sdks.jpg",
     featured: true,
     status: "Built",
     impact: [
@@ -69,7 +92,7 @@ export const projects: Project[] = [
       "Contributed to a delivery framework that turns an ambiguous problem into shipped, tested software through three phases (orchestrate, build, validate) and nine skills, with a Plan Gate and one-module-at-a-time TDD. Judgement lives in the model while every deterministic step runs in tested Python. Added a GitHub Copilot path that maps the same skills, agents, MCP servers and rules onto Copilot, removing the 3 to 5 day wait for Claude Code access; guards move to a pre-commit hook and CI where Copilot cannot block mid-chat. Reached the Top 20 prototypes in the Agentic AI Hackathon (about 1,000 teams, as reported) with a two-person team building on the AP invoice platform.",
     category: "GenAI",
     tags: ["Claude Code", "Subagents", "TDD", "MCP", "GitHub Copilot"],
-    image: "/images/ascend-agentic-harness.png",
+    image: "/images/opt/ascend-agentic-harness.jpg",
     featured: false,
     status: "Contributed",
     impact: [
@@ -88,7 +111,7 @@ export const projects: Project[] = [
       "A Python backend that detects and categorises changes between two revisions of an engineering drawing and returns annotated PDFs and review-ready results through a REST API. It pairs Azure Document Intelligence OCR with Azure OpenAI vision models to find both textual and geometric changes. Eight steps run end to end: render and preprocess with quality gates, Foreman-agent section planning (Rev B seeded with Rev A's section names), coarse crop and boundary refinement, a hybrid descriptor, parallel text and geometric diff paths, ReAct-loop validation of each candidate with a confidence score, highlighting, and PDF annotation. FastAPI exposes async comparisons (HTTP 202), per-step progress, reviews, approval and report download. Hybrid OCR plus vision, capped ReAct tool loops, and retry with backoff keep it resilient. It is the \"see what changed\" step of an AI change-impact analysis flow. Job state is currently held in memory, and one observed page with 8 sections took about 49 minutes.",
     category: "GenAI",
     tags: ["Azure Document Intelligence", "Azure OpenAI", "Vision", "ReAct Agents", "FastAPI", "OpenCV"],
-    image: "/images/ai-drawing-diff-pipeline.png",
+    image: "/images/opt/ai-drawing-diff-pipeline.jpg",
     featured: false,
     status: "Worked on",
     impact: [
@@ -108,7 +131,7 @@ export const projects: Project[] = [
     category: "Data Engineering",
     tags: ["Healthcare", "Dashboard", "React", "Data Visualization", "Community Health"],
     githubUrl: "https://github.com/chiranjeevbitm/sitamarhi-health--portal",
-    image: "/images/medical-dashboard.png",
+    image: "/images/opt/medical-dashboard.jpg",
     featured: true,
     impact: [
       { metric: "Domain", value: "Healthcare" },
@@ -130,7 +153,7 @@ export const projects: Project[] = [
     category: "GenAI",
     tags: ["Education", "NLP", "React", "FastAPI", "PostgreSQL", "Hindi-First"],
     githubUrl: "https://github.com/chiranjeevbitm/shikshak-Sahayak",
-    image: "/images/sikshak-sahayak.png",
+    image: "/images/opt/sikshak-sahayak.jpg",
     featured: true,
     impact: [
       { metric: "Target Users", value: "400K+" },
@@ -152,7 +175,7 @@ export const projects: Project[] = [
     category: "RAG",
     tags: ["RAG", "Azure OpenAI", "LangChain", "Vector Search", "Multimodal"],
     githubUrl: "https://github.com/chiranjeevbitm/multimodal_crag",
-    image: "/images/multimodal-crag.png",
+    image: "/images/opt/multimodal-crag.jpg",
     featured: true,
     impact: [
       { metric: "Type", value: "Multimodal" },
@@ -173,7 +196,7 @@ export const projects: Project[] = [
     category: "Machine Learning",
     tags: ["Deep Learning", "Research", "Medical Imaging", "Transfer Learning", "TensorFlow"],
     githubUrl: "https://github.com/chiranjeevbitm/RDVCoNet",
-    image: "/images/rdvconet.png",
+    image: "/images/opt/rdvconet.jpg",
     featured: true,
     impact: [
       { metric: "Venue", value: "Elsevier (2021)" },
@@ -195,7 +218,7 @@ export const projects: Project[] = [
     category: "GenAI",
     tags: ["LLMs", "Diffusion", "Prompt Engineering", "Python"],
     githubUrl: "https://github.com/chiranjeevbitm/Enhanced_image_prompting",
-    image: "/images/enhanced-image.png",
+    image: "/images/opt/enhanced-image.jpg",
     featured: false,
     impact: [
       { metric: "Type", value: "Image Gen" },
@@ -216,7 +239,7 @@ export const projects: Project[] = [
     category: "Machine Learning",
     tags: ["Healthcare", "Privacy", "Deep Learning", "Security"],
     githubUrl: "https://github.com/chiranjeevbitm/medguardian",
-    image: "/images/medguardian.png",
+    image: "/images/opt/medguardian.jpg",
     featured: false,
     impact: [
       { metric: "Domain", value: "Healthcare" },
@@ -237,7 +260,7 @@ export const projects: Project[] = [
     category: "GenAI",
     tags: ["AI", "NLP", "React", "ATS", "Content Gen"],
     githubUrl: "https://github.com/chiranjeevbitm/Ats_friendly_AI_resume_builder",
-    image: "/images/ats-friendly-ai-resume.png",
+    image: "/images/opt/ats-friendly-ai-resume.jpg",
     featured: false,
     impact: [
       { metric: "Type", value: "AI-Powered" },
@@ -258,7 +281,7 @@ export const projects: Project[] = [
     category: "Machine Learning",
     tags: ["Agentic AI", "Analytics", "Python", "Multi-Agent"],
     githubUrl: "https://github.com/chiranjeevbitm/Leadership-Insight-Agent",
-    image: "/images/ledership-insight.png",
+    image: "/images/opt/ledership-insight.jpg",
     featured: false,
     impact: [
       { metric: "Architecture", value: "Multi-Agent" },
@@ -279,7 +302,7 @@ export const projects: Project[] = [
     category: "Data Engineering",
     tags: ["Spend Analysis", "Data Cleaning", "Cost Optimisation", "Excel", "Python"],
     githubUrl: "https://github.com/chiranjeevbitm/english-quest",
-    image: "/images/english-quest.png",
+    image: "/images/opt/english-quest.jpg",
     featured: false,
     impact: [
       { metric: "Items Processed", value: "1,050+" },
@@ -300,7 +323,7 @@ export const projects: Project[] = [
     category: "Data Engineering",
     tags: ["React", "Node.js", "MongoDB", "Full-Stack"],
     githubUrl: "https://github.com/chiranjeevbitm/Doctors-Profile",
-    image: "/images/docto-profile.png",
+    image: "/images/opt/docto-profile.jpg",
     featured: false,
     impact: [
       { metric: "Stack", value: "Full-Stack" },
@@ -313,28 +336,6 @@ export const projects: Project[] = [
     }
   },
   {
-    id: "doctor-appointment-form",
-    title: "Arogya Clinic — Prescription Management",
-    tagline: "Full-Stack Digital Prescription Platform for Dr. Deepak Kumar MD",
-    description:
-      "A production-grade digital prescription management platform for Arogya Clinic (Dr. Deepak Kumar MD, General Medicine). Features a React 19 + Vite 7 frontend with a complete clinical form — patient demographics, vitals, physical & systemic exams, comorbidities with expandable detail drawers, quick-fill diagnosis chips, and a prescription table with unlimited medications. Backend built with FastAPI + PostgreSQL with bcrypt authentication, PMBJP drug catalog search, and full CRUD APIs. Includes an A4 print view that exactly mirrors the paper prescription format with Hindi letterhead, diet routine graphic, and doctor signature block, plus a patient dashboard with real-time stats and search.",
-    category: "Data Engineering",
-    tags: ["React", "FastAPI", "PostgreSQL", "Healthcare", "Prescription", "Vite", "Full-Stack"],
-    githubUrl: "https://github.com/chiranjeevbitm/DoctorAppointmentForm",
-    image: "/images/doctor-appointment-form.png",
-    featured: false,
-    impact: [
-      { metric: "Frontend", value: "React 19 + Vite 7" },
-      { metric: "Backend", value: "FastAPI + PostgreSQL" },
-      { metric: "Auth", value: "bcrypt" },
-      { metric: "Deployment", value: "Vercel + Render" }
-    ],
-    links: {
-      demo: "https://drdeepak-appointment-form.vercel.app/",
-      github: "https://github.com/chiranjeevbitm/DoctorAppointmentForm"
-    }
-  },
-  {
     id: "copilot-core-sdk",
     title: "Copilot Core SDK",
     tagline: "Production-Grade Async Multi-Tenant AI Copilot Engine",
@@ -343,7 +344,7 @@ export const projects: Project[] = [
     category: "GenAI",
     tags: ["Agentic AI", "Multi-Tenant", "OPEV Loop", "Kahn's Algorithm", "Azure", "Redis", "Postgres", "RabbitMQ"],
     githubUrl: "https://github.com/chiranjeevbitm/copilot-core-sdk",
-    image: "/images/custom built copilot.png",
+    image: "/images/opt/custom-built-copilot.jpg",
     featured: true,
     impact: [
       { metric: "Architecture", value: "OPEV Loop" },
@@ -364,7 +365,7 @@ export const projects: Project[] = [
     category: "GenAI",
     tags: ["Revit", "Agentic AI", "IronPython", "WebSocket", "pyRevit", "BIM", "Autodesk"],
     githubUrl: "https://github.com/chiranjeevbitm/revit-copilot-agent",
-    image: "/images/revit copilot agent.png",
+    image: "/images/opt/revit-copilot-agent.jpg",
     featured: true,
     impact: [
       { metric: "Platform", value: "Autodesk Revit" },

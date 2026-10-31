@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Award, BookOpen, ExternalLink, Calendar, Newspaper, TrendingUp, ChevronRight } from "lucide-react";
+import { Award, BookOpen, ExternalLink, Calendar, Newspaper, TrendingUp, ChevronRight, ChevronDown } from "lucide-react";
 import { certifications } from "../data/projects";
+import { Collapsible, ToggleButton } from "../components/Collapsible";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 30 },
@@ -17,7 +19,78 @@ const timelineEntry = {
   visible: { opacity: 1, x: 0, transition: { duration: 0.4, ease: "easeOut" as const } },
 };
 
+function Bullet({ text, icon }: { text: string; icon: string }) {
+  return (
+    <li className="flex gap-3">
+      <span className="material-symbols-outlined text-primary dark:text-[#d0bcff] text-[18px] shrink-0">{icon}</span>
+      <p className="text-[var(--on-surface)]">{text}</p>
+    </li>
+  );
+}
+
+/** Shows the first `limit` bullets and tucks the rest behind a toggle. */
+function BulletList({ items, limit, icon }: { items: string[]; limit: number; icon: string }) {
+  const [open, setOpen] = useState(false);
+  const head = items.slice(0, limit);
+  const rest = items.slice(limit);
+  return (
+    <div>
+      <ul className="list-none space-y-3">
+        {head.map((h, j) => (
+          <Bullet key={j} text={h} icon={icon} />
+        ))}
+      </ul>
+      {rest.length > 0 && (
+        <>
+          <Collapsible open={open}>
+            <ul className="list-none space-y-3 pt-3">
+              {rest.map((h, j) => (
+                <Bullet key={j} text={h} icon={icon} />
+              ))}
+            </ul>
+          </Collapsible>
+          <ToggleButton
+            open={open}
+            onClick={() => setOpen((o) => !o)}
+            closedLabel={`Show ${rest.length} more`}
+            className="mt-2"
+          />
+        </>
+      )}
+    </div>
+  );
+}
+
+/** One titled group of bullets that opens and closes. */
+function GroupAccordion({ title, items, defaultOpen }: { title: string; items: string[]; defaultOpen: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="rounded-xl border border-white/60 dark:border-white/10 bg-white/30 dark:bg-white/[0.03]">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left"
+      >
+        <span className="font-label-caps text-label-caps text-primary dark:text-[#d0bcff] font-bold">{title}</span>
+        <span className="flex items-center gap-2 text-xs text-[var(--on-surface-variant)] font-code-sm">
+          {items.length}
+          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+        </span>
+      </button>
+      <Collapsible open={open}>
+        <ul className="list-none space-y-3 px-4 pb-4">
+          {items.map((h, j) => (
+            <Bullet key={j} text={h} icon="check_circle" />
+          ))}
+        </ul>
+      </Collapsible>
+    </div>
+  );
+}
+
 export default function ExperienceSection() {
+  const [articlesOpen, setArticlesOpen] = useState(false);
   const timeline = [
     {
       company: "Deloitte",
@@ -186,27 +259,12 @@ export default function ExperienceSection() {
                           <p className="font-body-md text-[var(--on-surface)]"><span className="text-primary dark:text-[#d0bcff] font-bold">Featured:</span> {item.featured}</p>
                         </div>
                       )}
-                      {item.groups?.map((group) => (
-                        <div key={group.title}>
-                          <h4 className="font-label-caps text-label-caps text-primary dark:text-[#d0bcff] font-bold mb-2 mt-2">{group.title}</h4>
-                          <ul className="list-none space-y-3">
-                            {group.items.map((h, j) => (
-                              <li key={j} className="flex gap-3">
-                                <span className="material-symbols-outlined text-primary dark:text-[#d0bcff] text-[18px] shrink-0">check_circle</span>
-                                <p className="text-[var(--on-surface)]">{h}</p>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
+                      {item.groups?.map((group, gi) => (
+                        <GroupAccordion key={group.title} title={group.title} items={group.items} defaultOpen={gi === 0} />
                       ))}
-                      <ul className="list-none space-y-3">
-                        {item.highlights.map((h, j) => (
-                          <li key={j} className="flex gap-3">
-                            <span className="material-symbols-outlined text-primary dark:text-[#d0bcff] text-[18px] shrink-0">{i < 2 ? "check_circle" : "arrow_forward"}</span>
-                            <p className="text-[var(--on-surface)]">{h}</p>
-                          </li>
-                        ))}
-                      </ul>
+                      {item.highlights.length > 0 && (
+                        <BulletList items={item.highlights} limit={2} icon={i < 2 ? "check_circle" : "arrow_forward"} />
+                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -331,7 +389,7 @@ export default function ExperienceSection() {
                 <h2 className="font-headline-lg text-headline-lg text-[var(--on-surface)] font-bold">Articles & Insights</h2>
               </div>
               <div className="space-y-3">
-                {articles.map((article, i) => (
+                {articles.slice(0, 2).map((article, i) => (
                   <motion.a
                     key={i}
                     href={article.link}
@@ -359,6 +417,38 @@ export default function ExperienceSection() {
                     </div>
                   </motion.a>
                 ))}
+                <Collapsible open={articlesOpen}>
+                  <div className="space-y-3 pt-3">
+                {articles.slice(2).map((article, i) => (
+                  <motion.a
+                    key={i}
+                    href={article.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.08, duration: 0.3 }}
+                    className="block p-3 bg-white/40 rounded-lg border border-white/60 hover:bg-white/80 transition-all dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10 group"
+                  >
+                    <div className="flex justify-between items-start gap-2">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold text-[var(--on-surface)] group-hover:text-primary dark:group-hover:text-[#d0bcff] transition-colors line-clamp-2">
+                          {article.title}
+                        </p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-[10px] text-[var(--on-surface-variant)] bg-white/60 px-1.5 py-0.5 rounded dark:bg-white/10">{article.platform}</span>
+                          <span className="text-[10px] text-[var(--on-surface-variant)] flex items-center gap-1">
+                            <TrendingUp className="w-3 h-3" /> {article.impressions} impressions
+                          </span>
+                        </div>
+                      </div>
+                      <ExternalLink className="w-3.5 h-3.5 text-[var(--on-surface-variant)] shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                  </motion.a>
+                ))}
+                  </div>
+                </Collapsible>
               </div>
               <a
                 href="https://linkedin.com/in/chiranjeev-kumar-07071997"
@@ -368,6 +458,9 @@ export default function ExperienceSection() {
               >
                 Follow on LinkedIn <ExternalLink className="w-3 h-3" />
               </a>
+              <div>
+                <ToggleButton open={articlesOpen} onClick={() => setArticlesOpen((o) => !o)} closedLabel="More articles" openLabel="Fewer articles" />
+              </div>
             </motion.div>
           </aside>
         </div>

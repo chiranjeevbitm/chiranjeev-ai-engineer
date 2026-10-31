@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Award, BookOpen, Code2, Users, Zap, ExternalLink } from "lucide-react";
+import { Award, BookOpen, Code2, ExternalLink } from "lucide-react";
+import { Collapsible, ToggleButton } from "../components/Collapsible";
+import { useMode } from "../context/ModeContext";
 import CodeBlock from "../components/CodeBlock";
 import AIStatusBar from "../components/AIStatusBar";
 import AnimatedBlobs from "../components/AnimatedBlobs";
@@ -24,18 +27,28 @@ const statVariants = {
 };
 
 export default function HomeSection({ onNavigate }: Props) {
-  const stats = [
-    { icon: <Zap className="w-5 h-5" />, value: "1000+", label: "AI Practitioners Trained" },
-    { icon: <Award className="w-5 h-5" />, value: "$5M+", label: "Pipeline Opportunity" },
-    { icon: <Users className="w-5 h-5" />, value: "500+", label: "Developers Served" },
-    { icon: <Code2 className="w-5 h-5" />, value: "50%", label: "Proposal Time Cut" },
+  const { is3D } = useMode();
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [moreStats, setMoreStats] = useState(false);
+
+  const impactStats = [
+    { value: "1000+", label: "AI Practitioners Trained", icon: "🎓" },
+    { value: "$5M+", label: "Pipeline Opportunity", icon: "💰" },
+    { value: "500+", label: "Developers Served (Revit)", icon: "🚀" },
+    { value: "50%", label: "Proposal Time Reduction", icon: "⚡" },
+  ];
+  const moreImpactStats = [
+    { value: "-45%", label: "NLQ-to-SQL Query Latency", icon: "⏱️" },
+    { value: "+35%", label: "Retrieval Precision (RAG)", icon: "🎯" },
+    { value: "95%", label: "Item-Match Accuracy, 50K+ SKUs", icon: "🛒" },
+    { value: "Top 20", label: "Agentic AI Hackathon, ~1,000 Teams", icon: "🏅" },
   ];
 
   return (
     <div className="min-h-screen bg-grid-light selection:bg-primary/20 bg-background text-on-background dark:bg-[#131313] relative">
       <AnimatedBlobs />
       {/* Hero Section */}
-      <section className="relative min-h-screen md:min-h-screen flex flex-col justify-center md:justify-center items-center px-margin-mobile md:px-margin-desktop py-12 md:py-24 overflow-visible md:overflow-hidden pt-24 md:pt-32 snap-start">
+      <section className={`relative min-h-screen md:min-h-screen flex flex-col justify-center md:justify-center items-center ${is3D ? "lg:items-start" : ""} px-margin-mobile md:px-margin-desktop py-12 md:py-24 overflow-visible md:overflow-hidden ${is3D ? "pt-[36vh] lg:pt-32" : "pt-24 md:pt-32"} snap-start`}>
         {/* Parallax glow */}
         <motion.div
           className="absolute inset-0 z-[1] opacity-40"
@@ -44,7 +57,7 @@ export default function HomeSection({ onNavigate }: Props) {
         >
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 blur-[140px] rounded-full"></div>
         </motion.div>
-        <div className="relative z-10 text-center max-w-4xl">
+        <div className={`relative z-10 text-center max-w-4xl ${is3D ? "lg:text-left lg:max-w-xl xl:max-w-2xl lg:ml-[max(0px,calc((100vw-1280px)/2))]" : ""}`}>
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -58,7 +71,7 @@ export default function HomeSection({ onNavigate }: Props) {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap justify-center gap-3 mb-8"
+            className={`flex flex-wrap justify-center gap-3 mb-8 ${is3D ? "lg:justify-start" : ""}`}
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-white/60 backdrop-blur-md text-primary font-code-sm text-code-sm shadow-sm dark:bg-white/5">
               <span className="material-symbols-outlined text-[16px]">verified</span>
@@ -88,25 +101,27 @@ export default function HomeSection({ onNavigate }: Props) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="font-body-md text-body-md text-[var(--on-surface-variant)] max-w-2xl mx-auto mb-6"
+            className={`font-body-md text-body-md text-[var(--on-surface-variant)] max-w-2xl mx-auto mb-6 ${is3D ? "lg:mx-0" : ""}`}
           >
             Production GenAI Specialist building enterprise-scale multi-agent systems, 
             RAG pipelines, and MCP architectures. <strong className="text-[var(--on-surface)]">Dual Master's in AI/ML</strong> | 
             <strong className="text-purple-400"> NVIDIA Certified</strong> | 
             <strong className="text-[var(--on-surface)]"> Top 0.5% Kaggle</strong>
           </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <CodeBlock />
-          </motion.div>
+          {!is3D && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <CodeBlock />
+            </motion.div>
+          )}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mt-10"
+            className={`flex flex-col sm:flex-row gap-4 justify-center mt-10 ${is3D ? "lg:justify-start" : ""}`}
           >
             <MagneticButton
               onClick={() => onNavigate("skills")}
@@ -121,28 +136,6 @@ export default function HomeSection({ onNavigate }: Props) {
               My Journey
             </MagneticButton>
           </motion.div>
-          {/* Stats Grid */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-0"
-          >
-            {stats.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.8 + i * 0.1 }}
-                className="p-4 bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl hover:bg-white/10 transition-all duration-300 hover:scale-105 hover:shadow-accent group"
-              >
-                <div className="text-primary dark:text-cyan-400 mb-2 flex justify-center">{stat.icon}</div>
-                <div className="text-2xl font-bold text-[var(--on-surface)] mb-1">{stat.value}</div>
-                <div className="text-xs text-[var(--on-surface-variant)]">{stat.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
-
         </div>
       </section>
 
@@ -172,6 +165,8 @@ export default function HomeSection({ onNavigate }: Props) {
                 <strong className="text-[var(--on-surface)]"> Production Generative AI</strong>, <strong className="text-[var(--on-surface)]">Agentic Systems</strong>, 
                 and <strong className="text-[var(--on-surface)]">Multi-Agent Architectures</strong>. I build AI systems that ship to production — not just POCs.
               </p>
+              <Collapsible open={aboutOpen}>
+                <div className="space-y-4 pt-1">
               <p>
                 Led the GenAI COE Incubator — shipping production pipelines for RAG, multi-agent frameworks, and MCP (server/client) deployments. 
                 Architected an RFP Automation System that cut proposal turnaround from 4 weeks to 2 weeks for a client — part of an initial ~$1M engagement with a $5M+ pipeline forecast.
@@ -191,6 +186,9 @@ export default function HomeSection({ onNavigate }: Props) {
                 I combine academic rigor with a builder's mindset — shipping production apps in weekends 
                 (like Shikshak Sahayak for 400K+ teachers) while delivering enterprise-grade systems.
               </p>
+                </div>
+              </Collapsible>
+              <ToggleButton open={aboutOpen} onClick={() => setAboutOpen((o) => !o)} closedLabel="Read more" openLabel="Read less" />
               <p className="text-primary dark:text-[#d0bcff] font-medium">
                 My mission: Make AI accessible, practical, and impactful — from classroom teachers in Bihar to Fortune 500 enterprises.
               </p>
@@ -291,16 +289,7 @@ export default function HomeSection({ onNavigate }: Props) {
             viewport={{ once: true }}
             className="grid grid-cols-2 md:grid-cols-4 gap-6"
           >
-            {[
-              { value: "1000+", label: "AI Practitioners Trained", icon: "🎓" },
-              { value: "$5M+", label: "Pipeline Opportunity", icon: "💰" },
-              { value: "500+", label: "Developers Served (Revit)", icon: "🚀" },
-              { value: "50%", label: "Proposal Time Reduction", icon: "⚡" },
-              { value: "-45%", label: "NLQ-to-SQL Query Latency", icon: "⏱️" },
-              { value: "+35%", label: "Retrieval Precision (RAG)", icon: "🎯" },
-              { value: "95%", label: "Item-Match Accuracy, 50K+ SKUs", icon: "🛒" },
-              { value: "Top 20", label: "Agentic AI Hackathon, ~1,000 Teams", icon: "🏅" },
-            ].map((stat) => (
+            {impactStats.map((stat) => (
               <motion.div
                 key={stat.label}
                 variants={statVariants}
@@ -312,6 +301,20 @@ export default function HomeSection({ onNavigate }: Props) {
               </motion.div>
             ))}
           </motion.div>
+          <Collapsible open={moreStats}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-6">
+              {moreImpactStats.map((stat) => (
+                <div key={stat.label} className="text-center p-6 glass-card-light rounded-xl">
+                  <div className="text-3xl mb-2">{stat.icon}</div>
+                  <div className="font-headline-lg text-headline-lg text-[var(--on-surface)] mb-1">{stat.value}</div>
+                  <div className="font-label-caps text-label-caps text-[var(--on-surface-variant)]">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </Collapsible>
+          <div className="text-center mt-4">
+            <ToggleButton open={moreStats} onClick={() => setMoreStats((o) => !o)} closedLabel="More results" openLabel="Fewer results" />
+          </div>
         </div>
       </motion.section>
     </div>

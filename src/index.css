@@ -173,3 +173,40 @@
     padding-top: 4.5rem;
   }
 }
+
+/* ---------- 3D mode ----------
+   The WebGL scene sits behind the page, so section backgrounds go transparent
+   and the heavy backdrop blurs are replaced by cheap translucent fills. */
+.mode-3d body {
+  background: #070b16;
+}
+
+.mode-3d [data-section] > div,
+.mode-3d #skills-summary,
+.mode-3d #about {
+  background: transparent !important;
+}
+
+.mode-3d .bg-grid-light,
+.mode-3d .bg-grid-light::before {
+  background-image: none;
+}
+
+.mode-3d .glass-card-light,
+.mode-3d .glass-card-dark {
+  background: rgba(10, 16, 34, 0.74);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(125, 211, 252, 0.14);
+  box-shadow: 0 10px 40px rgba(2, 6, 23, 0.45);
+}
+
+.mode-3d header {
+  background: rgba(7, 11, 22, 0.72) !important;
+}
+
+.mode-3d .tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.18s ease-out, box-shadow 0.3s ease;
+  will-change: transform;
+}

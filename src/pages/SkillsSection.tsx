@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Download, ExternalLink, Mail, Code } from "lucide-react";
+import { Download, ExternalLink, ChevronDown } from "lucide-react";
 import { certifications } from "../data/projects";
+import { Collapsible, ToggleButton } from "../components/Collapsible";
 
 interface Props {
   onOpenResume?: () => void;
@@ -22,6 +23,8 @@ interface Skill {
 
 export default function SkillsSection({ onOpenResume }: Props) {
   const [activeCategory, setActiveCategory] = useState<SkillCategory>('genai');
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
+  const [showAllAwards, setShowAllAwards] = useState(false);
 
   const handleResume = onOpenResume || (() => {
     window.open("/Chiranjeev_Kumar_Resume_Oct2026.pdf", "_blank");
@@ -212,6 +215,19 @@ export default function SkillsSection({ onOpenResume }: Props) {
           <h2 className="font-headline-lg text-headline-lg mb-stack-md border-l-4 border-primary pl-4 text-[var(--on-surface)] dark:border-[#d0bcff]">
             Certifications & Credentials <span className="text-sm text-[var(--on-surface-variant)] font-normal">({certifications.length})</span>
           </h2>
+          <div className="mb-4">
+            <ToggleButton
+              open={Object.values(openGroups).some(Boolean)}
+              onClick={() => {
+                const anyOpen = Object.values(openGroups).some(Boolean);
+                const next: Record<string, boolean> = {};
+                ["google-cloud", "microsoft-azure", "ai-skills", "nvidia-genai", "platforms", "specialized"].forEach((k) => (next[k] = !anyOpen));
+                setOpenGroups(next);
+              }}
+              closedLabel="Expand all groups"
+              openLabel="Collapse all groups"
+            />
+          </div>
 
           {[
             { key: "google-cloud", label: "Google Cloud & AI", icon: "☁️", color: "border-l-blue-500 bg-blue-500/5", badge: "bg-blue-500/10 text-blue-400" },
@@ -232,14 +248,21 @@ export default function SkillsSection({ onOpenResume }: Props) {
                 transition={{ delay: gi * 0.08, duration: 0.4 }}
                 className={`mb-4 p-4 rounded-xl border-l-4 ${group.color} border border-white/60 dark:border-white/10`}
               >
-                <div className="flex items-center gap-2 mb-3">
+                <button
+                  type="button"
+                  onClick={() => setOpenGroups((g) => ({ ...g, [group.key]: !g[group.key] }))}
+                  aria-expanded={!!openGroups[group.key]}
+                  className="w-full flex items-center gap-2 text-left"
+                >
                   <span className="text-lg">{group.icon}</span>
                   <h3 className="font-headline-lg text-headline-lg text-[var(--on-surface)]">{group.label}</h3>
                   <span className={`ml-auto text-xs px-2 py-0.5 rounded-full font-code-sm ${group.badge}`}>
                     {groupCerts.length} certs
                   </span>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                  <ChevronDown className={`w-4 h-4 text-[var(--on-surface-variant)] transition-transform duration-300 ${openGroups[group.key] ? "rotate-180" : ""}`} />
+                </button>
+                <Collapsible open={!!openGroups[group.key]}>
+                <div className="pt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                   {groupCerts.map((cert, ci) => {
                     const Card = cert.link ? 'a' : 'div';
                     const cardProps = cert.link ? { href: cert.link, target: "_blank", rel: "noopener noreferrer" } : {};
@@ -273,6 +296,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
                     );
                   })}
                 </div>
+                </Collapsible>
               </motion.div>
             );
           })}
@@ -298,7 +322,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
               { company: "Deloitte", title: "Best Performer Award 2025", desc: "Recognized for outstanding delivery and impact.", icon: "🥇" },
               { company: "Deloitte", title: "Consultant-Level Bangalore Hackathon", desc: "1st Prize (team) for innovative AI solution.", icon: "🏅" },
               { company: "Tredence Inc.", title: "Pat on the Back Award", desc: "Recognition for excellence in Catalog Normalization automation.", icon: "🎖️" },
-            ].map((a, i) => (
+            ].slice(0, showAllAwards ? 7 : 3).map((a, i) => (
               <motion.div
                 key={a.title}
                 initial={{ opacity: 0, y: 20 }}
@@ -314,6 +338,9 @@ export default function SkillsSection({ onOpenResume }: Props) {
                 <p className="font-body-md text-body-md text-[var(--on-surface-variant)] text-sm">{a.desc}</p>
               </motion.div>
             ))}
+          </div>
+          <div className="mt-3">
+            <ToggleButton open={showAllAwards} onClick={() => setShowAllAwards((o) => !o)} closedLabel="Show all awards" openLabel="Show fewer awards" />
           </div>
         </motion.section>
 
@@ -355,33 +382,6 @@ export default function SkillsSection({ onOpenResume }: Props) {
           </div>
         </motion.section>
 
-        {/* Contact CTA */}
-        <motion.section
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.5 }}
-          className="glass-card-light p-stack-lg rounded-2xl text-center border-primary/10 relative overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
-          <h2 className="font-headline-lg text-headline-lg mb-stack-md text-[var(--on-surface)]">Let's Build the Future Together</h2>
-          <p className="font-body-md text-body-md text-[var(--on-surface-variant)] mb-stack-lg max-w-xl mx-auto">
-            Currently available for high-impact consulting in Agentic Systems, Multi-Agent Architectures, and Enterprise GenAI.
-          </p>
-          <div className="flex flex-wrap justify-center gap-stack-md">
-            {[
-              { icon: <Mail className="w-4 h-4" />, label: "Email", href: "mailto:chiranjeevkumar47@gmail.com" },
-              { icon: <ExternalLink className="w-4 h-4" />, label: "LinkedIn", href: "https://linkedin.com/in/chiranjeev-kumar-07071997" },
-              { icon: <Code className="w-4 h-4" />, label: "GitHub", href: "https://github.com/chiranjeevbitm" },
-            ].map((link) => (
-              <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 px-5 py-3 bg-white/5 border border-white/10 rounded-lg font-label-caps text-label-caps hover:bg-primary hover:text-on-primary hover:border-primary transition-all group text-[var(--on-surface-variant)] dark:hover:bg-[#d0bcff] dark:hover:text-[#3c0091] dark:hover:border-[#d0bcff]">
-                {link.icon}
-                {link.label}
-              </a>
-            ))}
-          </div>
-        </motion.section>
       </main>
     </motion.div>
   );
