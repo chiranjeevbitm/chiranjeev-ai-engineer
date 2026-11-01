@@ -20,7 +20,7 @@ export default function Footer() {
               © {currentYear} Chiranjeev Kumar. Production GenAI Specialist.
             </div>
             <div className="font-code-sm text-code-sm text-[var(--text-muted)]/60 text-xs mt-1">
-              Dual Master's in AI/ML • NVIDIA Certified • Top 0.5% Kaggle
+              Master's in AI/ML • NVIDIA Certified • Top 0.5% Kaggle
             </div>
           </div>
           <div className="flex flex-wrap justify-center gap-gutter">

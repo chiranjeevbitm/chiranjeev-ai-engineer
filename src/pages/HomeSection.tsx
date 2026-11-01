@@ -104,7 +104,7 @@ export default function HomeSection({ onNavigate }: Props) {
             className={`font-body-md text-body-md text-[var(--on-surface-variant)] max-w-2xl mx-auto mb-6 ${is3D ? "lg:mx-0" : ""}`}
           >
             Production GenAI Specialist building enterprise-scale multi-agent systems, 
-            RAG pipelines, and MCP architectures. <strong className="text-[var(--on-surface)]">Dual Master's in AI/ML</strong> | 
+            RAG pipelines, and MCP architectures. <strong className="text-[var(--on-surface)]">Master's in AI/ML</strong> | 
             <strong className="text-purple-400"> NVIDIA Certified</strong> | 
             <strong className="text-[var(--on-surface)]"> Top 0.5% Kaggle</strong>
           </motion.p>
