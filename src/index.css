@@ -176,9 +176,10 @@
 
 /* ---------- 3D mode ----------
    The WebGL scene sits behind the page, so section backgrounds go transparent
-   and the heavy backdrop blurs are replaced by cheap translucent fills. */
+   and the heavy backdrop blurs are replaced by cheap translucent fills.
+   Scene colours come from the active palette (--scene-* below). */
 .mode-3d body {
-  background: #070b16;
+  background: var(--scene-base);
 }
 
 .mode-3d [data-section] > div,
@@ -194,15 +195,15 @@
 
 .mode-3d .glass-card-light,
 .mode-3d .glass-card-dark {
-  background: rgba(10, 16, 34, 0.74);
+  background: var(--scene-card);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border: 1px solid rgba(125, 211, 252, 0.14);
-  box-shadow: 0 10px 40px rgba(2, 6, 23, 0.45);
+  border: 1px solid var(--scene-card-border);
+  box-shadow: var(--scene-card-shadow);
 }
 
 .mode-3d header {
-  background: rgba(7, 11, 22, 0.72) !important;
+  background: var(--scene-nav) !important;
 }
 
 .mode-3d .tilt-card {
@@ -216,7 +217,7 @@
    changes backgrounds, surfaces, borders and the navbar tint only; fonts,
    spacing and layout are untouched. "light" and "dark" match the original
    themes. The Claude palettes also swap the accent for Claude's clay.
-   3D mode keeps its own dark scene, so every rule skips .mode-3d. */
+   3D mode uses the same palette; its scene colours are the --scene-* tokens. */
 html[data-palette] {
   --pal-page: #f8fafc;
   --pal-band: #f1f5f9;
@@ -225,115 +226,180 @@ html[data-palette] {
   --pal-media: #f3f4f6;
   --pal-glass-dark-border: rgba(125, 211, 252, 0.1);
 }
-html[data-palette="light-warm"]:not(.mode-3d) {
+html[data-palette="light-warm"] {
   --bg: #fffdf8; --bg-surface: #f6f0e6; --border: #e7decf;
   --pal-page: #fbf8f2; --pal-band: #f3ece1; --pal-nav: 251 248 242;
   --pal-dot: rgba(194, 150, 90, 0.16); --pal-media: #efe7da;
 }
-html[data-palette="warm"]:not(.mode-3d) {
+html[data-palette="warm"] {
   --bg: #f8f0e3; --bg-surface: #ede1ce; --border: #dccbb0;
   --pal-page: #f3e9d9; --pal-band: #e9dcc7; --pal-nav: 243 233 217;
   --pal-dot: rgba(150, 105, 50, 0.18); --pal-media: #e6d8c1;
 }
-html[data-palette="claude"]:not(.mode-3d) {
+html[data-palette="claude"] {
   --bg: #faf9f5; --bg-surface: #f0eee6; --border: #e3dfd3; --accent: #c15f3c;
   --pal-page: #faf9f5; --pal-band: #f0eee6; --pal-nav: 250 249 245;
   --pal-dot: rgba(217, 119, 87, 0.14); --pal-media: #eae7dd;
   --clay: #c15f3c; --clay-2: #a84f30; --clay-ink: #ffffff;
 }
-html[data-palette="dark"]:not(.mode-3d) {
+html[data-palette="dark"] {
   --pal-page: #131313; --pal-band: #1c1b1b; --pal-nav: 18 18 18;
   --pal-dot: rgba(208, 188, 255, 0.05); --pal-media: rgba(0, 0, 0, 0.4);
 }
-html[data-palette="warm-dark"]:not(.mode-3d) {
+html[data-palette="warm-dark"] {
   --bg: #15120f; --bg-surface: #26211b; --border: #3a322a;
   --pal-page: #1b1814; --pal-band: #24201b; --pal-nav: 27 24 20;
   --pal-dot: rgba(240, 200, 150, 0.06); --pal-media: rgba(0, 0, 0, 0.35);
 }
-html[data-palette="claude-dark"]:not(.mode-3d) {
+html[data-palette="claude-dark"] {
   --bg: #1f1e1d; --bg-surface: #30302e; --border: #43423d; --accent: #d97757;
   --pal-page: #262624; --pal-band: #2e2d2a; --pal-nav: 38 38 36;
   --pal-dot: rgba(217, 119, 87, 0.08); --pal-media: rgba(0, 0, 0, 0.3);
   --pal-glass-dark-border: rgba(217, 119, 87, 0.16);
   --clay: #d97757; --clay-2: #e39a7f; --clay-ink: #1f1e1d;
 }
-html[data-palette].dark:not(.mode-3d) { color-scheme: dark; }
+html[data-palette].dark { color-scheme: dark; }
 
 /* Surfaces mapped onto the palette */
-html[data-palette]:not(.mode-3d) .bg-background,
-html[data-palette]:not(.mode-3d) .dark\:bg-\[\#131313\] { background-color: var(--pal-page); }
-html[data-palette]:not(.mode-3d) .bg-surface,
-html[data-palette]:not(.mode-3d) .dark\:bg-\[\#1c1b1b\] { background-color: var(--pal-band); }
-html[data-palette]:not(.mode-3d) .border-background,
-html[data-palette]:not(.mode-3d) .dark\:border-\[\#131313\] { border-color: var(--pal-page); }
-html[data-palette]:not(.mode-3d) .bg-gray-100 { background-color: var(--pal-media); }
+html[data-palette] .bg-background,
+html[data-palette] .dark\:bg-\[\#131313\] { background-color: var(--pal-page); }
+html[data-palette] .bg-surface,
+html[data-palette] .dark\:bg-\[\#1c1b1b\] { background-color: var(--pal-band); }
+html[data-palette] .border-background,
+html[data-palette] .dark\:border-\[\#131313\] { border-color: var(--pal-page); }
+html[data-palette] .bg-gray-100 { background-color: var(--pal-media); }
 html[data-palette]:not(.mode-3d) .bg-grid-light { background-image: radial-gradient(var(--pal-dot) 1px, transparent 0); }
-html[data-palette]:not(.mode-3d) header.bg-white\/70 { background-color: rgb(var(--pal-nav) / 0.7); }
-html[data-palette]:not(.mode-3d) header.bg-white\/90 { background-color: rgb(var(--pal-nav) / 0.9); }
-html[data-palette]:not(.mode-3d) header .bg-white\/95 { background-color: rgb(var(--pal-nav) / 0.95); }
-html[data-palette]:not(.mode-3d) header.dark\:bg-\[\#121212\]\/90 { background-color: rgb(var(--pal-nav) / 0.9); }
-html[data-palette]:not(.mode-3d) header.dark\:bg-\[\#121212\]\/95,
-html[data-palette]:not(.mode-3d) header .dark\:bg-\[\#121212\]\/95 { background-color: rgb(var(--pal-nav) / 0.95); }
-html[data-palette]:not(.mode-3d) header.dark\:border-\[\#121212\]\/80 { border-color: rgb(var(--pal-nav) / 0.8); }
+html[data-palette] header.bg-white\/70 { background-color: rgb(var(--pal-nav) / 0.7); }
+html[data-palette] header.bg-white\/90 { background-color: rgb(var(--pal-nav) / 0.9); }
+html[data-palette] header .bg-white\/95 { background-color: rgb(var(--pal-nav) / 0.95); }
+html[data-palette] header.dark\:bg-\[\#121212\]\/90 { background-color: rgb(var(--pal-nav) / 0.9); }
+html[data-palette] header.dark\:bg-\[\#121212\]\/95,
+html[data-palette] header .dark\:bg-\[\#121212\]\/95 { background-color: rgb(var(--pal-nav) / 0.95); }
+html[data-palette] header.dark\:border-\[\#121212\]\/80 { border-color: rgb(var(--pal-nav) / 0.8); }
 html[data-palette].dark:not(.mode-3d) .glass-card-light { border-color: var(--pal-glass-dark-border); }
 
 /* Claude palettes: clay accent in place of sky blue / lavender */
-html[data-palette^="claude"]:not(.mode-3d) .text-primary,
-html[data-palette^="claude"]:not(.mode-3d) .text-\[\#0ea5e9\],
-html[data-palette^="claude"]:not(.mode-3d) .dark\:text-\[\#d0bcff\],
-html[data-palette^="claude"]:not(.mode-3d) .hover\:text-primary:hover,
-html[data-palette^="claude"]:not(.mode-3d) .hover\:text-\[\#0ea5e9\]:hover,
-html[data-palette^="claude"]:not(.mode-3d) .dark\:hover\:text-\[\#d0bcff\]:hover,
-html[data-palette^="claude"]:not(.mode-3d) .group:hover .group-hover\:text-primary,
-html[data-palette^="claude"]:not(.mode-3d) .group:hover .dark\:group-hover\:text-\[\#d0bcff\] { color: var(--clay); }
-html[data-palette^="claude"]:not(.mode-3d) .text-secondary,
-html[data-palette^="claude"]:not(.mode-3d) .dark\:text-\[\#4cd7f6\] { color: var(--clay-2); }
-html[data-palette^="claude"]:not(.mode-3d) .bg-primary,
-html[data-palette^="claude"]:not(.mode-3d) .bg-\[\#0ea5e9\],
-html[data-palette^="claude"]:not(.mode-3d) .dark\:bg-\[\#d0bcff\],
-html[data-palette^="claude"]:not(.mode-3d) .hover\:bg-primary:hover { background-color: var(--clay); }
-html[data-palette^="claude"]:not(.mode-3d) .bg-secondary { background-color: var(--clay-2); }
-html[data-palette^="claude"]:not(.mode-3d) .text-on-primary,
-html[data-palette^="claude"]:not(.mode-3d) .hover\:text-on-primary:hover,
-html[data-palette^="claude"]:not(.mode-3d) .dark\:text-\[\#3c0091\],
-html[data-palette^="claude"]:not(.mode-3d) .bg-\[\#0ea5e9\].text-white { color: var(--clay-ink); }
-html[data-palette^="claude"]:not(.mode-3d) .bg-primary\/5,
-html[data-palette^="claude"]:not(.mode-3d) .dark\:bg-\[\#d0bcff\]\/5 { background-color: color-mix(in srgb, var(--clay) 6%, transparent); }
-html[data-palette^="claude"]:not(.mode-3d) .bg-primary\/10,
-html[data-palette^="claude"]:not(.mode-3d) .hover\:bg-primary\/10:hover,
-html[data-palette^="claude"]:not(.mode-3d) .dark\:bg-\[\#d0bcff\]\/10,
-html[data-palette^="claude"]:not(.mode-3d) .dark\:hover\:bg-\[\#d0bcff\]\/10:hover { background-color: color-mix(in srgb, var(--clay) 11%, transparent); }
-html[data-palette^="claude"]:not(.mode-3d) .bg-primary\/20,
-html[data-palette^="claude"]:not(.mode-3d) .hover\:bg-primary\/20:hover { background-color: color-mix(in srgb, var(--clay) 20%, transparent); }
-html[data-palette^="claude"]:not(.mode-3d) .border-primary,
-html[data-palette^="claude"]:not(.mode-3d) .hover\:border-primary:hover,
-html[data-palette^="claude"]:not(.mode-3d) .dark\:border-\[\#d0bcff\] { border-color: var(--clay); }
-html[data-palette^="claude"]:not(.mode-3d) .border-primary\/10,
-html[data-palette^="claude"]:not(.mode-3d) .dark\:border-\[\#d0bcff\]\/10 { border-color: color-mix(in srgb, var(--clay) 14%, transparent); }
-html[data-palette^="claude"]:not(.mode-3d) .border-primary\/20,
-html[data-palette^="claude"]:not(.mode-3d) .dark\:border-\[\#d0bcff\]\/20 { border-color: color-mix(in srgb, var(--clay) 24%, transparent); }
-html[data-palette^="claude"]:not(.mode-3d) .border-primary\/30,
-html[data-palette^="claude"]:not(.mode-3d) .border-primary\/40,
-html[data-palette^="claude"]:not(.mode-3d) .dark\:border-\[\#d0bcff\]\/30,
-html[data-palette^="claude"]:not(.mode-3d) .dark\:border-\[\#d0bcff\]\/40 { border-color: color-mix(in srgb, var(--clay) 38%, transparent); }
-html[data-palette^="claude"]:not(.mode-3d) .hover\:border-primary\/30:hover,
-html[data-palette^="claude"]:not(.mode-3d) .hover\:border-primary\/40:hover,
-html[data-palette^="claude"]:not(.mode-3d) .hover\:border-primary\/50:hover,
-html[data-palette^="claude"]:not(.mode-3d) .dark\:hover\:border-\[\#d0bcff\]\/50:hover { border-color: color-mix(in srgb, var(--clay) 50%, transparent); }
-html[data-palette^="claude"]:not(.mode-3d) .shadow-primary\/20,
-html[data-palette^="claude"]:not(.mode-3d) .shadow-\[\#0ea5e9\]\/20,
-html[data-palette^="claude"]:not(.mode-3d) .dark\:shadow-\[\#d0bcff\]\/20 { --tw-shadow-color: color-mix(in srgb, var(--clay) 25%, transparent); }
-html[data-palette^="claude"]:not(.mode-3d) .text-gradient {
+html[data-palette^="claude"] .text-primary,
+html[data-palette^="claude"] .text-\[\#0ea5e9\],
+html[data-palette^="claude"] .dark\:text-\[\#d0bcff\],
+html[data-palette^="claude"] .hover\:text-primary:hover,
+html[data-palette^="claude"] .hover\:text-\[\#0ea5e9\]:hover,
+html[data-palette^="claude"] .dark\:hover\:text-\[\#d0bcff\]:hover,
+html[data-palette^="claude"] .group:hover .group-hover\:text-primary,
+html[data-palette^="claude"] .group:hover .dark\:group-hover\:text-\[\#d0bcff\] { color: var(--clay); }
+html[data-palette^="claude"] .text-secondary,
+html[data-palette^="claude"] .dark\:text-\[\#4cd7f6\] { color: var(--clay-2); }
+html[data-palette^="claude"] .bg-primary,
+html[data-palette^="claude"] .bg-\[\#0ea5e9\],
+html[data-palette^="claude"] .dark\:bg-\[\#d0bcff\],
+html[data-palette^="claude"] .hover\:bg-primary:hover { background-color: var(--clay); }
+html[data-palette^="claude"] .bg-secondary { background-color: var(--clay-2); }
+html[data-palette^="claude"] .text-on-primary,
+html[data-palette^="claude"] .hover\:text-on-primary:hover,
+html[data-palette^="claude"] .dark\:text-\[\#3c0091\],
+html[data-palette^="claude"] .bg-\[\#0ea5e9\].text-white { color: var(--clay-ink); }
+html[data-palette^="claude"] .bg-primary\/5,
+html[data-palette^="claude"] .dark\:bg-\[\#d0bcff\]\/5 { background-color: color-mix(in srgb, var(--clay) 6%, transparent); }
+html[data-palette^="claude"] .bg-primary\/10,
+html[data-palette^="claude"] .hover\:bg-primary\/10:hover,
+html[data-palette^="claude"] .dark\:bg-\[\#d0bcff\]\/10,
+html[data-palette^="claude"] .dark\:hover\:bg-\[\#d0bcff\]\/10:hover { background-color: color-mix(in srgb, var(--clay) 11%, transparent); }
+html[data-palette^="claude"] .bg-primary\/20,
+html[data-palette^="claude"] .hover\:bg-primary\/20:hover { background-color: color-mix(in srgb, var(--clay) 20%, transparent); }
+html[data-palette^="claude"] .border-primary,
+html[data-palette^="claude"] .hover\:border-primary:hover,
+html[data-palette^="claude"] .dark\:border-\[\#d0bcff\] { border-color: var(--clay); }
+html[data-palette^="claude"] .border-primary\/10,
+html[data-palette^="claude"] .dark\:border-\[\#d0bcff\]\/10 { border-color: color-mix(in srgb, var(--clay) 14%, transparent); }
+html[data-palette^="claude"] .border-primary\/20,
+html[data-palette^="claude"] .dark\:border-\[\#d0bcff\]\/20 { border-color: color-mix(in srgb, var(--clay) 24%, transparent); }
+html[data-palette^="claude"] .border-primary\/30,
+html[data-palette^="claude"] .border-primary\/40,
+html[data-palette^="claude"] .dark\:border-\[\#d0bcff\]\/30,
+html[data-palette^="claude"] .dark\:border-\[\#d0bcff\]\/40 { border-color: color-mix(in srgb, var(--clay) 38%, transparent); }
+html[data-palette^="claude"] .hover\:border-primary\/30:hover,
+html[data-palette^="claude"] .hover\:border-primary\/40:hover,
+html[data-palette^="claude"] .hover\:border-primary\/50:hover,
+html[data-palette^="claude"] .dark\:hover\:border-\[\#d0bcff\]\/50:hover { border-color: color-mix(in srgb, var(--clay) 50%, transparent); }
+html[data-palette^="claude"] .shadow-primary\/20,
+html[data-palette^="claude"] .shadow-\[\#0ea5e9\]\/20,
+html[data-palette^="claude"] .dark\:shadow-\[\#d0bcff\]\/20 { --tw-shadow-color: color-mix(in srgb, var(--clay) 25%, transparent); }
+html[data-palette^="claude"] .text-gradient {
   background: linear-gradient(135deg, var(--clay) 0%, var(--clay-2) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-html[data-palette^="claude"]:not(.mode-3d) .timeline-line { background: linear-gradient(to bottom, var(--clay-2) 0%, var(--clay) 50%, var(--border) 100%); }
-html[data-palette^="claude"]:not(.mode-3d) .glow-ice { box-shadow: 0 0 30px 0 color-mix(in srgb, var(--clay) 20%, transparent); }
-html[data-palette^="claude"]:not(.mode-3d) .glow-hover-light:hover {
+html[data-palette^="claude"] .timeline-line { background: linear-gradient(to bottom, var(--clay-2) 0%, var(--clay) 50%, var(--border) 100%); }
+html[data-palette^="claude"] .glow-ice { box-shadow: 0 0 30px 0 color-mix(in srgb, var(--clay) 20%, transparent); }
+html[data-palette^="claude"] .glow-hover-light:hover {
   box-shadow: 0 0 30px color-mix(in srgb, var(--clay) 18%, transparent);
   border-color: color-mix(in srgb, var(--clay) 35%, transparent);
 }
-html[data-palette^="claude"]:not(.mode-3d) .from-cyan-500.to-purple-500 { background-image: linear-gradient(to right, var(--clay), var(--clay-2)); }
-html[data-palette="claude-dark"]:not(.mode-3d) .dark\:text-\[\#cbc3d7\] { color: #c3c0b6; }
-html[data-palette="claude-dark"]:not(.mode-3d) .dark\:text-\[\#e5e2e1\] { color: #faf9f5; }
+html[data-palette^="claude"] .from-cyan-500.to-purple-500 { background-image: linear-gradient(to right, var(--clay), var(--clay-2)); }
+html[data-palette="claude-dark"] .dark\:text-\[\#cbc3d7\] { color: #c3c0b6; }
+html[data-palette="claude-dark"] .dark\:text-\[\#e5e2e1\] { color: #faf9f5; }
+
+/* 3D scene colours per palette (light is the default) */
+html[data-palette], :root {
+  --scene-base: #f8fafc;
+  --scene-bg: radial-gradient(60% 50% at 78% 28%, rgba(14,165,233,0.14), transparent 70%), radial-gradient(50% 45% at 12% 85%, rgba(139,92,246,0.12), transparent 70%), linear-gradient(180deg, #f8fafc 0%, #eef4fb 55%, #f3f0fb 100%);
+  --scene-card: rgba(255,255,255,0.74);
+  --scene-card-border: rgba(14,165,233,0.16);
+  --scene-card-shadow: 0 10px 40px rgba(15,23,42,0.08);
+  --scene-nav: rgba(248,250,252,0.78);
+  --scene-cursor: radial-gradient(circle, rgba(14,165,233,0.10) 0%, rgba(139,92,246,0.06) 40%, transparent 70%);
+}
+html[data-palette="light-warm"] {
+  --scene-base: #fbf8f2;
+  --scene-bg: radial-gradient(60% 50% at 78% 28%, rgba(14,165,233,0.10), transparent 70%), radial-gradient(50% 45% at 12% 85%, rgba(214,160,90,0.16), transparent 70%), linear-gradient(180deg, #fbf8f2 0%, #f6efe4 55%, #f3eadf 100%);
+  --scene-card: rgba(255,253,248,0.78);
+  --scene-card-border: rgba(194,150,90,0.24);
+  --scene-card-shadow: 0 10px 40px rgba(90,60,20,0.08);
+  --scene-nav: rgba(251,248,242,0.8);
+  --scene-cursor: radial-gradient(circle, rgba(214,160,90,0.14) 0%, rgba(14,165,233,0.05) 40%, transparent 70%);
+}
+html[data-palette="warm"] {
+  --scene-base: #f3e9d9;
+  --scene-bg: radial-gradient(60% 50% at 78% 28%, rgba(14,165,233,0.10), transparent 70%), radial-gradient(50% 45% at 12% 85%, rgba(196,140,70,0.20), transparent 70%), linear-gradient(180deg, #f3e9d9 0%, #ecdfca 55%, #e6d6bd 100%);
+  --scene-card: rgba(250,243,232,0.8);
+  --scene-card-border: rgba(150,105,50,0.24);
+  --scene-card-shadow: 0 10px 40px rgba(90,60,20,0.10);
+  --scene-nav: rgba(243,233,217,0.82);
+  --scene-cursor: radial-gradient(circle, rgba(196,140,70,0.16) 0%, rgba(14,165,233,0.05) 40%, transparent 70%);
+}
+html[data-palette="claude"] {
+  --scene-base: #faf9f5;
+  --scene-bg: radial-gradient(60% 50% at 78% 28%, rgba(217,119,87,0.14), transparent 70%), radial-gradient(50% 45% at 12% 85%, rgba(194,162,124,0.18), transparent 70%), linear-gradient(180deg, #faf9f5 0%, #f3f1ea 55%, #eeebe1 100%);
+  --scene-card: rgba(255,255,255,0.74);
+  --scene-card-border: rgba(193,95,60,0.18);
+  --scene-card-shadow: 0 10px 40px rgba(60,40,20,0.08);
+  --scene-nav: rgba(250,249,245,0.8);
+  --scene-cursor: radial-gradient(circle, rgba(217,119,87,0.14) 0%, rgba(194,162,124,0.08) 40%, transparent 70%);
+}
+html[data-palette="dark"] {
+  --scene-base: #070b16;
+  --scene-bg: radial-gradient(60% 50% at 78% 28%, rgba(56,189,248,0.16), transparent 70%), radial-gradient(50% 45% at 12% 85%, rgba(139,92,246,0.18), transparent 70%), linear-gradient(180deg, #070b16 0%, #0c1224 55%, #120e2b 100%);
+  --scene-card: rgba(10,16,34,0.74);
+  --scene-card-border: rgba(125,211,252,0.14);
+  --scene-card-shadow: 0 10px 40px rgba(2,6,23,0.45);
+  --scene-nav: rgba(7,11,22,0.72);
+  --scene-cursor: radial-gradient(circle, rgba(94,231,255,0.14) 0%, rgba(139,92,246,0.08) 40%, transparent 70%);
+}
+html[data-palette="warm-dark"] {
+  --scene-base: #14100c;
+  --scene-bg: radial-gradient(60% 50% at 78% 28%, rgba(240,170,90,0.12), transparent 70%), radial-gradient(50% 45% at 12% 85%, rgba(139,92,246,0.12), transparent 70%), linear-gradient(180deg, #14100c 0%, #1d1712 55%, #231a14 100%);
+  --scene-card: rgba(30,24,18,0.8);
+  --scene-card-border: rgba(240,200,150,0.14);
+  --scene-card-shadow: 0 10px 40px rgba(0,0,0,0.45);
+  --scene-nav: rgba(20,16,12,0.74);
+  --scene-cursor: radial-gradient(circle, rgba(240,170,90,0.12) 0%, rgba(139,92,246,0.06) 40%, transparent 70%);
+}
+html[data-palette="claude-dark"] {
+  --scene-base: #1f1e1d;
+  --scene-bg: radial-gradient(60% 50% at 78% 28%, rgba(217,119,87,0.16), transparent 70%), radial-gradient(50% 45% at 12% 85%, rgba(194,162,124,0.10), transparent 70%), linear-gradient(180deg, #1f1e1d 0%, #262624 55%, #2b2420 100%);
+  --scene-card: rgba(38,38,36,0.82);
+  --scene-card-border: rgba(217,119,87,0.18);
+  --scene-card-shadow: 0 10px 40px rgba(0,0,0,0.45);
+  --scene-nav: rgba(31,30,29,0.76);
+  --scene-cursor: radial-gradient(circle, rgba(217,119,87,0.14) 0%, rgba(194,162,124,0.06) 40%, transparent 70%);
+}

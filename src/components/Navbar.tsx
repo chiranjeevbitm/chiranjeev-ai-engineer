@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
 import ModeToggle from "./ModeToggle";
-import { useMode } from "../context/ModeContext";
 
 interface NavbarProps {
   onOpenResume: () => void;
@@ -20,7 +19,6 @@ const SECTION_NAMES = ["home", "experience", "skills", "projects"];
 export default function Navbar({ onOpenResume, activeSection }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { is3D } = useMode();
 
   // Track scroll for navbar appearance
   useEffect(() => {
@@ -82,7 +80,7 @@ export default function Navbar({ onOpenResume, activeSection }: NavbarProps) {
             </div>
           ))}
           <ModeToggle />
-          {!is3D && <ThemeToggle />}
+          <ThemeToggle />
           <button
             onClick={onOpenResume}
             className="ml-2 px-5 py-2 font-label-caps text-label-caps rounded-xl transition-all active:scale-95 bg-[#0ea5e9] text-white shadow-lg shadow-[#0ea5e9]/20 dark:bg-[#d0bcff] dark:text-[#3c0091] dark:shadow-lg dark:shadow-[#d0bcff]/20"
@@ -94,7 +92,7 @@ export default function Navbar({ onOpenResume, activeSection }: NavbarProps) {
         {/* Mobile hamburger button */}
         <div className="flex items-center gap-2 md:hidden">
           <ModeToggle />
-          {!is3D && <ThemeToggle />}
+          <ThemeToggle />
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="flex items-center justify-center w-10 h-10 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition-colors"

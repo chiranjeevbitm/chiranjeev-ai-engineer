@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { AdaptiveDpr, PerformanceMonitor, RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
@@ -15,6 +15,59 @@ const smooth = { x: 0, y: 0, scroll: 0 };
 const REDUCED =
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const MOTION = REDUCED ? 0.25 : 1;
+
+// ---- Palette-aware scene colours -------------------------------------------
+// The scene follows the palette picked in the navbar (html[data-palette]).
+interface SceneColors {
+  glow: string; // eyes, rings, thruster
+  core: string; // chest light, ears
+  ring2: string;
+  sky: string;
+  particle: string;
+  additive: boolean; // additive particles only read well on dark backdrops
+  particleOpacity: number;
+  shapeOpacity: number;
+  shell: string;
+  lightA: string;
+  lightB: string;
+}
+
+const NIGHT: SceneColors = {
+  glow: "#5ee7ff", core: "#8b5cf6", ring2: "#a78bfa", sky: "#38bdf8", particle: "#9bd9ff",
+  additive: true, particleOpacity: 0.7, shapeOpacity: 0.35, shell: "#d7e0f0", lightA: "#38bdf8", lightB: "#8b5cf6",
+};
+const DAY: SceneColors = {
+  glow: "#0ea5e9", core: "#7c3aed", ring2: "#8b5cf6", sky: "#0284c7", particle: "#0ea5e9",
+  additive: false, particleOpacity: 0.45, shapeOpacity: 0.45, shell: "#d7e0f0", lightA: "#38bdf8", lightB: "#8b5cf6",
+};
+const CLAUDE_DAY: SceneColors = {
+  glow: "#d97757", core: "#c15f3c", ring2: "#c2a27c", sky: "#c15f3c", particle: "#c15f3c",
+  additive: false, particleOpacity: 0.4, shapeOpacity: 0.45, shell: "#ece7dd", lightA: "#d97757", lightB: "#c2a27c",
+};
+const CLAUDE_NIGHT: SceneColors = {
+  glow: "#f0a47f", core: "#d97757", ring2: "#c2a27c", sky: "#d97757", particle: "#e8b49a",
+  additive: true, particleOpacity: 0.6, shapeOpacity: 0.35, shell: "#e6e0d4", lightA: "#d97757", lightB: "#c2a27c",
+};
+
+function colorsFor(palette: string | undefined): SceneColors {
+  switch (palette) {
+    case "claude": return CLAUDE_DAY;
+    case "claude-dark": return CLAUDE_NIGHT;
+    case "light": case "light-warm": case "warm": return DAY;
+    default: return NIGHT; // dark, warm-dark
+  }
+}
+
+function useSceneColors(): SceneColors {
+  const [palette, setPalette] = useState(() => document.documentElement.dataset.palette);
+  useEffect(() => {
+    const root = document.documentElement;
+    const mo = new MutationObserver(() => setPalette(root.dataset.palette));
+    mo.observe(root, { attributes: true, attributeFilter: ["data-palette"] });
+    return () => mo.disconnect();
+  }, []);
+  return useMemo(() => colorsFor(palette), [palette]);
+}
 
 function Driver() {
   useFrame((state, rawDt) => {
@@ -43,7 +96,7 @@ function CameraRig() {
   return null;
 }
 
-function Robot() {
+function Robot({ c }: { c: SceneColors }) {
   const viewport = useThree((s) => s.viewport);
   const root = useRef<THREE.Group>(null);
   const torso = useRef<THREE.Group>(null);
@@ -147,7 +200,7 @@ function Robot() {
   });
 
   const shell = (
-    <meshPhysicalMaterial color="#d7e0f0" metalness={0.55} roughness={0.28} clearcoat={1} clearcoatRoughness={0.15} />
+    <meshPhysicalMaterial color={c.shell} metalness={0.55} roughness={0.28} clearcoat={1} clearcoatRoughness={0.15} />
   );
   const dark = <meshStandardMaterial color="#1a2238" metalness={0.6} roughness={0.35} />;
 
@@ -161,11 +214,11 @@ function Robot() {
           </RoundedBox>
           <mesh position={[0, 0.02, 0.39]} ref={chest}>
             <circleGeometry args={[0.13, 24]} />
-            <meshBasicMaterial color="#8b5cf6" toneMapped={false} />
+            <meshBasicMaterial color={c.core} toneMapped={false} />
           </mesh>
           <mesh position={[0, 0.02, 0.385]}>
             <ringGeometry args={[0.17, 0.2, 32]} />
-            <meshBasicMaterial color="#5ee7ff" toneMapped={false} />
+            <meshBasicMaterial color={c.glow} toneMapped={false} />
           </mesh>
           {/* arms */}
           <group ref={armL} position={[0.74, 0.28, 0]}>
@@ -191,7 +244,7 @@ function Robot() {
           {/* thruster */}
           <mesh position={[0, -0.78, 0]} rotation={[Math.PI, 0, 0]} ref={flame}>
             <coneGeometry args={[0.24, 0.5, 20]} />
-            <meshBasicMaterial color="#5ee7ff" transparent opacity={0.75} toneMapped={false} />
+            <meshBasicMaterial color={c.glow} transparent opacity={0.75} toneMapped={false} />
           </mesh>
         </group>
 
@@ -212,22 +265,22 @@ function Robot() {
           <group ref={eyes} position={[0, 0.06, 0.685]}>
             <mesh ref={eyeL} position={[-0.27, 0, 0]}>
               <capsuleGeometry args={[0.075, 0.13, 6, 14]} />
-              <meshBasicMaterial color="#5ee7ff" toneMapped={false} />
+              <meshBasicMaterial color={c.glow} toneMapped={false} />
             </mesh>
             <mesh ref={eyeR} position={[0.27, 0, 0]}>
               <capsuleGeometry args={[0.075, 0.13, 6, 14]} />
-              <meshBasicMaterial color="#5ee7ff" toneMapped={false} />
+              <meshBasicMaterial color={c.glow} toneMapped={false} />
             </mesh>
             <mesh position={[0, -0.25, 0]} rotation={[0, 0, Math.PI]}>
               <torusGeometry args={[0.12, 0.016, 8, 24, Math.PI]} />
-              <meshBasicMaterial color="#5ee7ff" toneMapped={false} />
+              <meshBasicMaterial color={c.glow} toneMapped={false} />
             </mesh>
           </group>
           {/* ears */}
           {[-1, 1].map((side) => (
             <mesh key={side} position={[side * 0.82, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
               <cylinderGeometry args={[0.2, 0.2, 0.16, 24]} />
-              <meshStandardMaterial color="#8b5cf6" emissive="#8b5cf6" emissiveIntensity={1.1} />
+              <meshStandardMaterial color={c.core} emissive={c.core} emissiveIntensity={1.1} />
             </mesh>
           ))}
           {/* antenna */}
@@ -238,7 +291,7 @@ function Robot() {
             </mesh>
             <mesh position={[0, 0.46, 0]}>
               <sphereGeometry args={[0.07, 16, 16]} />
-              <meshBasicMaterial color="#5ee7ff" toneMapped={false} />
+              <meshBasicMaterial color={c.glow} toneMapped={false} />
             </mesh>
           </group>
         </group>
@@ -246,18 +299,18 @@ function Robot() {
         {/* orbit rings */}
         <mesh ref={ring1} position={[0, 0.2, 0]} rotation={[1.2, 0, 0]}>
           <torusGeometry args={[1.55, 0.012, 8, 120]} />
-          <meshBasicMaterial color="#5ee7ff" transparent opacity={0.5} toneMapped={false} />
+          <meshBasicMaterial color={c.glow} transparent opacity={0.5} toneMapped={false} />
         </mesh>
         <mesh ref={ring2} position={[0, 0.2, 0]} rotation={[0.3, 0, 0.5]}>
           <torusGeometry args={[1.9, 0.01, 8, 120]} />
-          <meshBasicMaterial color="#a78bfa" transparent opacity={0.4} toneMapped={false} />
+          <meshBasicMaterial color={c.ring2} transparent opacity={0.4} toneMapped={false} />
         </mesh>
       </group>
     </group>
   );
 }
 
-function Particles() {
+function Particles({ c }: { c: SceneColors }) {
   const ref = useRef<THREE.Points>(null);
   const positions = useMemo(() => {
     const count = 700;
@@ -292,28 +345,29 @@ function Particles() {
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
       <pointsMaterial
+        key={c.additive ? "add" : "normal"}
         size={0.04}
         sizeAttenuation
-        color="#9bd9ff"
+        color={c.particle}
         transparent
-        opacity={0.7}
+        opacity={c.particleOpacity}
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
+        blending={c.additive ? THREE.AdditiveBlending : THREE.NormalBlending}
       />
     </points>
   );
 }
 
 const SHAPES = [
-  { kind: "ico", pos: [-5.2, 2.2, -2], scale: 0.6, color: "#38bdf8", speed: 0.25 },
-  { kind: "oct", pos: [4.8, 2.6, -3], scale: 0.5, color: "#a78bfa", speed: 0.3 },
-  { kind: "knot", pos: [-4.4, -2.4, -1.5], scale: 0.38, color: "#a78bfa", speed: 0.2 },
-  { kind: "torus", pos: [5.4, -2.2, -2.5], scale: 0.55, color: "#38bdf8", speed: 0.28 },
-  { kind: "dode", pos: [0.6, 3.1, -4], scale: 0.45, color: "#5ee7ff", speed: 0.22 },
-  { kind: "ico", pos: [-1.8, -3.2, -3], scale: 0.35, color: "#8b5cf6", speed: 0.32 },
+  { kind: "ico", pos: [-5.2, 2.2, -2], scale: 0.6, tone: "sky", speed: 0.25 },
+  { kind: "oct", pos: [4.8, 2.6, -3], scale: 0.5, tone: "ring2", speed: 0.3 },
+  { kind: "knot", pos: [-4.4, -2.4, -1.5], scale: 0.38, tone: "ring2", speed: 0.2 },
+  { kind: "torus", pos: [5.4, -2.2, -2.5], scale: 0.55, tone: "sky", speed: 0.28 },
+  { kind: "dode", pos: [0.6, 3.1, -4], scale: 0.45, tone: "glow", speed: 0.22 },
+  { kind: "ico", pos: [-1.8, -3.2, -3], scale: 0.35, tone: "core", speed: 0.32 },
 ] as const;
 
-function Shapes() {
+function Shapes({ c }: { c: SceneColors }) {
   const group = useRef<THREE.Group>(null);
 
   useFrame((fs, rawDt) => {
@@ -338,7 +392,7 @@ function Shapes() {
           {s.kind === "dode" && <dodecahedronGeometry args={[1, 0]} />}
           {s.kind === "torus" && <torusGeometry args={[1, 0.28, 12, 32]} />}
           {s.kind === "knot" && <torusKnotGeometry args={[1, 0.26, 72, 10]} />}
-          <meshBasicMaterial color={s.color} wireframe transparent opacity={0.35} toneMapped={false} />
+          <meshBasicMaterial color={c[s.tone]} wireframe transparent opacity={c.shapeOpacity} toneMapped={false} />
         </mesh>
       ))}
     </group>
@@ -346,6 +400,7 @@ function Shapes() {
 }
 
 export default function Scene3D() {
+  const c = useSceneColors();
   const [dpr, setDpr] = useState<number | [number, number]>([1, 1.75]);
 
   return (
@@ -364,13 +419,13 @@ export default function Scene3D() {
       <AdaptiveDpr pixelated={false} />
       <ambientLight intensity={0.7} />
       <directionalLight position={[3, 4, 5]} intensity={2.4} />
-      <pointLight position={[-4, 2, 4]} intensity={40} color="#38bdf8" />
-      <pointLight position={[4, -2, 3]} intensity={30} color="#8b5cf6" />
+      <pointLight position={[-4, 2, 4]} intensity={40} color={c.lightA} />
+      <pointLight position={[4, -2, 3]} intensity={30} color={c.lightB} />
       <Driver />
       <CameraRig />
-      <Particles />
-      <Shapes />
-      <Robot />
+      <Particles c={c} />
+      <Shapes c={c} />
+      <Robot c={c} />
     </Canvas>
   );
 }

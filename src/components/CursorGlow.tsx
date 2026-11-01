@@ -36,7 +36,7 @@ export default function CursorGlow() {
       ref={ref}
       aria-hidden
       className="fixed top-0 left-0 z-[1] pointer-events-none w-[440px] h-[440px] rounded-full will-change-transform"
-      style={{ background: "radial-gradient(circle, rgba(94,231,255,0.14) 0%, rgba(139,92,246,0.08) 40%, transparent 70%)" }}
+      style={{ background: "var(--scene-cursor)" }}
     />
   );
 }

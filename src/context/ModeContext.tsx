@@ -36,21 +36,10 @@ export function ModeProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, m);
   }, []);
 
-  // 3D mode is designed on a dark canvas, so it forces the dark palette while
-  // active and puts the user's saved theme back when they return to normal.
+  // 3D mode follows the selected colour palette (see ThemeContext / index.css),
+  // so it only needs to flag the root element.
   useEffect(() => {
-    const root = document.documentElement;
-    root.classList.toggle("mode-3d", effective === "3d");
-    if (effective === "3d") {
-      root.classList.add("dark");
-      root.setAttribute("data-theme", "dark");
-      return () => {
-        const saved = localStorage.getItem("theme");
-        const dark = saved ? saved === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
-        root.classList.toggle("dark", dark);
-        root.setAttribute("data-theme", dark ? "dark" : "light");
-      };
-    }
+    document.documentElement.classList.toggle("mode-3d", effective === "3d");
   }, [effective]);
 
   const value = useMemo<ModeValue>(
