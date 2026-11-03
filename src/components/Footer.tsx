@@ -1,4 +1,4 @@
-const LAST_UPDATED = "October 30, 2026";
+const LAST_UPDATED = "November 3, 2026";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();

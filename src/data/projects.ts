@@ -43,6 +43,25 @@ export const projects: Project[] = [
     links: {}
   },
   {
+    id: "medallion-agentic-pipeline",
+    title: "Medallion: Intent-Driven Agentic Pipeline",
+    tagline: "Business Question to Bronze, Silver, Gold and an Executive Report",
+    description:
+      "Ask a business question about messy retail CSVs and a Supervisor drives six ReAct agents (Profiler, STTM, Bronze, Silver, Gold, Reporter) to profile the data, draft Source-to-Target Mapping rules for each medallion layer, and pause for human approval at three gates before anything is built. At each gate you edit the rules, regenerate with feedback such as \"also split by payment method\", approve, or stop; approved rules run in DuckDB and Parquet. The Reporter writes an executive report with KPIs, charts, a narrative and the SQL behind it, downloadable as standalone HTML. Gold tables are reconciled against an independent pandas calculation, every agent call leaves a trace file and an audit log, and a failed model call falls back to a scripted policy with the reason recorded. Runs on OpenAI, Anthropic, Grok or Gemini, or fully offline.",
+    category: "GenAI",
+    tags: ["LangChain", "ReAct Agents", "Supervisor", "DuckDB", "Parquet", "FastAPI", "React", "Human-in-the-Loop"],
+    image: "/images/opt/medallion-agentic-pipeline.jpg",
+    featured: true,
+    status: "Built",
+    impact: [
+      { metric: "Agents", value: "6 + Supervisor" },
+      { metric: "Approval Gates", value: "3 (human)" },
+      { metric: "LLM Providers", value: "4 + offline" },
+      { metric: "Tests", value: "122" }
+    ],
+    links: {}
+  },
+  {
     id: "doctor-appointment-form",
     title: "Arogya Rx — Clinic Prescription Platform",
     tagline: "30-second bilingual prescriptions for clinics",
@@ -63,6 +82,28 @@ export const projects: Project[] = [
     links: {
       demo: "https://arogya-rx-demo.vercel.app/",
       github: "https://github.com/chiranjeevbitm/arogya-rx-demo"
+    }
+  },
+  {
+    id: "arogya-rx-dr-deepak",
+    title: "Arogya Rx for Dr. Deepak Kumar's Clinic",
+    tagline: "Full clinic OPD system running at Arogya Clinic, Muzaffarpur",
+    description:
+      "The production build of Arogya Rx for Dr. Deepak Kumar (MBBS, MD General Medicine) at Arogya Clinic, Muzaffarpur. One system covers the day: a 14-day appointment book with WhatsApp reminders, online and WhatsApp bookings with photo intake of old prescriptions and lab reports, a token queue with one-tap templates and Hinglish voice-to-prescription, medicine search with Jan Aushadhi prices and allergy, duplicate and interaction checks, Hindi dose lines, and print, PDF or WhatsApp delivery on the doctor's own letterhead. It also keeps a patient timeline with HbA1c, BP and sugar trends, billing with UPI receipts and CSV export, and a public booking page. \"Ask Arogya\" answers plain-language questions over the clinic's own records. Role-based logins for doctor, reception and admin, an activity log, and a letterhead studio for layout, logo and signature.",
+    category: "Data Engineering",
+    tags: ["Healthcare", "Hindi + English", "Voice-to-Rx", "WhatsApp", "React", "TypeScript", "Hono", "Supabase", "Vercel"],
+    githubUrl: "https://github.com/chiranjeevbitm/arogya-rx-dr-deepak",
+    image: "/images/opt/arogya-rx-dr-deepak.jpg",
+    featured: true,
+    status: "In clinic use",
+    impact: [
+      { metric: "Medicines searchable", value: "9,924" },
+      { metric: "Staff roles", value: "Doctor, reception, admin" },
+      { metric: "API checks", value: "56 end to end" },
+      { metric: "Clinic", value: "Muzaffarpur" }
+    ],
+    links: {
+      github: "https://github.com/chiranjeevbitm/arogya-rx-dr-deepak"
     }
   },
   {

@@ -121,6 +121,7 @@ export default function ExperienceSection() {
             "Deployed the SDK as a live AI Copilot inside Autodesk Revit for 500+ developers, with an Apply-then-Review safety workflow and a WebSocket bridge.",
             "Built the Guardian and Observability SDKs (one package, v1.6.1): 16 guardian features and 10 observability features for LangChain and Azure OpenAI apps via MLflow, onboarded by configuration and fail-open by design.",
             "Contributed to the Ascend Agentic Harness, a three-phase, nine-skill delivery framework on Claude Code with TDD builds, including a GitHub Copilot path that removes the 3 to 5 day Claude Code access wait.",
+            "Built Medallion, an intent-driven agentic pipeline: a Supervisor and six ReAct agents turn a business question about messy retail CSVs into Bronze, Silver and Gold layers with human approval at three gates, DuckDB execution and an executive report. Runs on four LLM providers or offline, backed by 122 tests.",
             "Worked on an AI-assisted change-impact analysis flow for an engineering client, targeting weeks-to-days turnaround (an indicative estimate, not a measured result). People keep the approval decision.",
             "Built the drawing-diff backend for that flow: Azure Document Intelligence OCR plus Azure OpenAI vision, a nine-agent, eight-step pipeline with parallel text and geometric diff paths, ReAct validation with confidence scores, and annotated PDFs served through a FastAPI REST API.",
           ],
