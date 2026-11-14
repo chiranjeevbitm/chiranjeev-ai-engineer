@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Code2, Star, FolderOpen, Mail, Play } from "lucide-react";
-import { projects, githubRepos, type Project } from "../data/projects";
+import { projects, type Project } from "../data/projects";
+import { GITHUB_PROFILE, GITHUB_USER, langColor, updatedLabel, useGitHubRepos } from "../lib/github";
 import { Collapsible, ToggleButton } from "../components/Collapsible";
 import { useMode } from "../context/ModeContext";
 
@@ -137,6 +138,7 @@ export default function ProjectsSection() {
   const [filter, setFilter] = useState("All Systems");
   const [showAll, setShowAll] = useState(false);
   const [reposOpen, setReposOpen] = useState(false);
+  const { repos, status: repoStatus } = useGitHubRepos(reposOpen);
   const categories = ["All Systems", "GenAI", "RAG", "Machine Learning", "Data Engineering"];
 
   const filtered =
@@ -205,31 +207,53 @@ export default function ProjectsSection() {
             <ToggleButton open={reposOpen} onClick={() => setReposOpen((o) => !o)} closedLabel="Show" openLabel="Hide" />
           </div>
           <Collapsible open={reposOpen}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-stack-md pb-2 stage-narrow-2">
-              {githubRepos.map((repo) => (
-                <div
-                  key={repo.name}
-                  className="bg-white/5 border border-primary/10 p-stack-md rounded-xl hover:border-primary/50 hover:bg-white/10 transition-all group dark:border-[#d0bcff]/10 dark:hover:border-[#d0bcff]/50"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-code-sm text-code-sm text-primary dark:text-[#d0bcff] font-bold">{repo.name}</span>
-                    <Star className="w-4 h-4 text-primary/40 dark:text-[#d0bcff]/40" />
-                  </div>
-                  <p className="text-[var(--on-surface-variant)] text-body-md text-sm mb-4 line-clamp-2 leading-relaxed">{repo.description}</p>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-1">
-                      <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: repo.langColor, boxShadow: `0 0 8px ${repo.langColor}` }}></span>
-                      <span className="text-[12px] text-outline font-code-sm">{repo.language}</span>
-                    </div>
-                    <span className="text-[12px] text-outline font-code-sm">{repo.updated}</span>
-                  </div>
-                </div>
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-stack-md pb-2 stage-narrow-2" aria-busy={repoStatus === "loading"}>
+              {repoStatus === "loading"
+                ? Array.from({ length: 3 }, (_, i) => (
+                    <div
+                      key={i}
+                      className="h-[150px] rounded-xl border border-primary/10 dark:border-[#d0bcff]/10 bg-white/5 animate-pulse"
+                    />
+                  ))
+                : repos.map((repo) => (
+                    <a
+                      key={repo.name}
+                      href={repo.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col bg-white/5 border border-primary/10 p-stack-md rounded-xl hover:border-primary/50 hover:bg-white/10 transition-all group dark:border-[#d0bcff]/10 dark:hover:border-[#d0bcff]/50"
+                    >
+                      <div className="flex items-start justify-between gap-3 mb-3">
+                        <span className="font-code-sm text-code-sm text-primary dark:text-[#d0bcff] font-bold break-all">{repo.name}</span>
+                        <ExternalLink className="w-4 h-4 shrink-0 text-primary/40 dark:text-[#d0bcff]/40 group-hover:text-primary dark:group-hover:text-[#d0bcff] transition-colors" />
+                      </div>
+                      <p className="text-[var(--on-surface-variant)] text-body-md text-sm mb-4 line-clamp-2 leading-relaxed">
+                        {repo.description || "No description yet."}
+                      </p>
+                      <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1">
+                        {repo.language && (
+                          <div className="flex items-center gap-1">
+                            <span
+                              className="w-2.5 h-2.5 rounded-full"
+                              style={{ backgroundColor: langColor(repo.language), boxShadow: `0 0 8px ${langColor(repo.language)}` }}
+                            ></span>
+                            <span className="text-[12px] text-outline font-code-sm">{repo.language}</span>
+                          </div>
+                        )}
+                        {repo.stars > 0 && (
+                          <span className="flex items-center gap-1 text-[12px] text-outline font-code-sm">
+                            <Star className="w-3.5 h-3.5" /> {repo.stars}
+                          </span>
+                        )}
+                        <span className="text-[12px] text-outline font-code-sm">{updatedLabel(repo.pushedAt)}</span>
+                      </div>
+                    </a>
+                  ))}
             </div>
           </Collapsible>
-          <a href="https://github.com/chiranjeevbitm" target="_blank" rel="noopener noreferrer"
+          <a href={GITHUB_PROFILE} target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 mt-2 text-on-surface-variant hover:text-primary dark:hover:text-[#d0bcff] transition-colors">
-            <span className="font-label-caps text-label-caps">Follow @chiranjeev on GitHub</span>
+            <span className="font-label-caps text-label-caps">Follow @{GITHUB_USER} on GitHub</span>
             <ExternalLink className="w-4 h-4" />
           </a>
         </section>

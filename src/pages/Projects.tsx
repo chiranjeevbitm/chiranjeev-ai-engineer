@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { projects, githubRepos } from "../data/projects";
+import { langColor, updatedLabel } from "../lib/github";
 import PageTransition from "../components/PageTransition";
 
 export default function Projects() {
@@ -160,7 +161,7 @@ export default function Projects() {
               className="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2 group"
             >
               <span className="font-label-caps text-label-caps">
-                Follow @chiranjeev
+                Follow @chiranjeevbitm
               </span>
               <span className="material-symbols-outlined text-[18px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
                 open_in_new
@@ -189,8 +190,8 @@ export default function Projects() {
                     <span
                       className="w-2.5 h-2.5 rounded-full"
                       style={{
-                        backgroundColor: repo.langColor,
-                        boxShadow: `0 0 8px ${repo.langColor}`,
+                        backgroundColor: langColor(repo.language),
+                        boxShadow: `0 0 8px ${langColor(repo.language)}`,
                       }}
                     ></span>
                     <span className="text-[12px] text-outline font-code-sm">
@@ -198,7 +199,7 @@ export default function Projects() {
                     </span>
                   </div>
                   <span className="text-[12px] text-outline font-code-sm">
-                    {repo.updated}
+                    {updatedLabel(repo.pushedAt)}
                   </span>
                 </div>
               </div>

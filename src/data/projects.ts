@@ -18,8 +18,9 @@ export interface GitHubRepo {
   name: string;
   description: string;
   language: string;
-  langColor: string;
-  updated: string;
+  url: string;
+  stars: number;
+  pushedAt: string; // ISO date of the last push
 }
 
 export const projects: Project[] = [
@@ -420,30 +421,61 @@ export const projects: Project[] = [
   },
 ];
 
+// Shown only when GitHub can't be reached and nothing is cached in the
+// browser; normally the list is loaded live (see src/lib/github.ts).
+// Snapshot taken 14 Nov 2026.
 export const githubRepos: GitHubRepo[] = [
   {
-    name: "multi-agent-framework",
+    name: "chiranjeev-ai-engineer",
     description:
-      "Orchestration layer for multiple GenAI agents using LangGraph and custom tool execution.",
-    language: "Python",
-    langColor: "#7dd3fc",
-    updated: "Updated 2d ago",
+      "AI Portfolio: Production GenAI Specialist @ Deloitte | React + TypeScript + Tailwind CSS | NVIDIA Certified | Dual Master's in AI/ML",
+    language: "TypeScript",
+    url: "https://github.com/chiranjeevbitm/chiranjeev-ai-engineer",
+    stars: 0,
+    pushedAt: "2026-11-14T11:13:21Z",
   },
   {
-    name: "rag-eval-metrics",
-    description:
-      "A collection of scoring mechanisms for RAG systems: faithfulness, relevancy, and groundedness.",
-    language: "Python",
-    langColor: "#7dd3fc",
-    updated: "Updated 5d ago",
+    name: "chiranjeevbitm.github.io",
+    description: "My Projects and Blogs",
+    language: "HTML",
+    url: "https://github.com/chiranjeevbitm/chiranjeevbitm.github.io",
+    stars: 1,
+    pushedAt: "2026-11-14T11:04:09Z",
   },
   {
-    name: "dataiku-plugin-genai",
+    name: "agentic-job-search",
     description:
-      "Custom plugin for Dataiku to integrate advanced prompt engineering workflows directly into visual flows.",
+      "Multi-agent job search: LangGraph + FastAPI + React. Scrape jobs, score them against your resume with Azure OpenAI, generate cover letters.",
     language: "JavaScript",
-    langColor: "#38bdf8",
-    updated: "Updated 1w ago",
+    url: "https://github.com/chiranjeevbitm/agentic-job-search",
+    stars: 0,
+    pushedAt: "2026-11-13T11:33:02Z",
+  },
+  {
+    name: "reel-studio",
+    description:
+      "Brief in, 9:16 explainer reel out: SVG scenes + HyperFrames render, edge-tts or your own cloned voice, a Sarvam/three.js news factory, and Claude Code slash commands.",
+    language: "Python",
+    url: "https://github.com/chiranjeevbitm/reel-studio",
+    stars: 0,
+    pushedAt: "2026-11-10T14:36:12Z",
+  },
+  {
+    name: "hindi-english-doc-to-markdown",
+    description:
+      "Bilingual (Hindi + English) PDF / scanned-PDF / image / PPTX to Markdown pipeline with OCR fallback, quality scoring, CLI and web UI",
+    language: "Python",
+    url: "https://github.com/chiranjeevbitm/hindi-english-doc-to-markdown",
+    stars: 0,
+    pushedAt: "2026-11-09T08:21:40Z",
+  },
+  {
+    name: "DoctorAppointmentForm",
+    description: "A form-based application for scheduling and managing doctor appointments.",
+    language: "JavaScript",
+    url: "https://github.com/chiranjeevbitm/DoctorAppointmentForm",
+    stars: 0,
+    pushedAt: "2026-08-06T04:48:37Z",
   },
 ];
 
