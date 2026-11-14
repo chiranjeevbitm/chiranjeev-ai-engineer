@@ -46,18 +46,21 @@ export default function HomeSection({ onNavigate }: Props) {
 
   return (
     <div className="min-h-screen bg-grid-light selection:bg-primary/20 bg-background text-on-background dark:bg-[#131313] relative">
-      <AnimatedBlobs />
+      {/* In 3D mode the WebGL scene is the backdrop, so the blurred blobs are left out. */}
+      {!is3D && <AnimatedBlobs />}
       {/* Hero Section */}
-      <section className={`relative min-h-screen md:min-h-screen flex flex-col justify-center md:justify-center items-center ${is3D ? "lg:items-start" : ""} px-margin-mobile md:px-margin-desktop py-12 md:py-24 overflow-visible md:overflow-hidden ${is3D ? "pt-[36vh] lg:pt-32" : "pt-24 md:pt-32"} snap-start`}>
+      <section data-scene="hero" className={`relative min-h-screen md:min-h-screen flex flex-col justify-center md:justify-center items-center ${is3D ? "lg:items-start" : ""} px-margin-mobile md:px-margin-desktop py-12 md:py-24 overflow-visible md:overflow-hidden ${is3D ? "pt-[36vh] lg:pt-32" : "pt-24 md:pt-32"} snap-start`}>
         {/* Parallax glow */}
-        <motion.div
-          className="absolute inset-0 z-[1] opacity-40"
-          animate={{ scale: [1, 1.05, 1], opacity: [0.4, 0.5, 0.4] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 blur-[140px] rounded-full"></div>
-        </motion.div>
-        <div className={`relative z-10 text-center max-w-4xl ${is3D ? "lg:text-left lg:max-w-xl xl:max-w-2xl lg:ml-[max(0px,calc((100vw-1280px)/2))]" : ""}`}>
+        {!is3D && (
+          <motion.div
+            className="absolute inset-0 z-[1] opacity-40"
+            animate={{ scale: [1, 1.05, 1], opacity: [0.4, 0.5, 0.4] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 blur-[140px] rounded-full"></div>
+          </motion.div>
+        )}
+        <div className={`relative z-10 text-center max-w-4xl ${is3D ? "lg:text-left lg:max-w-xl xl:max-w-2xl lg:ml-[max(0px,calc((100%-1152px)/2))]" : ""}`}>
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -148,8 +151,9 @@ export default function HomeSection({ onNavigate }: Props) {
         className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-stack-lg snap-start"
         id="about"
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter stage-about">
           <motion.div
+            data-scene="agents"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -217,9 +221,9 @@ export default function HomeSection({ onNavigate }: Props) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-4"
+            className="space-y-4 stage-about-side"
           >
-            <div className="glass-card-light p-8 rounded-xl glow-hover-light transition-all">
+            <div data-scene="education" className="glass-card-light p-8 rounded-xl glow-hover-light transition-all">
               <div className="font-label-caps text-label-caps text-secondary dark:text-[#4cd7f6] mb-2 flex items-center gap-2">
                 <BookOpen className="w-4 h-4" /> EDUCATION
               </div>
@@ -246,7 +250,7 @@ export default function HomeSection({ onNavigate }: Props) {
                 </div>
               </div>
             </div>
-            <div className="glass-card-light p-8 rounded-xl glow-hover-light transition-all">
+            <div data-scene="certs" className="glass-card-light p-8 rounded-xl glow-hover-light transition-all">
               <div className="font-label-caps text-label-caps text-purple-400 mb-2 flex items-center gap-2">
                 <Award className="w-4 h-4" /> CERTIFIED
               </div>
@@ -270,6 +274,7 @@ export default function HomeSection({ onNavigate }: Props) {
         transition={{ duration: 0.5 }}
         className="bg-surface py-24 border-y border-white/50 snap-start dark:bg-[#1c1b1b] dark:border-white/5"
         id="skills-summary"
+        data-scene="impact"
       >
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
           <motion.div
@@ -287,7 +292,7 @@ export default function HomeSection({ onNavigate }: Props) {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6"
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 stage-narrow-2"
           >
             {impactStats.map((stat) => (
               <motion.div
@@ -302,7 +307,7 @@ export default function HomeSection({ onNavigate }: Props) {
             ))}
           </motion.div>
           <Collapsible open={moreStats}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-6 stage-narrow-2">
               {moreImpactStats.map((stat) => (
                 <div key={stat.label} className="text-center p-6 glass-card-light rounded-xl">
                   <div className="text-3xl mb-2">{stat.icon}</div>

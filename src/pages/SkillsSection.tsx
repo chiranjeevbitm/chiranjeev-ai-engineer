@@ -110,7 +110,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
       viewport={{ once: true }}
       className="min-h-screen selection:bg-primary/30 bg-background text-on-background dark:bg-[#131313] text-[var(--on-surface)]"
     >
-      <main className="pt-28 pb-stack-lg px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+      <main data-scene="skills" data-scene-rank="0" className="pt-28 pb-stack-lg px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
         {/* Header Section */}
         <motion.div variants={fadeIn} className="mb-stack-lg">
           <h1 className="font-headline-xl text-headline-xl mb-stack-sm bg-gradient-to-r from-on-surface to-on-surface-variant bg-clip-text text-transparent dark:bg-none dark:text-white">
@@ -176,7 +176,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-stack-lg"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-stack-lg stage-narrow-2"
         >
           {filteredSkills.map((skill, index) => (
             <motion.div
@@ -206,6 +206,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
         {/* Certifications Wall - Categorized */}
         <motion.section
           id="certifications"
+          data-scene="certs"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
@@ -262,7 +263,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
                   <ChevronDown className={`w-4 h-4 text-[var(--on-surface-variant)] transition-transform duration-300 ${openGroups[group.key] ? "rotate-180" : ""}`} />
                 </button>
                 <Collapsible open={!!openGroups[group.key]}>
-                <div className="pt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                <div className="pt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 stage-certs">
                   {groupCerts.map((cert, ci) => {
                     const Card = cert.link ? 'a' : 'div';
                     const cardProps = cert.link ? { href: cert.link, target: "_blank", rel: "noopener noreferrer" } : {};
@@ -304,6 +305,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
 
         {/* Awards Section */}
         <motion.section
+          data-scene="awards"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
@@ -313,7 +315,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
           <h2 className="font-headline-lg text-headline-lg mb-stack-md border-l-4 border-primary pl-4 text-[var(--on-surface)] dark:border-[#d0bcff]">
             Awards & Recognition
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-gutter stage-narrow-2">
             {[
               { company: "Deloitte", title: "Applause Award, October 2026", desc: "Recognition for a GenAI session delivered to 1,000+ practitioners.", icon: "👏" },
               { company: "Deloitte", title: "Agentic AI Hackathon: Top 20", desc: "Top 20 prototypes of about 1,000 teams in the Ascend Agentic Harness Hackathon.", icon: "🚀" },
@@ -346,6 +348,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
 
         {/* Social Proof Section */}
         <motion.section
+          data-scene="presence"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
@@ -356,7 +359,7 @@ export default function SkillsSection({ onOpenResume }: Props) {
             <h2 className="font-headline-lg text-headline-lg mb-stack-md text-[var(--on-surface)]">
               Digital Presence
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-gutter stage-narrow-2">
               {[
                 { platform: "LinkedIn", followers: "1,900+", metric: "Followers", href: "https://linkedin.com/in/chiranjeev-kumar-07071997", color: "text-blue-400" },
                 { platform: "Kaggle", followers: "Top 0.5%", metric: "Rank (1029/225K)", href: "https://kaggle.com/chiranjeevbit", color: "text-cyan-400" },

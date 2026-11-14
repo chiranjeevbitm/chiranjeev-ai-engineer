@@ -1,62 +1,43 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { AdaptiveDpr, PerformanceMonitor, RoundedBox } from "@react-three/drei";
+// The 3D backdrop. One canvas and one scene graph for the whole page: the
+// content in focus picks a diorama (see input.ts), and scrolling turns it,
+// builds it up and swaps it for the next one. Nothing here re-renders React
+// while the page moves; every frame reads plain mutable values.
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { Canvas, addEffect, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
-import { input } from "./input";
+import { input, stage } from "./input";
+import {
+  ColorsContext,
+  GEO,
+  MOTION,
+  MatsContext,
+  clamp,
+  colorsFor,
+  damp,
+  disposeMats,
+  lerp,
+  makeMats,
+  paintMats,
+  seeded,
+  smooth,
+  stagePos,
+  useColors,
+  useMats,
+  type SceneColors,
+} from "./kit";
+import { Slot } from "./parts";
+import Robot from "./Robot";
+import { Agents, Certs, Education, Impact } from "./DioramasHome";
+import { CloudOps, Office, Process, Retail } from "./DioramasWork";
+import { Awards, ContactExtras, Github, Presence, Projects, Skills } from "./DioramasMore";
+import { startSmoothScroll, tickSmoothScroll } from "../lib/scroll";
 
-const damp = THREE.MathUtils.damp;
-const clamp = THREE.MathUtils.clamp;
-const smoothstep = THREE.MathUtils.smoothstep;
-
-// Pointer and scroll after smoothing. One driver updates it first each frame so
-// every object reads the same, already-eased values (no per-object jitter).
-const smooth = { x: 0, y: 0, scroll: 0 };
-
-const REDUCED =
-  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const MOTION = REDUCED ? 0.25 : 1;
-
-// ---- Palette-aware scene colours -------------------------------------------
-// The scene follows the palette picked in the navbar (html[data-palette]).
-interface SceneColors {
-  glow: string; // eyes, rings, thruster
-  core: string; // chest light, ears
-  ring2: string;
-  sky: string;
-  particle: string;
-  additive: boolean; // additive particles only read well on dark backdrops
-  particleOpacity: number;
-  shapeOpacity: number;
-  shell: string;
-  lightA: string;
-  lightB: string;
-}
-
-const NIGHT: SceneColors = {
-  glow: "#5ee7ff", core: "#8b5cf6", ring2: "#a78bfa", sky: "#38bdf8", particle: "#9bd9ff",
-  additive: true, particleOpacity: 0.7, shapeOpacity: 0.35, shell: "#d7e0f0", lightA: "#38bdf8", lightB: "#8b5cf6",
-};
-const DAY: SceneColors = {
-  glow: "#0ea5e9", core: "#7c3aed", ring2: "#8b5cf6", sky: "#0284c7", particle: "#0ea5e9",
-  additive: false, particleOpacity: 0.45, shapeOpacity: 0.45, shell: "#d7e0f0", lightA: "#38bdf8", lightB: "#8b5cf6",
-};
-const CLAUDE_DAY: SceneColors = {
-  glow: "#d97757", core: "#c15f3c", ring2: "#c2a27c", sky: "#c15f3c", particle: "#c15f3c",
-  additive: false, particleOpacity: 0.4, shapeOpacity: 0.45, shell: "#ece7dd", lightA: "#d97757", lightB: "#c2a27c",
-};
-const CLAUDE_NIGHT: SceneColors = {
-  glow: "#f0a47f", core: "#d97757", ring2: "#c2a27c", sky: "#d97757", particle: "#e8b49a",
-  additive: true, particleOpacity: 0.6, shapeOpacity: 0.35, shell: "#e6e0d4", lightA: "#d97757", lightB: "#c2a27c",
-};
-
-function colorsFor(palette: string | undefined): SceneColors {
-  switch (palette) {
-    case "claude": return CLAUDE_DAY;
-    case "claude-dark": return CLAUDE_NIGHT;
-    case "light": case "light-warm": case "warm": return DAY;
-    default: return NIGHT; // dark, warm-dark
-  }
-}
+const WIDE = 1024; // px: from here up the stage gets its own column (see index.css)
+const MAX_DPR = 1.5;
+// A long lens from further back: little perspective distortion, so a diorama
+// off to the side of the screen is not stretched toward the edge.
+const CAM_FOV = 30;
+const CAM_Z = 11;
 
 function useSceneColors(): SceneColors {
   const [palette, setPalette] = useState(() => document.documentElement.dataset.palette);
@@ -69,18 +50,48 @@ function useSceneColors(): SceneColors {
   return useMemo(() => colorsFor(palette), [palette]);
 }
 
+/**
+ * Eased scrolling runs on the renderer's own frame loop, so the page and the
+ * scene read the same scroll position in the same frame.
+ */
+function ScrollSync() {
+  useEffect(() => {
+    const el = document.querySelector<HTMLElement>("[data-scroll-root]");
+    if (!el) return;
+    const stop = startSmoothScroll(el);
+    const unsub = addEffect((time) => tickSmoothScroll(time));
+    return () => {
+      unsub();
+      stop();
+    };
+  }, []);
+  return null;
+}
+
+/** Smooths pointer and scroll once per frame, before anything else reads them. */
 function Driver() {
+  const last = useRef({ px: -1 });
   useFrame((state, rawDt) => {
     const dt = Math.min(rawDt, 0.05);
     const t = state.clock.elapsedTime;
-    // With no recent pointer movement (phones, idle desktop) the character
-    // wanders on its own so the scene never looks frozen.
+    // With no recent pointer movement (phones, idle desktop) the eyes wander
+    // on their own so the scene never looks frozen.
     const idle = performance.now() - input.lastMove > 2500;
     const tx = idle ? Math.sin(t * 0.5) * 0.55 : input.px;
     const ty = idle ? Math.cos(t * 0.4) * 0.25 : input.py;
     smooth.x = damp(smooth.x, tx, 5, dt);
     smooth.y = damp(smooth.y, ty, 5, dt);
-    smooth.scroll = damp(smooth.scroll, input.scroll, 3, dt);
+
+    smooth.scroll = damp(smooth.scroll, input.scroll, 9, dt);
+    smooth.progress = damp(smooth.progress, stage.progress, 7, dt);
+    smooth.travel = damp(smooth.travel, input.scrollPx / input.viewH, 10, dt);
+    smooth.docked = damp(smooth.docked, stage.active === "hero" ? 0 : 1, 5, dt);
+
+    const l = last.current;
+    if (l.px < 0) l.px = input.scrollPx;
+    const speed = rawDt > 0 ? (input.scrollPx - l.px) / input.viewH / rawDt : 0;
+    l.px = input.scrollPx;
+    smooth.vel = damp(smooth.vel, clamp(speed, -6, 6), 8, dt);
   }, -1);
   return null;
 }
@@ -89,311 +100,271 @@ function CameraRig() {
   useFrame((state, rawDt) => {
     const dt = Math.min(rawDt, 0.05);
     const cam = state.camera;
-    cam.position.x = damp(cam.position.x, smooth.x * 0.35 * MOTION, 3, dt);
-    cam.position.y = damp(cam.position.y, smooth.y * 0.22 * MOTION - smooth.scroll * 0.9, 3, dt);
-    cam.lookAt(0, -smooth.scroll * 0.4, 0);
+    cam.position.x = damp(cam.position.x, smooth.x * 0.3 * MOTION, 3, dt);
+    cam.position.y = damp(cam.position.y, smooth.y * 0.2 * MOTION, 3, dt);
+    // A fast scroll pulls the camera back a touch, like a breath.
+    cam.position.z = damp(cam.position.z, CAM_Z + Math.min(0.8, Math.abs(smooth.vel) * 0.25) * MOTION, 4, dt);
+    cam.lookAt(0, 0, 0);
   });
   return null;
 }
 
-function Robot({ c }: { c: SceneColors }) {
-  const viewport = useThree((s) => s.viewport);
-  const root = useRef<THREE.Group>(null);
-  const torso = useRef<THREE.Group>(null);
-  const head = useRef<THREE.Group>(null);
-  const eyes = useRef<THREE.Group>(null);
-  const eyeL = useRef<THREE.Mesh>(null);
-  const eyeR = useRef<THREE.Mesh>(null);
-  const antenna = useRef<THREE.Group>(null);
-  const armL = useRef<THREE.Group>(null);
-  const armR = useRef<THREE.Group>(null);
-  const ring1 = useRef<THREE.Mesh>(null);
-  const ring2 = useRef<THREE.Mesh>(null);
-  const chest = useRef<THREE.Mesh>(null);
-  const flame = useRef<THREE.Mesh>(null);
-  const state = useRef({ yaw: 0, blinkAt: 2.5, blinkStart: -1, ndcX: 0, ndcY: 0 });
+const DPR_STEPS = [0.85, 1, 1.25, MAX_DPR];
 
-  useFrame((fs, rawDt) => {
-    const dt = Math.min(rawDt, 0.05);
-    const t = fs.clock.elapsedTime;
-    const r = root.current!;
-    const st = state.current;
+/**
+ * Trades resolution for frame rate. The frame rate is averaged over one-second
+ * windows; two slow windows in a row drop the pixel ratio a step, and a long
+ * smooth stretch raises it again. After a few reversals it stays put, so a
+ * device on the edge never flickers between two resolutions.
+ */
+function AdaptiveQuality() {
+  const setDpr = useThree((s) => s.setDpr);
+  const q = useRef({ level: DPR_STEPS.length - 1, frames: 0, time: 0, slow: 0, fast: 0, flips: 0, warm: 2 });
 
-    // Layout: sits beside the hero text, then docks small in the corner as the
-    // page scrolls. Portrait screens centre it above the text instead.
-    const wide = viewport.width / viewport.height > 1.15;
-    const dock = smoothstep(smooth.scroll, 0.02, 0.14);
-    const heroX = wide ? viewport.width * 0.26 : 0;
-    const heroY = wide ? 0.05 : viewport.height * 0.27;
-    const dockX = wide ? viewport.width * 0.4 : viewport.width * 0.33;
-    const dockY = wide ? -viewport.height * 0.26 : -viewport.height * 0.34;
-    const baseScale = wide
-      ? Math.min(1, viewport.height / 5.2)
-      : Math.min(viewport.height / 5.2, viewport.width / 4.6) * 0.95;
-    const targetScale = THREE.MathUtils.lerp(baseScale, baseScale * (wide ? 0.42 : 0.3), dock);
-
-    r.position.x = damp(r.position.x, THREE.MathUtils.lerp(heroX, dockX, dock), 4, dt);
-    r.position.y = damp(r.position.y, THREE.MathUtils.lerp(heroY, dockY, dock), 4, dt);
-    const s = damp(r.scale.x, targetScale, 4, dt);
-    r.scale.setScalar(s);
-
-    const bob = Math.sin(t * 1.2) * 0.07 * MOTION;
-    r.children[0].position.y = bob; // inner bob group, keeps the layout damping above clean
-
-    // Where the robot is on screen, so "look at the cursor" is relative to it.
-    st.ndcX = r.position.x / (viewport.width / 2);
-    st.ndcY = r.position.y / (viewport.height / 2);
-    const dx = smooth.x - st.ndcX;
-    const dy = smooth.y - (st.ndcY + 0.15);
-
-    // Head: eased yaw / pitch toward the cursor.
-    const h = head.current!;
-    const prevYaw = h.rotation.y;
-    h.rotation.y = damp(h.rotation.y, clamp(dx * 0.95, -0.95, 0.95) * MOTION, 7, dt);
-    h.rotation.x = damp(h.rotation.x, clamp(-dy * 0.5, -0.45, 0.45) * MOTION, 7, dt);
-    h.rotation.z = damp(h.rotation.z, clamp(-dx * 0.08, -0.12, 0.12) * MOTION, 5, dt);
-    const yawVel = (h.rotation.y - prevYaw) / Math.max(dt, 1e-4);
-
-    // Eyes slide slightly further than the head turns, which sells the look.
-    const e = eyes.current!;
-    e.position.x = damp(e.position.x, clamp(dx * 0.14, -0.15, 0.15) * MOTION, 10, dt);
-    e.position.y = damp(e.position.y, clamp(dy * 0.09, -0.09, 0.09) * MOTION + 0.06, 10, dt);
-
-    // Blink every few seconds.
-    if (t > st.blinkAt && st.blinkStart < 0) st.blinkStart = t;
-    let lid = 1;
-    if (st.blinkStart >= 0) {
-      const p = (t - st.blinkStart) / 0.16;
-      lid = p < 0.5 ? 1 - p * 2 * 0.9 : 0.1 + (p - 0.5) * 2 * 0.9;
-      if (p >= 1) {
-        lid = 1;
-        st.blinkStart = -1;
-        st.blinkAt = t + 2.2 + Math.random() * 3;
-      }
+  useFrame((_, rawDt) => {
+    const s = q.current;
+    if (rawDt > 0.25) return; // a tab switch or a long task, not the renderer
+    s.frames++;
+    s.time += rawDt;
+    if (s.time < 1) return;
+    const fps = s.frames / s.time;
+    s.frames = 0;
+    s.time = 0;
+    if (s.warm > 0) {
+      s.warm--; // the first seconds include shader compilation
+      return;
     }
-    eyeL.current!.scale.y = lid;
-    eyeR.current!.scale.y = lid;
+    s.slow = fps < 48 ? s.slow + 1 : 0;
+    s.fast = fps > 57 ? s.fast + 1 : 0;
+    let next = s.level;
+    if (s.slow >= 2 && s.level > 0) next = s.level - 1;
+    else if (s.fast >= 6 && s.level < DPR_STEPS.length - 1 && s.flips < 3) next = s.level + 1;
+    if (next === s.level) return;
+    if (next > s.level) s.flips++;
+    s.level = next;
+    s.slow = 0;
+    s.fast = 0;
+    setDpr(Math.min(window.devicePixelRatio || 1, DPR_STEPS[next]));
+  });
+  return null;
+}
 
-    // Torso follows the head with a lag.
-    const tr = torso.current!;
-    tr.rotation.y = damp(tr.rotation.y, h.rotation.y * 0.35, 4, dt);
-    tr.rotation.z = damp(tr.rotation.z, clamp(-dx * 0.04, -0.06, 0.06), 4, dt);
+/**
+ * Pays every first-use cost while the page is still loading: compiles all the
+ * shaders, then draws each diorama once into a single pixel so its buffers
+ * are on the GPU before it is ever scrolled to. The next frame clears it.
+ */
+function Warmup() {
+  const gl = useThree((s) => s.gl);
+  const scene = useThree((s) => s.scene);
+  const camera = useThree((s) => s.camera);
+  useEffect(() => {
+    let cancelled = false;
+    gl.compileAsync(scene, camera)
+      .then(() => {
+        if (cancelled) return;
+        const hidden: THREE.Object3D[] = [];
+        scene.traverse((o) => {
+          if (!o.visible) {
+            hidden.push(o);
+            o.visible = true;
+          }
+        });
+        gl.setScissorTest(true);
+        gl.setScissor(0, 0, 1, 1);
+        gl.render(scene, camera);
+        gl.setScissorTest(false);
+        hidden.forEach((o) => (o.visible = false));
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [gl, scene, camera]);
+  return null;
+}
 
-    // Secondary motion: antenna whips against the head's turning speed.
-    antenna.current!.rotation.z = damp(
-      antenna.current!.rotation.z,
-      clamp(-yawVel * 0.05, -0.6, 0.6) + Math.sin(t * 2.1) * 0.04 * MOTION,
-      9,
+const ARC_SEGMENTS = 96;
+
+/**
+ * The turntable. It carries whichever diorama is active, places it beside the
+ * content (or behind it on narrow screens), and turns with the scroll.
+ */
+function Stage({ children }: { children: ReactNode }) {
+  const m = useMats();
+  const root = useRef<THREE.Group>(null);
+  const tilt = useRef<THREE.Group>(null);
+  const turn = useRef<THREE.Group>(null);
+  const arcStep = useRef(-1);
+  const placed = useRef(false);
+
+  // A flat ring that fills as you read through the content in focus.
+  const arc = useMemo(() => new THREE.RingGeometry(1.8, 1.87, ARC_SEGMENTS, 1), []);
+  useEffect(() => () => arc.dispose(), [arc]);
+
+  useFrame((state, rawDt) => {
+    const dt = Math.min(rawDt, 0.05);
+    const { viewport, size } = state;
+    const g = root.current!;
+
+    let x: number;
+    let centerY: number;
+    let scale: number;
+    if (size.width >= WIDE) {
+      // Same formula as --stage-w in index.css.
+      const colPx = clamp(size.width * 0.32, 320, 600);
+      const col = (colPx / size.width) * viewport.width;
+      x = viewport.width / 2 - col / 2 - viewport.width * 0.012;
+      scale = Math.min(col / 4.0, (viewport.height * 0.66) / 3.3);
+      centerY = -viewport.height * 0.03;
+    } else {
+      // Narrow screens: above the hero text first, then low behind the cards.
+      const d = smooth.docked;
+      x = 0;
+      // Docked, it is smaller and sits in the lower third so text stays readable over it.
+      scale = lerp(Math.min(viewport.width / 4.6, (viewport.height * 0.26) / 3.3), viewport.width / 5.4, d);
+      centerY = lerp(viewport.height * 0.27, -viewport.height * 0.3, d);
+    }
+    const y = centerY - 1.38 * scale;
+
+    if (!placed.current) {
+      placed.current = true;
+      g.position.set(x, y, 0);
+      g.scale.setScalar(scale);
+    } else {
+      g.position.x = damp(g.position.x, x, 5, dt);
+      // The whole stage dips against the scroll, then springs back.
+      g.position.y = damp(g.position.y, y - clamp(smooth.vel * 0.07, -0.22, 0.22) * MOTION, 5, dt);
+      g.scale.setScalar(damp(g.scale.x, scale, 5, dt));
+    }
+
+    // Face the camera from wherever the stage sits, then sweep with progress.
+    const face = -Math.atan2(g.position.x, CAM_Z);
+    const yaw = face + (smooth.progress - 0.5) * 1.15 * MOTION + smooth.x * 0.16 * MOTION;
+    turn.current!.rotation.y = damp(turn.current!.rotation.y, yaw, 5, dt);
+    tilt.current!.rotation.x = damp(
+      tilt.current!.rotation.x,
+      0.27 - smooth.y * 0.05 * MOTION + clamp(smooth.vel * 0.035, -0.12, 0.12) * MOTION,
+      5,
       dt,
     );
 
-    armL.current!.rotation.z = 0.14 + Math.sin(t * 1.3) * 0.05 * MOTION;
-    armR.current!.rotation.z = -0.14 - Math.sin(t * 1.3 + 1.2) * 0.05 * MOTION;
+    stagePos.ndcX = g.position.x / (viewport.width / 2);
+    stagePos.ndcY = centerY / (viewport.height / 2);
+    stagePos.yaw = turn.current!.rotation.y - face;
 
-    ring1.current!.rotation.x += dt * 0.6 * MOTION;
-    ring1.current!.rotation.y += dt * 0.25 * MOTION;
-    ring2.current!.rotation.y += dt * 0.45 * MOTION;
-    ring2.current!.rotation.z -= dt * 0.2 * MOTION;
-
-    chest.current!.scale.setScalar(1 + Math.sin(t * 3) * 0.1 * MOTION);
-    flame.current!.scale.y = 1 + Math.sin(t * 18) * 0.12 * MOTION;
+    const step = Math.round(clamp(smooth.progress, 0, 1) * ARC_SEGMENTS);
+    if (step !== arcStep.current) {
+      arcStep.current = step;
+      arc.setDrawRange(0, step * 6);
+    }
   });
-
-  const shell = (
-    <meshPhysicalMaterial color={c.shell} metalness={0.55} roughness={0.28} clearcoat={1} clearcoatRoughness={0.15} />
-  );
-  const dark = <meshStandardMaterial color="#1a2238" metalness={0.6} roughness={0.35} />;
 
   return (
     <group ref={root}>
-      <group>
-        {/* torso */}
-        <group ref={torso} position={[0, -0.45, 0]}>
-          <RoundedBox args={[1.15, 0.95, 0.75]} radius={0.22} smoothness={4}>
-            {shell}
-          </RoundedBox>
-          <mesh position={[0, 0.02, 0.39]} ref={chest}>
-            <circleGeometry args={[0.13, 24]} />
-            <meshBasicMaterial color={c.core} toneMapped={false} />
-          </mesh>
-          <mesh position={[0, 0.02, 0.385]}>
-            <ringGeometry args={[0.17, 0.2, 32]} />
-            <meshBasicMaterial color={c.glow} toneMapped={false} />
-          </mesh>
-          {/* arms */}
-          <group ref={armL} position={[0.74, 0.28, 0]}>
-            <mesh>
-              <sphereGeometry args={[0.17, 20, 20]} />
-              {dark}
-            </mesh>
-            <mesh position={[0.03, -0.38, 0]}>
-              <capsuleGeometry args={[0.1, 0.4, 6, 14]} />
-              {shell}
-            </mesh>
-          </group>
-          <group ref={armR} position={[-0.74, 0.28, 0]}>
-            <mesh>
-              <sphereGeometry args={[0.17, 20, 20]} />
-              {dark}
-            </mesh>
-            <mesh position={[-0.03, -0.38, 0]}>
-              <capsuleGeometry args={[0.1, 0.4, 6, 14]} />
-              {shell}
-            </mesh>
-          </group>
-          {/* thruster */}
-          <mesh position={[0, -0.78, 0]} rotation={[Math.PI, 0, 0]} ref={flame}>
-            <coneGeometry args={[0.24, 0.5, 20]} />
-            <meshBasicMaterial color={c.glow} transparent opacity={0.75} toneMapped={false} />
-          </mesh>
-        </group>
-
-        {/* neck */}
-        <mesh position={[0, 0.1, 0]}>
-          <cylinderGeometry args={[0.16, 0.2, 0.2, 16]} />
-          {dark}
-        </mesh>
-
-        {/* head */}
-        <group ref={head} position={[0, 0.85, 0]}>
-          <RoundedBox args={[1.55, 1.25, 1.25]} radius={0.3} smoothness={5}>
-            {shell}
-          </RoundedBox>
-          <RoundedBox args={[1.22, 0.78, 0.14]} radius={0.12} smoothness={4} position={[0, 0.02, 0.6]}>
-            <meshPhysicalMaterial color="#060a16" metalness={0.9} roughness={0.08} clearcoat={1} />
-          </RoundedBox>
-          <group ref={eyes} position={[0, 0.06, 0.685]}>
-            <mesh ref={eyeL} position={[-0.27, 0, 0]}>
-              <capsuleGeometry args={[0.075, 0.13, 6, 14]} />
-              <meshBasicMaterial color={c.glow} toneMapped={false} />
-            </mesh>
-            <mesh ref={eyeR} position={[0.27, 0, 0]}>
-              <capsuleGeometry args={[0.075, 0.13, 6, 14]} />
-              <meshBasicMaterial color={c.glow} toneMapped={false} />
-            </mesh>
-            <mesh position={[0, -0.25, 0]} rotation={[0, 0, Math.PI]}>
-              <torusGeometry args={[0.12, 0.016, 8, 24, Math.PI]} />
-              <meshBasicMaterial color={c.glow} toneMapped={false} />
-            </mesh>
-          </group>
-          {/* ears */}
-          {[-1, 1].map((side) => (
-            <mesh key={side} position={[side * 0.82, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-              <cylinderGeometry args={[0.2, 0.2, 0.16, 24]} />
-              <meshStandardMaterial color={c.core} emissive={c.core} emissiveIntensity={1.1} />
-            </mesh>
-          ))}
-          {/* antenna */}
-          <group ref={antenna} position={[0, 0.62, 0]}>
-            <mesh position={[0, 0.2, 0]}>
-              <cylinderGeometry args={[0.02, 0.02, 0.4, 8]} />
-              {dark}
-            </mesh>
-            <mesh position={[0, 0.46, 0]}>
-              <sphereGeometry args={[0.07, 16, 16]} />
-              <meshBasicMaterial color={c.glow} toneMapped={false} />
-            </mesh>
-          </group>
-        </group>
-
-        {/* orbit rings */}
-        <mesh ref={ring1} position={[0, 0.2, 0]} rotation={[1.2, 0, 0]}>
-          <torusGeometry args={[1.55, 0.012, 8, 120]} />
-          <meshBasicMaterial color={c.glow} transparent opacity={0.5} toneMapped={false} />
-        </mesh>
-        <mesh ref={ring2} position={[0, 0.2, 0]} rotation={[0.3, 0, 0.5]}>
-          <torusGeometry args={[1.9, 0.01, 8, 120]} />
-          <meshBasicMaterial color={c.ring2} transparent opacity={0.4} toneMapped={false} />
-        </mesh>
+      <group ref={tilt}>
+        <mesh geometry={GEO.disc} material={m.floor} rotation={[-Math.PI / 2, 0, 0]} scale={3.74} position={[0, -0.012, 0]} />
+        <mesh geometry={GEO.ring} material={m.ring2} rotation={[Math.PI / 2, 0, 0]} scale={1.835} position={[0, -0.01, 0]} />
+        <mesh geometry={arc} material={m.glow} rotation={[-Math.PI / 2, 0, Math.PI / 2]} position={[0, -0.004, 0]} />
+        <group ref={turn}>{children}</group>
       </group>
     </group>
   );
 }
 
-function Particles({ c }: { c: SceneColors }) {
-  const ref = useRef<THREE.Points>(null);
-  const positions = useMemo(() => {
-    const count = 700;
+function paintStars(material: THREE.PointsMaterial, c: SceneColors) {
+  material.color.set(c.particle);
+  material.opacity = c.particleOpacity;
+  // Additive stars only read well on dark backdrops.
+  material.blending = c.additive ? THREE.AdditiveBlending : THREE.NormalBlending;
+  material.needsUpdate = true;
+}
+
+const STAR_SPAN = 16; // the star field repeats every 16 units, so it can scroll forever
+
+function Particles() {
+  const c = useColors();
+  const a = useRef<THREE.Points>(null);
+  const b = useRef<THREE.Points>(null);
+  const geometry = useMemo(() => {
+    const count = 520;
     const arr = new Float32Array(count * 3);
     // Seeded so the star field is identical on every render and every visit.
-    let seed = 1337;
-    const rand = () => {
-      seed = (seed + 0x6d2b79f5) | 0;
-      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
+    const rand = seeded(1337);
     for (let i = 0; i < count; i++) {
-      arr[i * 3] = (rand() - 0.5) * 22;
-      arr[i * 3 + 1] = (rand() - 0.5) * 14;
-      arr[i * 3 + 2] = -9 + rand() * 12;
+      arr[i * 3] = (rand() - 0.5) * 24;
+      arr[i * 3 + 1] = (rand() - 0.5) * STAR_SPAN;
+      arr[i * 3 + 2] = -9 + rand() * 11;
     }
-    return arr;
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(arr, 3));
+    return g;
   }, []);
+  const material = useMemo(
+    () => new THREE.PointsMaterial({ size: 0.045, sizeAttenuation: true, transparent: true, depthWrite: false }),
+    [],
+  );
+  useLayoutEffect(() => paintStars(material, c), [material, c]);
+  useEffect(
+    () => () => {
+      geometry.dispose();
+      material.dispose();
+    },
+    [geometry, material],
+  );
 
-  useFrame((_, rawDt) => {
-    const dt = Math.min(rawDt, 0.05);
-    const p = ref.current!;
-    p.rotation.y += dt * 0.012 * MOTION;
-    p.position.x = damp(p.position.x, -smooth.x * 0.5 * MOTION, 3, dt);
-    p.position.y = damp(p.position.y, smooth.scroll * 3 - smooth.y * 0.3 * MOTION, 3, dt);
+  useFrame((state) => {
+    // The field rises with the page at a fraction of its speed; a second copy
+    // one span below keeps the view filled across the wrap.
+    const t = state.clock.elapsedTime;
+    const shift = (((smooth.travel * 0.85 + t * 0.02 * MOTION) % STAR_SPAN) + STAR_SPAN) % STAR_SPAN;
+    const px = -smooth.x * 0.5 * MOTION;
+    const py = -smooth.y * 0.3 * MOTION;
+    a.current!.position.set(px, py + shift, 0);
+    b.current!.position.set(px, py + shift - STAR_SPAN, 0);
   });
 
   return (
-    <points ref={ref}>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-      </bufferGeometry>
-      <pointsMaterial
-        key={c.additive ? "add" : "normal"}
-        size={0.04}
-        sizeAttenuation
-        color={c.particle}
-        transparent
-        opacity={c.particleOpacity}
-        depthWrite={false}
-        blending={c.additive ? THREE.AdditiveBlending : THREE.NormalBlending}
-      />
-    </points>
+    <>
+      <points ref={a} geometry={geometry} material={material} frustumCulled={false} />
+      <points ref={b} geometry={geometry} material={material} frustumCulled={false} />
+    </>
   );
 }
 
+// Wireframe solids drifting behind the content. Each rises at its own rate as
+// the page scrolls, which reads as depth.
 const SHAPES = [
-  { kind: "ico", pos: [-5.2, 2.2, -2], scale: 0.6, tone: "sky", speed: 0.25 },
-  { kind: "oct", pos: [4.8, 2.6, -3], scale: 0.5, tone: "ring2", speed: 0.3 },
-  { kind: "knot", pos: [-4.4, -2.4, -1.5], scale: 0.38, tone: "ring2", speed: 0.2 },
-  { kind: "torus", pos: [5.4, -2.2, -2.5], scale: 0.55, tone: "sky", speed: 0.28 },
-  { kind: "dode", pos: [0.6, 3.1, -4], scale: 0.45, tone: "glow", speed: 0.22 },
-  { kind: "ico", pos: [-1.8, -3.2, -3], scale: 0.35, tone: "core", speed: 0.32 },
+  { geo: GEO.ico, pos: [-5.4, 2.2, -2.5], scale: 1.1, rate: 0.9, speed: 0.25 },
+  { geo: GEO.oct, pos: [-2.2, -1.6, -4], scale: 0.9, rate: 0.55, speed: 0.3 },
+  { geo: GEO.ico1, pos: [-6.2, -3.4, -5], scale: 1.5, rate: 0.4, speed: 0.18 },
+  { geo: GEO.oct, pos: [1.4, 3.6, -5.5], scale: 1.0, rate: 0.35, speed: 0.22 },
+  { geo: GEO.ico, pos: [-3.6, 4.6, -3.2], scale: 0.7, rate: 0.7, speed: 0.32 },
 ] as const;
+const SHAPE_SPAN = 11.5;
 
-function Shapes({ c }: { c: SceneColors }) {
+function Shapes() {
+  const m = useMats();
   const group = useRef<THREE.Group>(null);
 
-  useFrame((fs, rawDt) => {
+  useFrame((state, rawDt) => {
     const dt = Math.min(rawDt, 0.05);
-    const t = fs.clock.elapsedTime;
-    const g = group.current!;
-    g.children.forEach((child, i) => {
+    const t = state.clock.elapsedTime;
+    const rush = 1 + Math.min(4, Math.abs(smooth.vel) * 2);
+    group.current!.children.forEach((child, i) => {
       const sh = SHAPES[i];
-      child.rotation.x += dt * sh.speed * MOTION;
-      child.rotation.y += dt * sh.speed * 0.7 * MOTION;
-      child.position.y = sh.pos[1] + Math.sin(t * 0.6 + i * 1.7) * 0.18 * MOTION;
+      child.rotation.x += dt * sh.speed * MOTION * rush;
+      child.rotation.y += dt * sh.speed * 0.7 * MOTION * rush;
+      const raw = sh.pos[1] + smooth.travel * sh.rate * 1.6 + Math.sin(t * 0.6 + i * 1.7) * 0.18 * MOTION;
+      child.position.y = ((((raw + SHAPE_SPAN / 2) % SHAPE_SPAN) + SHAPE_SPAN) % SHAPE_SPAN) - SHAPE_SPAN / 2;
     });
-    g.rotation.y = damp(g.rotation.y, smooth.scroll * 0.9 + smooth.x * 0.05 * MOTION, 3, dt);
+    group.current!.position.x = damp(group.current!.position.x, -smooth.x * 0.25 * MOTION, 3, dt);
   });
 
   return (
     <group ref={group}>
       {SHAPES.map((s, i) => (
-        <mesh key={i} position={[s.pos[0], s.pos[1], s.pos[2]]} scale={s.scale}>
-          {s.kind === "ico" && <icosahedronGeometry args={[1, 0]} />}
-          {s.kind === "oct" && <octahedronGeometry args={[1, 0]} />}
-          {s.kind === "dode" && <dodecahedronGeometry args={[1, 0]} />}
-          {s.kind === "torus" && <torusGeometry args={[1, 0.28, 12, 32]} />}
-          {s.kind === "knot" && <torusKnotGeometry args={[1, 0.26, 72, 10]} />}
-          <meshBasicMaterial color={c[s.tone]} wireframe transparent opacity={c.shapeOpacity} toneMapped={false} />
-        </mesh>
+        <mesh key={i} geometry={s.geo} material={m.wire} position={[s.pos[0], s.pos[1], s.pos[2]]} scale={s.scale} />
       ))}
     </group>
   );
@@ -401,31 +372,79 @@ function Shapes({ c }: { c: SceneColors }) {
 
 export default function Scene3D() {
   const c = useSceneColors();
-  const [dpr, setDpr] = useState<number | [number, number]>([1, 1.75]);
+  const mats = useMemo(() => makeMats(), []);
+  useLayoutEffect(() => paintMats(mats, c), [mats, c]);
+  useEffect(() => () => disposeMats(mats), [mats]);
 
   return (
     <Canvas
-      dpr={dpr}
-      camera={{ position: [0, 0, 7], fov: 45, near: 0.1, far: 60 }}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+      dpr={[1, MAX_DPR]}
+      camera={{ position: [0, 0, CAM_Z], fov: CAM_FOV, near: 0.1, far: 60 }}
+      gl={{ antialias: true, alpha: true, stencil: false, powerPreference: "high-performance" }}
       style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none" }}
     >
-      <PerformanceMonitor
-        flipflops={3}
-        onDecline={() => setDpr(1)}
-        onIncline={() => setDpr([1, 1.75])}
-        onFallback={() => setDpr(0.85)}
-      />
-      <AdaptiveDpr pixelated={false} />
-      <ambientLight intensity={0.7} />
-      <directionalLight position={[3, 4, 5]} intensity={2.4} />
-      <pointLight position={[-4, 2, 4]} intensity={40} color={c.lightA} />
-      <pointLight position={[4, -2, 3]} intensity={30} color={c.lightB} />
-      <Driver />
-      <CameraRig />
-      <Particles c={c} />
-      <Shapes c={c} />
-      <Robot c={c} />
+      <MatsContext.Provider value={mats}>
+        <ColorsContext.Provider value={c}>
+          <ambientLight intensity={0.75} />
+          <directionalLight position={[3, 4, 5]} intensity={2.4} />
+          <pointLight position={[-4, 2, 4]} intensity={40} color={c.lightA} />
+          <pointLight position={[4, -2, 3]} intensity={30} color={c.lightB} />
+          <AdaptiveQuality />
+          <ScrollSync />
+          <Driver />
+          <CameraRig />
+          <Particles />
+          <Shapes />
+          <Stage>
+            <Slot id={["hero", "contact"]}>
+              <Robot />
+            </Slot>
+            <Slot id="agents">
+              <Agents />
+            </Slot>
+            <Slot id="impact">
+              <Impact />
+            </Slot>
+            <Slot id="office">
+              <Office />
+            </Slot>
+            <Slot id="retail">
+              <Retail />
+            </Slot>
+            <Slot id="process">
+              <Process />
+            </Slot>
+            <Slot id="cloud">
+              <CloudOps />
+            </Slot>
+            <Slot id="education">
+              <Education />
+            </Slot>
+            <Slot id="skills">
+              <Skills />
+            </Slot>
+            <Slot id="certs">
+              <Certs />
+            </Slot>
+            <Slot id="awards">
+              <Awards />
+            </Slot>
+            <Slot id="presence">
+              <Presence />
+            </Slot>
+            <Slot id="projects">
+              <Projects />
+            </Slot>
+            <Slot id="github">
+              <Github />
+            </Slot>
+            <Slot id="contact">
+              <ContactExtras />
+            </Slot>
+          </Stage>
+          <Warmup />
+        </ColorsContext.Provider>
+      </MatsContext.Provider>
     </Canvas>
   );
 }

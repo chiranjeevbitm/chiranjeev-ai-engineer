@@ -12,7 +12,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full py-stack-lg border-t backdrop-blur-md transition-colors border-white/50 bg-white/40 dark:border-[var(--border)] dark:bg-[var(--bg-surface)]/50">
+    <footer className="w-full py-stack-lg border-t backdrop-blur-md transition-colors border-white/50 bg-white/40 dark:border-[var(--border)] dark:bg-[color-mix(in_srgb,var(--bg-surface)_50%,transparent)]">
       <div className="flex flex-col items-center max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop gap-3">
         <div className="flex flex-col md:flex-row justify-between items-center w-full gap-gutter">
           <div className="text-center md:text-left">
