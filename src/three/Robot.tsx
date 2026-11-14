@@ -7,6 +7,10 @@ import { stage } from "./input";
 import { GEO, MOTION, clamp, damp, smooth, stagePos, useColors, useLive, useMats } from "./kit";
 
 const GREETING = 3.2; // seconds of waving after the scene first appears
+// Eye size: a soft oval, a little taller than wide. Blinking and smiling scale
+// the height from this base; they never replace it.
+const EYE_W = 0.2;
+const EYE_H = 0.24;
 
 export default function Robot() {
   const m = useMats();
@@ -99,8 +103,9 @@ export default function Robot() {
     st.wave = damp(st.wave, waving ? 1 : 0, 5, dt);
     const w = st.wave;
     // Eyes narrow into a smile while waving.
-    eyeL.current!.scale.y = lid * (1 - w * 0.35);
-    eyeR.current!.scale.y = lid * (1 - w * 0.35);
+    const eyeH = EYE_H * lid * (1 - w * 0.35);
+    eyeL.current!.scale.y = eyeH;
+    eyeR.current!.scale.y = eyeH;
 
     // Torso follows the head with a lag.
     const tr = torso.current!;
@@ -165,8 +170,8 @@ export default function Robot() {
           <mesh geometry={geos.head} material={mats.shell} />
           <mesh geometry={geos.visor} material={mats.visor} position={[0, 0.02, 0.6]} />
           <group ref={eyes} position={[0, 0.06, 0.685]}>
-            <mesh ref={eyeL} geometry={GEO.capsule} material={m.glow} position={[-0.27, 0, 0]} scale={[0.15, 0.14, 0.15]} />
-            <mesh ref={eyeR} geometry={GEO.capsule} material={m.glow} position={[0.27, 0, 0]} scale={[0.15, 0.14, 0.15]} />
+            <mesh ref={eyeL} geometry={GEO.sphere} material={m.glow} position={[-0.27, 0, 0]} scale={[EYE_W, EYE_H, 0.08]} />
+            <mesh ref={eyeR} geometry={GEO.sphere} material={m.glow} position={[0.27, 0, 0]} scale={[EYE_W, EYE_H, 0.08]} />
             <mesh geometry={GEO.arc} material={m.glow} position={[0, -0.25, 0]} rotation={[0, 0, Math.PI]} scale={0.12} />
           </group>
           {/* ears */}
