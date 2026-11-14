@@ -89,6 +89,9 @@ function GroupAccordion({ title, items, defaultOpen }: { title: string; items: s
   );
 }
 
+// The 3D backdrop for each role on the timeline, in order.
+const ROLE_SCENES = ["office", "retail", "process", "cloud"];
+
 export default function ExperienceSection() {
   const [articlesOpen, setArticlesOpen] = useState(false);
   const timeline = [
@@ -219,8 +222,8 @@ export default function ExperienceSection() {
 
   return (
     <div className="min-h-screen bg-background text-on-background dark:bg-[#131313] selection:bg-primary/20">
-      <main className="pt-28 pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-        <div className="flex flex-col lg:flex-row gap-gutter">
+      <main data-scene="office" data-scene-rank="0" className="pt-28 pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+        <div className="flex flex-col lg:flex-row gap-gutter stage-stack">
           <section className="lg:w-2/3">
             <div className="mb-stack-lg">
               <h1 className="font-headline-xl text-headline-xl text-[var(--on-surface)] mb-2">Professional Journey</h1>
@@ -235,7 +238,7 @@ export default function ExperienceSection() {
             >
               <div className="absolute left-0 top-2 bottom-0 w-px timeline-line opacity-40"></div>
               {timeline.map((item, i) => (
-                <motion.div key={item.company} variants={timelineEntry} className="relative mb-12 last:mb-0">
+                <motion.div key={item.company} data-scene={ROLE_SCENES[i]} variants={timelineEntry} className="relative mb-12 last:mb-0">
                   <div className={`absolute -left-[36px] top-2 w-5 h-5 ${item.color} rounded-full border-4 border-background dark:border-[#131313] ${i === 0 ? "glow-ice" : ""} flex items-center justify-center`}>
                     <span className="text-[8px] text-white font-bold">{item.logo}</span>
                   </div>
@@ -275,6 +278,7 @@ export default function ExperienceSection() {
           <aside className="lg:w-1/3 space-y-gutter">
             {/* Education */}
             <motion.div
+              data-scene="education"
               variants={fadeIn}
               initial="hidden"
               whileInView="visible"
@@ -309,6 +313,7 @@ export default function ExperienceSection() {
 
             {/* Certifications - Compact Preview */}
             <motion.div
+              data-scene="certs"
               variants={fadeIn}
               initial="hidden"
               whileInView="visible"
@@ -379,6 +384,7 @@ export default function ExperienceSection() {
 
             {/* Articles & Thought Leadership */}
             <motion.div
+              data-scene="presence"
               variants={fadeIn}
               initial="hidden"
               whileInView="visible"

@@ -212,6 +212,91 @@
   will-change: transform;
 }
 
+/* A blur filter over a canvas that redraws every frame has to be recomputed
+   every frame too. The scene is the backdrop here, so nothing blurs it. */
+.mode-3d [class*="backdrop-blur"] {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* The scroll bar follows the scene's accent. */
+.mode-3d [data-scroll-root] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scene-thumb) transparent;
+}
+.mode-3d [data-scroll-root]::-webkit-scrollbar { width: 8px; }
+.mode-3d [data-scroll-root]::-webkit-scrollbar-track { background: transparent; }
+.mode-3d [data-scroll-root]::-webkit-scrollbar-thumb {
+  background: var(--scene-thumb);
+  border-radius: 8px;
+}
+
+.mode-3d footer {
+  background: var(--scene-nav) !important;
+  border-color: var(--scene-card-border) !important;
+}
+
+.stage-caption { display: none; }
+
+/* From 1024px the diorama gets a column of its own on the right, and the
+   content reflows into the space left of it. Narrower screens keep the full
+   width and the diorama sits behind the cards.
+   --stage-w must match the stage layout in src/three/Scene3D.tsx. */
+@media (min-width: 1024px) {
+  .mode-3d { --stage-w: clamp(320px, 32vw, 600px); }
+
+  .mode-3d [data-section][id] { padding-right: var(--stage-w); }
+
+  .mode-3d .stage-stack { flex-direction: column; }
+  .mode-3d .stage-stack > * { width: 100%; }
+
+  .mode-3d .stage-about { grid-template-columns: minmax(0, 1fr); }
+  .mode-3d .stage-about > * { grid-column: auto; }
+  .mode-3d .stage-about-side {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+  .mode-3d .stage-about-side > * { margin-top: 0 !important; }
+
+  .mode-3d .stage-caption {
+    position: fixed;
+    right: 0;
+    bottom: 7vh;
+    z-index: 5;
+    width: var(--stage-w);
+    justify-content: center;
+    pointer-events: none;
+  }
+  .mode-3d .stage-caption-chip {
+    padding: 6px 14px;
+    border-radius: 9999px;
+    border: 1px solid var(--scene-card-border);
+    background: var(--scene-card);
+    color: var(--text-muted);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    animation: stage-caption-in 0.35s ease-out both;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1439.98px) {
+  .mode-3d .stage-narrow-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) and (max-width: 1279.98px) {
+  .mode-3d .stage-narrow-1 { grid-template-columns: minmax(0, 1fr); }
+  .mode-3d .stage-certs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1280px) and (max-width: 1699.98px) {
+  .mode-3d .stage-certs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@keyframes stage-caption-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
 /* ---------- Colour palettes ----------
    Chosen from the palette picker in the navbar (ThemeToggle). Each palette
    changes backgrounds, surfaces, borders and the navbar tint only; fonts,
@@ -347,6 +432,7 @@ html[data-palette], :root {
   --scene-card-border: rgba(14,165,233,0.16);
   --scene-card-shadow: 0 10px 40px rgba(15,23,42,0.08);
   --scene-nav: rgba(248,250,252,0.78);
+  --scene-thumb: rgba(14,165,233,0.45);
   --scene-cursor: radial-gradient(circle, rgba(14,165,233,0.10) 0%, rgba(139,92,246,0.06) 40%, transparent 70%);
 }
 html[data-palette="light-warm"] {
@@ -356,6 +442,7 @@ html[data-palette="light-warm"] {
   --scene-card-border: rgba(194,150,90,0.24);
   --scene-card-shadow: 0 10px 40px rgba(90,60,20,0.08);
   --scene-nav: rgba(251,248,242,0.8);
+  --scene-thumb: rgba(194,150,90,0.5);
   --scene-cursor: radial-gradient(circle, rgba(214,160,90,0.14) 0%, rgba(14,165,233,0.05) 40%, transparent 70%);
 }
 html[data-palette="warm"] {
@@ -365,6 +452,7 @@ html[data-palette="warm"] {
   --scene-card-border: rgba(150,105,50,0.24);
   --scene-card-shadow: 0 10px 40px rgba(90,60,20,0.10);
   --scene-nav: rgba(243,233,217,0.82);
+  --scene-thumb: rgba(150,105,50,0.5);
   --scene-cursor: radial-gradient(circle, rgba(196,140,70,0.16) 0%, rgba(14,165,233,0.05) 40%, transparent 70%);
 }
 html[data-palette="claude"] {
@@ -374,6 +462,7 @@ html[data-palette="claude"] {
   --scene-card-border: rgba(193,95,60,0.18);
   --scene-card-shadow: 0 10px 40px rgba(60,40,20,0.08);
   --scene-nav: rgba(250,249,245,0.8);
+  --scene-thumb: rgba(193,95,60,0.45);
   --scene-cursor: radial-gradient(circle, rgba(217,119,87,0.14) 0%, rgba(194,162,124,0.08) 40%, transparent 70%);
 }
 html[data-palette="dark"] {
@@ -383,6 +472,7 @@ html[data-palette="dark"] {
   --scene-card-border: rgba(125,211,252,0.14);
   --scene-card-shadow: 0 10px 40px rgba(2,6,23,0.45);
   --scene-nav: rgba(7,11,22,0.72);
+  --scene-thumb: rgba(94,231,255,0.38);
   --scene-cursor: radial-gradient(circle, rgba(94,231,255,0.14) 0%, rgba(139,92,246,0.08) 40%, transparent 70%);
 }
 html[data-palette="warm-dark"] {
@@ -392,6 +482,7 @@ html[data-palette="warm-dark"] {
   --scene-card-border: rgba(240,200,150,0.14);
   --scene-card-shadow: 0 10px 40px rgba(0,0,0,0.45);
   --scene-nav: rgba(20,16,12,0.74);
+  --scene-thumb: rgba(240,200,150,0.35);
   --scene-cursor: radial-gradient(circle, rgba(240,170,90,0.12) 0%, rgba(139,92,246,0.06) 40%, transparent 70%);
 }
 html[data-palette="claude-dark"] {
@@ -401,5 +492,6 @@ html[data-palette="claude-dark"] {
   --scene-card-border: rgba(217,119,87,0.18);
   --scene-card-shadow: 0 10px 40px rgba(0,0,0,0.45);
   --scene-nav: rgba(31,30,29,0.76);
+  --scene-thumb: rgba(217,119,87,0.45);
   --scene-cursor: radial-gradient(circle, rgba(217,119,87,0.14) 0%, rgba(194,162,124,0.06) 40%, transparent 70%);
 }

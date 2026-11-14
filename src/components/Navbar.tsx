@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import ThemeToggle from "./ThemeToggle";
 import ModeToggle from "./ModeToggle";
+import { scrollToSection as scrollPageToSection } from "../lib/scroll";
 
 interface NavbarProps {
   onOpenResume: () => void;
@@ -14,8 +15,6 @@ const navLinks = [
   { section: "projects", label: "Projects" },
 ];
 
-const SECTION_NAMES = ["home", "experience", "skills", "projects"];
-
 export default function Navbar({ onOpenResume, activeSection }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -28,17 +27,7 @@ export default function Navbar({ onOpenResume, activeSection }: NavbarProps) {
   }, []);
 
   const scrollToSection = (section: string) => {
-    const container = document.querySelector(".snap-y") as HTMLElement;
-    if (!container) {
-      window.location.hash = section;
-      return;
-    }
-    const idx = SECTION_NAMES.indexOf(section);
-    const el = container.children[idx] as HTMLElement;
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-      window.history.replaceState(null, "", "#" + section);
-    }
+    if (!scrollPageToSection(section)) window.location.hash = section;
     setMobileOpen(false);
   };
 

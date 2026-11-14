@@ -148,7 +148,7 @@ export default function ProjectsSection() {
 
   return (
     <div className="min-h-screen bg-background text-on-background dark:bg-[#131313] text-[var(--on-surface)] selection:bg-primary/30">
-      <main className="pt-28 pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+      <main data-scene="projects" data-scene-rank="0" className="pt-28 pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
         <header className="mb-stack-lg">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-3 py-1 rounded-full mb-stack-md dark:bg-[#d0bcff]/10 dark:border-[#d0bcff]/20">
             <span className="w-2 h-2 rounded-full bg-primary dark:bg-[#d0bcff] animate-pulse shadow-[0_0_8px_#7dd3fc]"></span>
@@ -176,7 +176,7 @@ export default function ProjectsSection() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter items-start mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter items-start mb-6 stage-narrow-1">
           <AnimatePresence mode="popLayout">
             {visible.map((project) => (
               <ProjectCard key={project.id} project={project} />
@@ -196,7 +196,7 @@ export default function ProjectsSection() {
           </div>
         )}
 
-        <section className="mb-16">
+        <section data-scene="github" className="mb-16">
           <div className="flex items-center justify-between mb-stack-md">
             <div className="flex items-center gap-3">
               <FolderOpen className="w-7 h-7 text-primary dark:text-[#d0bcff]" />
@@ -205,7 +205,7 @@ export default function ProjectsSection() {
             <ToggleButton open={reposOpen} onClick={() => setReposOpen((o) => !o)} closedLabel="Show" openLabel="Hide" />
           </div>
           <Collapsible open={reposOpen}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-stack-md pb-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-stack-md pb-2 stage-narrow-2">
               {githubRepos.map((repo) => (
                 <div
                   key={repo.name}
@@ -235,6 +235,7 @@ export default function ProjectsSection() {
         </section>
 
         <motion.section
+          data-scene="contact"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}

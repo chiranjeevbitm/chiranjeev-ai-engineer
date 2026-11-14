@@ -6,6 +6,7 @@ import ExperienceSection from "./ExperienceSection";
 import SkillsSection from "./SkillsSection";
 import ProjectsSection from "./ProjectsSection";
 import Footer from "../components/Footer";
+import { scrollPageTo, scrollToSection } from "../lib/scroll";
 
 const SECTION_NAMES = ["home", "experience", "skills", "projects"];
 
@@ -61,30 +62,10 @@ export default function PortfolioScroll() {
     return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = useCallback((index: number) => {
-    const container = containerRef.current;
-    if (!container) return;
-    const section = container.children[index] as HTMLElement;
-    if (section) {
-      // Account for fixed navbar height (80px desktop, 64px mobile)
-      const navbarH = window.innerWidth < 768 ? 64 : 80;
-      const top = section.getBoundingClientRect().top + container.scrollTop - navbarH;
-      container.scrollTo({ top, behavior: "smooth" });
-      setActiveSection(SECTION_NAMES[index]);
-      window.history.replaceState(null, "", `#${SECTION_NAMES[index]}`);
-    }
-  }, []);
-
-  const scrollToTop = useCallback(() => {
-    const container = containerRef.current;
-    if (container) {
-      container.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, []);
+  const scrollToTop = useCallback(() => scrollPageTo(0), []);
 
   const handleSectionNav = (section: string) => {
-    const idx = SECTION_NAMES.indexOf(section);
-    if (idx >= 0) scrollToSection(idx);
+    if (SECTION_NAMES.includes(section) && scrollToSection(section)) setActiveSection(section);
   };
 
   return (
@@ -93,21 +74,25 @@ export default function PortfolioScroll() {
       data-scroll-root
       className="h-screen overflow-y-auto relative"
     >
-      <div className="snap-start min-h-screen" id="home" data-section>
-        <HomeSection onNavigate={handleSectionNav} onOpenResume={onOpenResume} />
-      </div>
-      <div className="snap-start min-h-screen" id="experience" data-section>
-        <ExperienceSection />
-      </div>
-      <div className="snap-start min-h-screen" id="skills" data-section>
-        <SkillsSection onOpenResume={onOpenResume} />
-      </div>
-      <div className="snap-start min-h-screen" id="projects" data-section>
-        <ProjectsSection />
-      </div>
-      {/* Footer inside snap container */}
-      <div className="snap-start" data-section>
-        <Footer />
+      {/* One wrapper around everything that scrolls: the eased scroller and the
+          3D scene both measure it. */}
+      <div data-scroll-content>
+        <div className="snap-start min-h-screen" id="home" data-section>
+          <HomeSection onNavigate={handleSectionNav} onOpenResume={onOpenResume} />
+        </div>
+        <div className="snap-start min-h-screen" id="experience" data-section>
+          <ExperienceSection />
+        </div>
+        <div className="snap-start min-h-screen" id="skills" data-section>
+          <SkillsSection onOpenResume={onOpenResume} />
+        </div>
+        <div className="snap-start min-h-screen" id="projects" data-section>
+          <ProjectsSection />
+        </div>
+        {/* Footer inside snap container */}
+        <div className="snap-start" data-section data-scene="contact">
+          <Footer />
+        </div>
       </div>
 
       {/* Scroll to Top Button (^) - inside container so it's visible */}
